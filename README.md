@@ -1,6 +1,8 @@
 # IntelliJ IDEA Community Edition Dissection 
 
-This is a dissection of [intellij-community @ 2e9c58f](https://github.com/JetBrains/intellij-community/commit/2e9c58f56b507fedf8d650dc1e5d6e39300e54ec). THe goal is to understand how intellij does code understanding with the aim of potentially doing  something similar elsewhere.
+This is a repo where I, Ryan1729, am taking apart the [intellij community repo](https://github.com/JetBrains/intellij-community), in order to understand how it works. I'm going to be deleting code thta is not relevant to what I care about understanding. So unless you care about exactly the things I care about, which are partially TBD, then you probablywant the real [intellij community repo](https://github.com/JetBrains/intellij-community).
+
+This is a dissection of [intellij-community @ 2e9c58f](https://github.com/JetBrains/intellij-community/commit/2e9c58f56b507fedf8d650dc1e5d6e39300e54ec). The goal is to understand how intellij does code understanding with the aim of potentially doing  something similar elsewhere.
 
 In addtion to the below, on windows I also downloaded the javafx SDK v11 from [here](https://gluonhq.com/products/javafx/) and added it to Program Files manually.
 I then added all the jars inside there (like `javafx-base.jar`) to the class path of the two mentioned JDKs.
@@ -17,7 +19,14 @@ That was in `.\platform\platform-impl\src\com\intellij\openapi\wm\impl\GlobalMen
 But then other places where javafx things were causing errors happened. At first I was worried, but I realized that even if none of the graphics work at all, 
 I can have it print to the console or pass stuff to a different gui window or something. So I pressed on.
 
+And eventaually it built!
 
+But attempting to install the rust plugin just causes an error box.
+
+____
+
+The original README follows:
+____
 
 # IntelliJ IDEA Community Edition [![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 These instructions will help you build IntelliJ IDEA Community Edition from source code, which is the basis for IntelliJ Platform development.
