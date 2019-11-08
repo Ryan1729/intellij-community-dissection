@@ -1,5 +1,7 @@
 # IntelliJ IDEA Community Edition Dissection 
 
+This is a dissection of [intellij-community @ 2e9c58f](https://github.com/JetBrains/intellij-community/commit/2e9c58f56b507fedf8d650dc1e5d6e39300e54ec). THe goal is to understand how intellij does code understanding with the aim of potentially doing  something similar elsewhere.
+
 In addtion to the below, on windows I also downloaded the javafx SDK v11 from [here](https://gluonhq.com/products/javafx/) and added it to Program Files manually.
 I then added all the jars inside there (like `javafx-base.jar`) to the class path of the two mentioned JDKs.
 

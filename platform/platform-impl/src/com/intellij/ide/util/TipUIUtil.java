@@ -32,13 +32,6 @@ import com.intellij.util.SVGLoader;
 import com.intellij.util.io.IOUtil;
 import com.intellij.util.ui.*;
 import com.twelvemonkeys.imageio.stream.ByteArrayImageInputStream;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.web.WebView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,8 +47,6 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.ImageView;
 import java.awt.*;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
@@ -495,56 +486,16 @@ public class TipUIUtil {
   }
 
   private static class JFXBrowser extends JPanel implements Browser {
-    private final JFXPanel myPanel;
-    private WebView myWebView;
     private String myRecentText = "";
 
     JFXBrowser() {
       setLayout(new GridLayout(1, 1));
       setBackground(UIUtil.getTextFieldBackground());
-      Long mask = ReflectionUtil.getField(Component.class, this, long.class, "eventMask");
-      add(myPanel = new JFXPanel(){
-        {if (mask != null) enableEvents(mask);}
-      });
-      Platform.runLater(() -> {
-        Platform.setImplicitExit(false);
-        myPanel.addMouseWheelListener(new MouseWheelListener() {
-          @Override
-          public void mouseWheelMoved(MouseWheelEvent e) {
-            //noinspection SSBasedInspection
-            SwingUtilities.invokeLater(() -> JFXBrowser.this.dispatchEvent(e));
-          }
-        });
-        myPanel.setScene(new Scene(myWebView = new WebView(), 600, 400));
-        myWebView.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
-          @Override
-          public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) {
-            if (newValue == Worker.State.SUCCEEDED) {
-              int height = 0;
-              int width = 0;
-              Integer size = (Integer)myWebView.getEngine().executeScript("document.body.children.length");
-              for (int i = 0; i < size; i++) {
-                Object w = myWebView.getEngine().executeScript("document.body.children[" + i + "].scrollWidth");
-                if (w instanceof Integer) {
-                  width = Math.max(width, (Integer)w);
-                }
-                Object h = myWebView.getEngine().executeScript("document.body.children[" + i + "].scrollHeight");
-                if (h instanceof Integer) {
-                  height += (Integer)h;
-                }
-              }
-              myPanel.setPreferredSize(new Dimension(width, height));
-              myPanel.revalidate();
-            }
-          }
-        });
-      });
     }
 
     @Override
     public void setText(String html) {
       myRecentText = html;
-      Platform.runLater(() -> myWebView.getEngine().loadContent(html));
     }
 
     @Override

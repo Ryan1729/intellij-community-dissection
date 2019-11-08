@@ -31,26 +31,12 @@ public class JavaFxHtmlPanel implements Disposable {
 
   }
 
-
-  private static void runFX(@NotNull Runnable r) {
-    IdeEventQueue.unsafeNonblockingExecute(r);
-  }
-
-  protected void runInPlatformWhenAvailable(@NotNull Runnable runnable) {
-    ApplicationManager.getApplication().assertIsDispatchThread();
-  }
-
   @NotNull
   public JComponent getComponent() {
     return null;
   }
 
   public void setHtml(@NotNull String html) {
-  }
-
-  @NotNull
-  protected String prepareHtml(@NotNull String html) {
-    return html;
   }
 
   public void render() {
@@ -65,28 +51,6 @@ public class JavaFxHtmlPanel implements Disposable {
   @Nullable
   protected URL getStyle(boolean isDarcula) {
     return null;
-  }
-
-  /**
-   * @return java fx style, used for menus etc.
-   * See <a href="https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html">manual</a>
-   * @see Scene#getStylesheets()
-   * @see #getStyle(boolean)
-   */
-  @Nullable
-  protected URL getJavaFxStyle(boolean isDarcula) {
-    return null;
-  }
-
-
-  private class JavaFXLafManagerListener implements LafManagerListener {
-    @Override
-    public void lookAndFeelChanged(@NotNull LafManager manager) {
-      updateLaf(manager.getCurrentLookAndFeel() instanceof DarculaLookAndFeelInfo);
-    }
-  }
-
-  private void updateLaf(boolean isDarcula) {
   }
 
   @Override
