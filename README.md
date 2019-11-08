@@ -1,3 +1,22 @@
+# IntelliJ IDEA Community Edition Dissection 
+
+In addtion to the below, on windows I also downloaded the javafx SDK v11 from [here](https://gluonhq.com/products/javafx/) and added it to Program Files manually.
+I then added all the jars inside there (like `javafx-base.jar`) to the class path of the two mentioned JDKs.
+
+That got it down to a single reported compile error:
+```
+Error:(26, 34) java: cannot access com.sun.javafx.application.PlatformImpl
+  bad class file: /C:/Program Files/javafx-sdk-11.0.2/lib/javafx.graphics.jar!/com/sun/javafx/application/PlatformImpl.class
+    class file has wrong version 54.0, should be 52.0
+    Please remove or make sure it appears in the correct subdirectory of the classpath.
+```
+That was in `.\platform\platform-impl\src\com\intellij\openapi\wm\impl\GlobalMenuLinux.java`, so since for the purpose of this dissection I don't care about Linux, I dummied it out.
+
+But then other places where javafx things were causing errors happened. At first I was worried, but I realized that even if none of the graphics work at all, 
+I can have it print to the console or pass stuff to a different gui window or something. So I pressed on.
+
+
+
 # IntelliJ IDEA Community Edition [![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 These instructions will help you build IntelliJ IDEA Community Edition from source code, which is the basis for IntelliJ Platform development.
 The following conventions will be used to refer to directories on your machine:

@@ -23,7 +23,6 @@ import com.intellij.openapi.util.registry.Registry;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.loader.NativeLibraryLoader;
 import com.intellij.util.ui.ImageUtil;
-import com.sun.javafx.application.PlatformImpl;
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
@@ -192,14 +191,8 @@ public final class GlobalMenuLinux implements LinuxGlobalMenuEventHandler, Dispo
         }
       };
 
-      // NOTE: linux implementation of javaFX starts native main loop with GtkApplication._runLoop()
-      try {
-        PlatformImpl.startup(()->ourLib.startWatchDbus(ourGLogger, ourOnAppmenuServiceAppeared, ourOnAppmenuServiceVanished));
-      } catch (Throwable e) {
-        LOG.info("can't start main loop via javaFX (will run it manualy): " + e.getMessage());
-        final Thread glibMain = new Thread(()->ourLib.runMainLoop(ourGLogger, ourOnAppmenuServiceAppeared, ourOnAppmenuServiceVanished), "GlobalMenuLinux loop");
-        glibMain.start();
-      }
+      final Thread glibMain = new Thread(()->ourLib.runMainLoop(ourGLogger, ourOnAppmenuServiceAppeared, ourOnAppmenuServiceVanished), "GlobalMenuLinux loop");
+      glibMain.start();
 
       // register toggle-swing-menu action (to be able to enable swing menu when system applet is died)
       final ActionManager am = ActionManager.getInstance();
