@@ -1,8 +1,0 @@
-PsiJavaFile:SwitchLabelsIncomplete0.java
-  PsiSwitchLabelStatement
-    PsiKeyword:case('case')
-    PsiExpressionList
-      PsiErrorElement:Expression expected
-        <empty list>
-    PsiErrorElement:':' expected
-      <empty list>

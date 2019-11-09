@@ -1,3 +1,4 @@
+<!-- //This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more. -->
 <idea-plugin>
   <name>YAML</name>
   <id>org.jetbrains.plugins.yaml</id>
@@ -44,7 +45,6 @@
                              implementationClass="org.jetbrains.yaml.psi.impl.YAMLScalarElementManipulator"/>
     <lang.elementManipulator forClass="org.jetbrains.yaml.psi.YAMLKeyValue"
                              implementationClass="org.jetbrains.yaml.psi.impl.YAMLKeyValueKeyManipulator"/>
-    <breadcrumbsInfoProvider implementation="org.jetbrains.yaml.breadcrumbs.YAMLBreadcrumbsInfoProvider"/>
     <elementDescriptionProvider implementation="org.jetbrains.yaml.psi.impl.YAMLElementDescriptionProvider"/>
     <readWriteAccessDetector implementation="org.jetbrains.yaml.resolve.YAMLAnchorReadWriteAccessDetector"/>
     <renameInputValidator implementation="org.jetbrains.yaml.refactoring.rename.YamlKeyValueRenameInputValidator" order="first"/>
@@ -98,10 +98,6 @@
   <extensions defaultExtensionNs="com.intellij.json">
     <jsonLikePsiWalkerFactory implementation="org.jetbrains.yaml.schema.YamlJsonLikePsiWalkerFactory"/>
     <jsonSchemaEnabler implementation="org.jetbrains.yaml.schema.YamlJsonEnabler" />
-  </extensions>
-
-  <extensions defaultExtensionNs="com.intellij.spellchecker">
-    <support language="yaml" implementationClass="org.jetbrains.yaml.YAMLSpellcheckerStrategy"/>
   </extensions>
 
   <extensionPoints>

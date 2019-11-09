@@ -1,3 +1,4 @@
+<!-- //This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more. -->
 <idea-plugin>
   <module value="com.intellij.modules.structuralsearch"/>
 
@@ -10,7 +11,6 @@
     <localInspection shortName="SSBasedInspection" bundle="messages.SSRBundle" key="SSRInspection.display.name" groupName="General"
                      enabledByDefault="false" level="WARNING"
                      implementationClass="com.intellij.structuralsearch.inspection.highlightTemplate.SSBasedInspection"/>
-    <structuralsearch.profile implementation="com.intellij.structuralsearch.XmlStructuralSearchProfile"/>
     <projectService serviceImplementation="com.intellij.structuralsearch.plugin.StructuralSearchPlugin"/>
     <projectService serviceImplementation="com.intellij.structuralsearch.plugin.ui.ExistingTemplatesComponent"/>
     <projectService serviceImplementation="com.intellij.structuralsearch.plugin.ui.ConfigurationManager"/>

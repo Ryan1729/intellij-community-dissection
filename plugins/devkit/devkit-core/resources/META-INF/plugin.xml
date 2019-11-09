@@ -1,4 +1,5 @@
 <idea-plugin>
+  <!-- //This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more. -->
   <!--suppress PluginXmlValidity -->
   <name>Plugin DevKit</name>
   <id>DevKit</id>
@@ -13,11 +14,8 @@
   <vendor>JetBrains</vendor>
 
   <depends>com.intellij.properties</depends>
-  <depends>com.intellij.modules.java</depends>
   <depends>com.intellij.modules.json</depends>
   <depends config-file="gradle-devkit.xml" optional="true">org.jetbrains.plugins.gradle</depends>
-  <depends config-file="groovy-devkit.xml" optional="true">org.intellij.groovy</depends>
-  <depends config-file="uidesigner-devkit.xml" optional="true">com.intellij.uiDesigner</depends>
 
   <resource-bundle>org.jetbrains.idea.devkit.DevKitBundle</resource-bundle>
 
@@ -26,91 +24,19 @@
     <editorTabTitleProvider implementation="org.jetbrains.idea.devkit.testAssistant.TestDataGroupEditorTabTitleProvider"/>
     <highlightingPassFactory implementation="org.jetbrains.idea.devkit.testAssistant.TestDataHighlightingPassFactory"/>
 
-    <runLineMarkerContributor language="JAVA" implementationClass="org.jetbrains.idea.devkit.testAssistant.TestDataLineMarkerProvider"/>
     <fileEditorProvider implementation="org.jetbrains.idea.devkit.testAssistant.TestDataGroupEditorProvider"/>
     <gotoRelatedProvider implementation="org.jetbrains.idea.devkit.testAssistant.TestDataAsRelatedFileProvider"/>
     <gotoRelatedProvider implementation="org.jetbrains.idea.devkit.testAssistant.TestCaseAsRelatedFileProvider"/>
     <gotoRelatedProvider implementation="org.jetbrains.idea.devkit.navigation.DescriptionInspectionGotoRelatedProvider"/>
-    <psi.referenceContributor language="UAST" implementation="org.jetbrains.idea.devkit.testAssistant.TestDataReferenceContributor"/>
     <getDataRule key="TestLocationData" implementationClass="org.jetbrains.idea.devkit.testAssistant.TestLocationDataRule"/>
 
     <automaticRenamerFactory implementation="org.jetbrains.idea.devkit.refactoring.InspectionAutomaticRenamerFactory"/>
-
-    <junitPatcher implementation="org.jetbrains.idea.devkit.run.JUnitDevKitPatcher"/>
-    <antBuildGen implementation="org.jetbrains.idea.devkit.build.ant.ChunkBuildPluginExtension"/>
-    <compiler.buildTargetScopeProvider implementation="org.jetbrains.idea.devkit.build.PluginModuleBuildScopeProvider"/>
-
-    <xmlStructureViewBuilderProvider
-        implementation="org.jetbrains.idea.devkit.navigation.structure.PluginDescriptorXmlStructureViewBuilderProvider"/>
-
-    <dom.fileMetaData implementation="org.jetbrains.idea.devkit.dom.impl.PluginDescriptorDomFileDescription"
-                      rootTagName="idea-plugin"
-                      stubVersion="12"/>
-    <dom.extender domClass="org.jetbrains.idea.devkit.dom.Extensions"
-                  extenderClass="org.jetbrains.idea.devkit.dom.impl.ExtensionsDomExtender"/>
-    <dom.extender domClass="org.jetbrains.idea.devkit.dom.Action"
-                  extenderClass="org.jetbrains.idea.devkit.dom.impl.InternalDomExtender$ForAction"/>
-    <dom.extender domClass="org.jetbrains.idea.devkit.dom.Group"
-                  extenderClass="org.jetbrains.idea.devkit.dom.impl.InternalDomExtender$ForGroup"/>
-    <dom.implementation interfaceClass="org.jetbrains.idea.devkit.dom.IdeaPlugin"
-                        implementationClass="org.jetbrains.idea.devkit.dom.impl.IdeaPluginImpl"/>
-    <dom.implementation interfaceClass="org.jetbrains.idea.devkit.dom.Extension"
-                        implementationClass="org.jetbrains.idea.devkit.dom.impl.ExtensionImpl"/>
-    <dom.implementation interfaceClass="org.jetbrains.idea.devkit.dom.ExtensionPoint"
-                        implementationClass="org.jetbrains.idea.devkit.dom.impl.ExtensionPointImpl"/>
-    <dom.implementation interfaceClass="org.jetbrains.idea.devkit.dom.Extensions"
-                        implementationClass="org.jetbrains.idea.devkit.dom.impl.ExtensionsImpl"/>
-
-    <fileBasedIndex implementation="org.jetbrains.idea.devkit.dom.index.IdeaPluginRegistrationIndex"/>
-    <fileBasedIndex implementation="org.jetbrains.idea.devkit.dom.index.PluginIdModuleIndex"/>
-    <fileBasedIndex implementation="org.jetbrains.idea.devkit.dom.index.PluginIdDependenciesIndex"/>
-    <fileBasedIndex implementation="org.jetbrains.idea.devkit.dom.index.ExtensionPointIndex"/>
-
-    <editorTabTitleProvider implementation="org.jetbrains.idea.devkit.dom.ide.PluginDescriptorEditorTabTitleProvider"/>
-    <useScopeEnlarger implementation="org.jetbrains.idea.devkit.dom.ide.PluginDescriptorUseScopeEnlarger"/>
-    <searchScopesProvider
-        order="last"
-        implementation="org.jetbrains.idea.devkit.dom.impl.PluginDescriptorDomFileSearchScopeProvider"/>
 
     <properties.implicitPropertyUsageProvider implementation="org.jetbrains.idea.devkit.inspections.RegistryImplicitPropertyUsageProvider"/>
 
     <configurationType implementation="org.jetbrains.idea.devkit.run.PluginConfigurationType"/>
     <moduleType id="PLUGIN_MODULE" implementationClass="org.jetbrains.idea.devkit.module.PluginModuleType" classpathProvider="true"/>
-    <sdkType implementation="org.jetbrains.idea.devkit.projectRoots.IdeaJdk"/>
-    <compileServer.plugin classpath="devkit-jps-plugin.jar"/>
     <fileTemplateGroup implementation="org.jetbrains.idea.devkit.DevKitFileTemplatesFactory"/>
-    <lang.documentationProvider language="XML"
-                                implementationClass="org.jetbrains.idea.devkit.references.extensions.ExtensionPointDocumentationProvider"/>
-
-    <completion.contributor implementationClass="org.jetbrains.idea.devkit.completion.ExtensionOrderKeywordCompletionContributor"
-                            language="XML"/>
-
-    <localInspection language="XML" shortName="PluginXmlValidity" displayName="Plugin.xml validity" applyToDialects="false"
-                     groupPath="Plugin DevKit" groupKey="inspections.group.descriptor"
-                     enabledByDefault="true" level="ERROR"
-                     implementationClass="org.jetbrains.idea.devkit.inspections.PluginXmlDomInspection"/>
-    <localInspection language="XML" shortName="PluginXmlCapitalization" displayName="Plugin.xml text capitalization" applyToDialects="false"
-                     groupPath="Plugin DevKit" groupKey="inspections.group.descriptor"
-                     enabledByDefault="true" level="WARNING"
-                     implementationClass="org.jetbrains.idea.devkit.inspections.PluginXmlCapitalizationInspection"/>
-    <localInspection language="JVM" shortName="ComponentNotRegistered"
-                     groupPath="Plugin DevKit"
-                     key="inspections.component.not.registered.name" groupKey="inspections.group.code" enabledByDefault="true"
-                     level="WARNING" implementationClass="org.jetbrains.idea.devkit.inspections.ComponentNotRegisteredInspection"/>
-    <localInspection language="JAVA" shortName="InspectionDescriptionNotFoundInspection" displayName="Inspection description checker"
-                     groupPath="Plugin DevKit" groupKey="inspections.group.description.file"
-                     enabledByDefault="true" level="WARNING"
-                     implementationClass="org.jetbrains.idea.devkit.inspections.InspectionDescriptionNotFoundInspection"/>
-    <localInspection language="JAVA" shortName="InspectionUsingGrayColors" displayName="Using new Color(a,a,a)"
-                     groupPath="Plugin DevKit" groupKey="inspections.group.code"
-                     enabledByDefault="true" level="WARNING"
-                     implementationClass="org.jetbrains.idea.devkit.inspections.UseGrayInspection"/>
-    <localInspection language="JAVA" shortName="InspectionUniqueToolbarId" displayName="Specify toolbar id"
-                     groupPath="Plugin DevKit" groupKey="inspections.group.code"
-                     enabledByDefault="true" level="WARNING"
-                     implementationClass="org.jetbrains.idea.devkit.inspections.UniqueToolbarIdInspection"/>
-    <localInspection language="JAVA" shortName="IntentionDescriptionNotFoundInspection" displayName="Intention description checker"
-                     groupPath="Plugin DevKit" groupKey="inspections.group.description.file"
                      enabledByDefault="true" level="WARNING"
                      implementationClass="org.jetbrains.idea.devkit.inspections.IntentionDescriptionNotFoundInspection"/>
     <localInspection language="JAVA"
@@ -125,13 +51,6 @@
                      groupKey="inspections.group.name"
                      enabledByDefault="true" level="ERROR"
                      implementationClass="org.jetbrains.idea.devkit.inspections.RegistrationProblemsInspection"/>
-    <localInspection language="XML" shortName="InspectionMappingConsistency" applyToDialects="false"
-                     groupPath="Plugin DevKit" groupKey="inspections.group.descriptor"
-                     displayName="&lt;inspection&gt; tag consistency"
-                     enabledByDefault="true"
-                     level="WARNING"
-                     implementationClass="org.jetbrains.idea.devkit.inspections.InspectionMappingConsistencyInspection"/>
-
     <localInspection language="UAST" shortName="UndesirableClassUsage" displayName="Undesirable class usage"
                      groupPath="Plugin DevKit" groupKey="inspections.group.code"
                      enabledByDefault="true" level="WARNING"
@@ -226,11 +145,9 @@
 
     <moduleConfigurationEditorProvider implementation="org.jetbrains.idea.devkit.module.PluginModuleEditorsProvider"/>
     <implicitUsageProvider implementation="org.jetbrains.idea.devkit.inspections.DevKitImplicitUsageProvider"/>
-    <psi.referenceContributor language="XML" implementation="org.jetbrains.idea.devkit.dom.impl.I18nReferenceContributor"/>
     <psi.referenceContributor language="UAST" implementation="org.jetbrains.idea.devkit.references.ExperimentalFeatureIdContributor"/>
     <psi.referenceContributor implementation="org.jetbrains.idea.devkit.references.IconsReferencesContributor"/>
     <psi.referenceContributor language="UAST" implementation="org.jetbrains.idea.devkit.references.TestDataFilesReferencesContributor"/>
-    <psi.referenceContributor language="XML" implementation="org.jetbrains.idea.devkit.references.ThemeEPPathReferenceContributor"/>
     <psi.referenceContributor language="UAST" implementation="org.jetbrains.idea.devkit.references.RegistryKeyIdReferenceContributor"/>
     <referencesSearch implementation="org.jetbrains.idea.devkit.references.IconsReferencesContributor"/>
     <unusedDeclarationFixProvider implementation="org.jetbrains.idea.devkit.inspections.quickfix.RegisterExtensionFixProvider"/>
@@ -285,9 +202,6 @@
 
     <generatedSourcesFilter implementation="org.jetbrains.idea.devkit.internal.IconsGeneratedSourcesFilter"/>
 
-    <psi.referenceContributor
-        language="XML"
-        implementation="org.jetbrains.idea.devkit.references.PluginDescriptorXIncludeReferenceContributor"/>
     <psi.fileReferenceHelper
         order="first"
         implementation="org.jetbrains.idea.devkit.references.PluginDescriptorXIncludeFileReferenceHelper"/>
@@ -307,9 +221,6 @@
     <annotator language="JSON" implementationClass="org.jetbrains.idea.devkit.themes.ThemeColorAnnotator"/>
     <annotator language="JSON" implementationClass="org.jetbrains.idea.devkit.themes.ThemeAnnotator"/>
     <psi.referenceContributor language="JSON" implementation="org.jetbrains.idea.devkit.themes.ThemeJsonPsiReferenceContributor"/>
-    <spellchecker.support language="JSON"
-                          order="first"
-                          implementationClass="org.jetbrains.idea.devkit.themes.ThemeSpellcheckingStrategy"/>
     <editorNotificationProvider implementation="org.jetbrains.idea.devkit.themes.ThemeEditorToolbar"/>
     <applicationService serviceImplementation="org.jetbrains.idea.devkit.themes.metadata.UIThemeMetadataService"/>
     <lang.documentationProvider language="JSON"
@@ -362,8 +273,8 @@
       <add-to-group anchor="last" group-id="GenerateGroup"/>
     </action>
 
-    <group id="Internal.DevKit" internal="true" text="DevKit" popup="true">
-      <action internal="true" class="org.jetbrains.idea.devkit.actions.ToggleHighlightingMarkupAction"
+    <group id="Internal.DevKit" text="DevKit" popup="true">
+      <action class="org.jetbrains.idea.devkit.actions.ToggleHighlightingMarkupAction"
               text="Toggle Expected Highlighting Markup"
               id="ToggleHighlightingMarkup"/>
 
@@ -371,13 +282,13 @@
               text="Shuffle/Scramble/Anonymize/Permute Names"
               id="ShuffleNamesAction"/>
 
-      <action internal="true" class="org.jetbrains.idea.devkit.actions.ShowSerializedXmlAction" text="Show Serialized XML for Class"
+      <action class="org.jetbrains.idea.devkit.actions.ShowSerializedXmlAction" text="Show Serialized XML for Class"
               id="ShowSerializedXml"/>
 
-      <action internal="true" class="org.jetbrains.idea.devkit.dom.generator.GenerateDomModelAction" text="Generate DOM Model..."
+      <action class="org.jetbrains.idea.devkit.dom.generator.GenerateDomModelAction" text="Generate DOM Model..."
               id="GenerateDomModel"/>
 
-      <action internal="true" class="org.jetbrains.idea.devkit.actions.ShowHelpPageByIdAction" text="Show Help Page by ID"
+      <action class="org.jetbrains.idea.devkit.actions.ShowHelpPageByIdAction" text="Show Help Page by ID"
               id="ShowHelpPageById"/>
 
       <add-to-group group-id="Internal" anchor="last"/>
@@ -388,16 +299,16 @@
             text="Navigate to Test Data" use-shortcut-of="GotoRelated">
       <add-to-group anchor="last" group-id="TestTreePopupMenu"/>
     </action>
-    <action id="DumpCleanTestData" internal="true" class="org.jetbrains.idea.devkit.internal.DumpCleanHighlightingTestdataAction"
+    <action id="DumpCleanTestData" class="org.jetbrains.idea.devkit.internal.DumpCleanHighlightingTestdataAction"
             text="Dump Highlighting-Markup-Free Data">
       <add-to-group group-id="Internal.Dump"/>
     </action>
-    <action id="AnalyzeUnloadablePlugins" internal="true" class="org.jetbrains.idea.devkit.internal.AnalyzeUnloadablePluginsAction"
+    <action id="AnalyzeUnloadablePlugins" class="org.jetbrains.idea.devkit.internal.AnalyzeUnloadablePluginsAction"
             text="Analyze Unloadable Plugins">
       <add-to-group group-id="Internal.DevKit"/>
     </action>
 
-    <action id="AnalyzeEPUsage" internal="true" class="org.jetbrains.idea.devkit.inspections.AnalyzeEPUsageAction"
+    <action id="AnalyzeEPUsage" class="org.jetbrains.idea.devkit.inspections.AnalyzeEPUsageAction"
             text="Analyze EP Usage">
       <add-to-group group-id="Internal.DevKit"/>
     </action>

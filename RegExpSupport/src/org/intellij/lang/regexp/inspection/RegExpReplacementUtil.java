@@ -1,4 +1,5 @@
 // Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package org.intellij.lang.regexp.inspection;
 
 import com.intellij.lang.injection.InjectedLanguageManager;
@@ -6,7 +7,6 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.*;
-import com.intellij.psi.xml.XmlElement;
 import com.intellij.xml.util.XmlStringUtil;
 import org.intellij.lang.regexp.psi.impl.RegExpElementImpl;
 import org.jetbrains.annotations.NotNull;
@@ -45,9 +45,6 @@ public class RegExpReplacementUtil {
       if (RegExpElementImpl.isLiteralExpression(context)) {
         // otherwise, just pretend it is a Java-style string
         return StringUtil.escapeStringCharacters(text);
-      }
-      else if (context instanceof XmlElement) {
-        return XmlStringUtil.escapeString(text);
       }
     }
     return text;

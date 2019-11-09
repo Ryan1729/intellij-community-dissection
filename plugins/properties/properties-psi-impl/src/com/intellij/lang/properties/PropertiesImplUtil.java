@@ -1,13 +1,11 @@
 /*
  * Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.lang.properties;
 
 import com.intellij.lang.properties.psi.PropertiesFile;
 import com.intellij.lang.properties.psi.PropertyKeyIndex;
-import com.intellij.lang.properties.xml.XmlPropertiesFileImpl;
-import com.intellij.lang.properties.xml.XmlPropertiesIndex;
-import com.intellij.lang.properties.xml.XmlProperty;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.project.Project;
@@ -21,7 +19,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.indexing.FileBasedIndex;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -109,11 +106,11 @@ public class PropertiesImplUtil extends PropertiesUtil {
   @Nullable
   public static PropertiesFile getPropertiesFile(@Nullable PsiFile file) {
     if (!canBePropertyFile(file)) return null;
-    return file instanceof PropertiesFile ? (PropertiesFile)file : XmlPropertiesFileImpl.getPropertiesFile(file);
+    return file instanceof PropertiesFile ? (PropertiesFile)file : null;
   }
 
   public static boolean canBePropertyFile(PsiFile file) {
-    return file instanceof PropertiesFile || file instanceof XmlFile && file.getFileType() == StdFileTypes.XML;
+    return file instanceof PropertiesFile;
   }
 
   @Nullable
@@ -125,22 +122,7 @@ public class PropertiesImplUtil extends PropertiesUtil {
   @NotNull
   public static List<IProperty> findPropertiesByKey(@NotNull final Project project, @NotNull final String key) {
     final GlobalSearchScope scope = GlobalSearchScope.allScope(project);
-    final ArrayList<IProperty> properties =
-      new ArrayList<>(PropertyKeyIndex.getInstance().get(key, project, scope));
-    final Set<VirtualFile> files = new HashSet<>();
-    FileBasedIndex.getInstance().processValues(XmlPropertiesIndex.NAME, new XmlPropertiesIndex.Key(key), null, (file, value) -> {
-      if (files.add(file)) {
-        PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
-        if (psiFile != null) {
-          PropertiesFile propertiesFile = XmlPropertiesFileImpl.getPropertiesFile(psiFile);
-          if (propertiesFile != null) {
-            properties.addAll(propertiesFile.findPropertiesByKey(key));
-          }
-        }
-      }
-      return true;
-    }, scope);
-    return properties;
+    return new ArrayList<>(PropertyKeyIndex.getInstance().get(key, project, scope));
   }
 
   @Nullable
@@ -189,12 +171,6 @@ public class PropertiesImplUtil extends PropertiesUtil {
   public static IProperty getProperty(@Nullable PsiElement element) {
     if (element instanceof IProperty) {
       return (IProperty)element;
-    }
-    if (element instanceof PomTargetPsiElement) {
-      final PomTarget target = ((PomTargetPsiElement)element).getTarget();
-      if (target instanceof XmlProperty) {
-        return (IProperty)target;
-      }
     }
     return null;
   }

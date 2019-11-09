@@ -1,4 +1,5 @@
 // Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.lang.properties.refactoring.rename;
 
 import com.intellij.lang.properties.IProperty;
@@ -7,9 +8,7 @@ import com.intellij.lang.properties.PropertiesUtil;
 import com.intellij.lang.properties.ResourceBundle;
 import com.intellij.lang.properties.psi.PropertiesFile;
 import com.intellij.lang.properties.refactoring.PropertiesRefactoringSettings;
-import com.intellij.lang.properties.xml.XmlProperty;
 import com.intellij.openapi.util.Comparing;
-import com.intellij.pom.PomTargetPsiElement;
 import com.intellij.psi.PsiElement;
 import com.intellij.refactoring.rename.RenamePsiElementProcessor;
 import com.intellij.refactoring.rename.UnresolvableCollisionUsageInfo;
@@ -24,8 +23,7 @@ import java.util.Objects;
 public class RenamePropertyProcessor extends RenamePsiElementProcessor {
   @Override
   public boolean canProcessElement(@NotNull final PsiElement element) {
-    return element instanceof IProperty ||
-           (element instanceof PomTargetPsiElement && ((PomTargetPsiElement)element).getTarget() instanceof XmlProperty);
+    return element instanceof IProperty;
   }
 
   @Override

@@ -47,8 +47,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 interface GlobalMenuLib extends Library {
-  void startWatchDbus(JLogger jlogger, JRunnable onAppmenuServiceAppeared, JRunnable onAppmenuServiceVanished);
-
   void runMainLoop(JLogger jlogger, JRunnable onAppmenuServiceAppeared, JRunnable onAppmenuServiceVanished);
 
   void execOnMainLoop(JRunnable run);
@@ -60,7 +58,6 @@ interface GlobalMenuLib extends Library {
   void unbindWindow(Pointer wi, long windowXid);  // can be called from EDT (invokes only g_dbus_proxy_call, stateless)
 
   void clearRootMenu(Pointer wi);
-  void clearMenu(Pointer dbmi);
 
   Pointer addRootMenu(Pointer wi, int uid, String label);
   Pointer addMenuItem(Pointer parent, int uid, String label, int type, int position);
@@ -1091,7 +1088,6 @@ public final class GlobalMenuLinux implements LinuxGlobalMenuEventHandler, Dispo
 
     boolean check(int uid, int eventType, @NotNull MenuItemInternal mi) {
       // exec at glib-main-thread
-      final boolean isFillEvent = _isFillEvent(eventType);
       final long timeMs = System.currentTimeMillis();
 
       if (_isClosed()) {

@@ -1,1 +1,0 @@
-Method is used in method reference. Proceeding would result in conversion to lambda expression

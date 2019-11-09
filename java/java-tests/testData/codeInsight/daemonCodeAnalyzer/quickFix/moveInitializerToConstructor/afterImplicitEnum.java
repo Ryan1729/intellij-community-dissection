@@ -1,9 +1,0 @@
-// "Move initializer to constructor" "true"
-enum C {
-  foo;
-  private final String myExtension;
-
-  C() {
-      myExtension = null;
-  }
-}

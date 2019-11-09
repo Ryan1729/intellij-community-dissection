@@ -1,3 +1,4 @@
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.tasks.generic;
 
 import com.intellij.openapi.project.Project;
@@ -106,17 +107,14 @@ public class GenericRepositoryEditor<T extends GenericRepository> extends BaseRe
     myTabbedPane.addTab("Server Configuration", myPanel);
 
     // Put appropriate configuration components on the card panel
-    ResponseHandler xmlHandler = myRepository.getResponseHandler(ResponseType.XML);
     ResponseHandler jsonHandler = myRepository.getResponseHandler(ResponseType.JSON);
     ResponseHandler textHandler = myRepository.getResponseHandler(ResponseType.TEXT);
     // Select appropriate card pane
-    myCardPanel.add(xmlHandler.getConfigurationComponent(myProject), ResponseType.XML.getMimeType());
     myCardPanel.add(jsonHandler.getConfigurationComponent(myProject), ResponseType.JSON.getMimeType());
     myCardPanel.add(textHandler.getConfigurationComponent(myProject), ResponseType.TEXT.getMimeType());
 
     myRadio2ResponseType = new IdentityHashMap<>();
     myRadio2ResponseType.put(myJsonRadioButton, ResponseType.JSON);
-    myRadio2ResponseType.put(myXmlRadioButton, ResponseType.XML);
     myRadio2ResponseType.put(myTextRadioButton, ResponseType.TEXT);
 
     myManageTemplateVariablesButton.addActionListener(new ActionListener() {

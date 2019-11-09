@@ -1,4 +1,0 @@
-class A e<caret> B {}
------
-extends
-implements

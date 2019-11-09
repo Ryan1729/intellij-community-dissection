@@ -1,4 +1,5 @@
 // Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package org.jetbrains.idea.devkit.module;
 
 import com.intellij.icons.AllIcons;
@@ -8,15 +9,10 @@ import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.SourceFolder;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.util.descriptors.ConfigFile;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.idea.devkit.DevKitBundle;
-import org.jetbrains.idea.devkit.build.PluginBuildConfiguration;
 import org.jetbrains.idea.devkit.build.PluginBuildUtil;
 import org.jetbrains.idea.devkit.util.PsiUtil;
 import org.jetbrains.jps.model.java.JavaModuleSourceRootTypes;
@@ -68,7 +64,7 @@ public class PluginModuleType extends ModuleType<PluginModuleBuilder> {
   }
 
   @Nullable
-  public static XmlFile getPluginXml(Module module) {
+  public static Object getPluginXml(Module module) {
     if (module == null) return null;
     if (!isOfType(module)) {
       for (final ContentEntry entry : ModuleRootManager.getInstance(module).getContentEntries()) {
@@ -82,22 +78,13 @@ public class PluginModuleType extends ModuleType<PluginModuleBuilder> {
 
           final String relativePath = prefixPath + PluginDescriptorConstants.PLUGIN_XML_PATH;
           final VirtualFile pluginXmlVF = file.findFileByRelativePath(relativePath);
-          if (pluginXmlVF != null) {
-            final PsiFile psiFile = PsiManager.getInstance(module.getProject()).findFile(pluginXmlVF);
-            if (psiFile instanceof XmlFile) {
-              return (XmlFile)psiFile;
-            }
-          }
         }
       }
 
       return null;
     }
 
-    final PluginBuildConfiguration buildConfiguration = PluginBuildConfiguration.getInstance(module);
-    if (buildConfiguration == null) return null;
-    final ConfigFile configFile = buildConfiguration.getPluginXmlConfigFile();
-    return configFile != null ? configFile.getXmlFile() : null;
+    return null;
   }
 
   public static boolean isPluginModuleOrDependency(@Nullable Module module) {

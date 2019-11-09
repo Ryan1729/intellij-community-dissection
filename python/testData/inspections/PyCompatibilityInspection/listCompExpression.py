@@ -1,1 +1,0 @@
-var = [x for x in <warning descr="Python version 3.4, 3.5, 3.6, 3.7, 3.8 do not support this syntax in list comprehensions.">1, 2, 3</warning>]

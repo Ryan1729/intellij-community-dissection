@@ -24,8 +24,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="intellij.testng.rt" />
-    <orderEntry type="module" module-name="intellij.junit.rt" />
     <orderEntry type="module" module-name="intellij.java.compiler" />
     <orderEntry type="library" name="JaCoCo" level="project" />
     <orderEntry type="module" module-name="intellij.java.coverage.rt" />

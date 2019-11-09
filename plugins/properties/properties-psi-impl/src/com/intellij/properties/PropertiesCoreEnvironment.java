@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.properties;
 
 import com.intellij.core.CoreApplicationEnvironment;
@@ -36,8 +37,6 @@ import com.intellij.lang.properties.psi.impl.PropertyKeyImpl;
 import com.intellij.lang.properties.psi.impl.PropertyValueImpl;
 import com.intellij.lang.properties.refactoring.PropertiesRefactoringSettings;
 import com.intellij.lang.properties.structureView.PropertiesSeparatorManager;
-import com.intellij.lang.properties.xml.XmlPropertiesIconProvider;
-import com.intellij.lang.properties.xml.XmlPropertiesIndex;
 import com.intellij.openapi.fileTypes.LanguageSyntaxHighlighters;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.impl.cache.impl.id.IdIndexers;
@@ -59,7 +58,6 @@ public class PropertiesCoreEnvironment {
       appEnvironment.addExplicitExtension(LanguageSyntaxHighlighters.INSTANCE, PropertiesLanguage.INSTANCE,
                                           new PropertiesHighlighter());
       appEnvironment.addExplicitExtension(LanguageParserDefinitions.INSTANCE, PropertiesLanguage.INSTANCE, new PropertiesParserDefinition());
-      appEnvironment.addExtension(FileBasedIndexExtension.EXTENSION_POINT_NAME, new XmlPropertiesIndex());
       appEnvironment.addExtension(StubIndexExtension.EP_NAME, new PropertyKeyIndex());
 
       appEnvironment.registerApplicationService(PropertiesQuickFixFactory.class, new EmptyPropertiesQuickFixFactory());
@@ -80,8 +78,6 @@ public class PropertiesCoreEnvironment {
       appEnvironment.addExplicitExtension(LanguageCommenters.INSTANCE, PropertiesLanguage.INSTANCE, new PropertiesCommenter());
       appEnvironment.addExplicitExtension(IdIndexers.INSTANCE, PropertiesFileType.INSTANCE, new PropertiesIdIndexer());
       appEnvironment.addExplicitExtension(TodoIndexers.INSTANCE, PropertiesFileType.INSTANCE, new PropertiesTodoIndexer());
-
-      appEnvironment.addExtension(IconProvider.EXTENSION_POINT_NAME, new XmlPropertiesIconProvider());
     }
   }
 

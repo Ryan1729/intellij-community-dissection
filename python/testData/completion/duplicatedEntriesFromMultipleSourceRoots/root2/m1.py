@@ -1,2 +1,0 @@
-class Cls:
-    pass

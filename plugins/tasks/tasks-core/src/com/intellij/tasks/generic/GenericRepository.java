@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.tasks.generic;
 
 import com.intellij.openapi.util.Comparing;
@@ -71,7 +72,7 @@ public class GenericRepository extends BaseRepositoryImpl {
   private HTTPMethod myTasksListMethodType = HTTPMethod.GET;
   private HTTPMethod mySingleTaskMethodType = HTTPMethod.GET;
 
-  private ResponseType myResponseType = ResponseType.XML;
+  private ResponseType myResponseType = ResponseType.TEXT;
 
   private EnumMap<ResponseType, ResponseHandler> myResponseHandlersMap = new EnumMap<>(ResponseType.class);
 
@@ -126,10 +127,9 @@ public class GenericRepository extends BaseRepositoryImpl {
     myLoginMethodType = HTTPMethod.GET;
     myTasksListMethodType = HTTPMethod.GET;
     mySingleTaskMethodType = HTTPMethod.GET;
-    myResponseType = ResponseType.XML;
+    myResponseType = ResponseType.TEXT;
     myTemplateVariables = new ArrayList<>();
     myResponseHandlersMap = new EnumMap<>(ResponseType.class);
-    myResponseHandlersMap.put(ResponseType.XML, getXmlResponseHandlerDefault());
     myResponseHandlersMap.put(ResponseType.JSON, getJsonResponseHandlerDefault());
     myResponseHandlersMap.put(ResponseType.TEXT, getTextResponseHandlerDefault());
   }
@@ -349,7 +349,6 @@ public class GenericRepository extends BaseRepositoryImpl {
 
   @XCollection(
     elementTypes = {
-      XPathResponseHandler.class,
       JsonPathResponseHandler.class,
       RegExResponseHandler.class
     }
@@ -372,10 +371,6 @@ public class GenericRepository extends BaseRepositoryImpl {
     for (ResponseHandler handler : myResponseHandlersMap.values()) {
       handler.setRepository(this);
     }
-  }
-
-  public ResponseHandler getXmlResponseHandlerDefault() {
-    return new XPathResponseHandler(this);
   }
 
   public ResponseHandler getJsonResponseHandlerDefault() {
