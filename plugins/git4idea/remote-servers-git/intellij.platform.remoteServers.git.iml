@@ -11,7 +11,6 @@
     <orderEntry type="module" module-name="intellij.platform.core" />
     <orderEntry type="module" module-name="intellij.platform.vcs" />
     <orderEntry type="module" module-name="intellij.platform.remoteServers" exported="" />
-    <orderEntry type="module" module-name="intellij.vcs.git" exported="" />
     <orderEntry type="module" module-name="intellij.platform.remoteServers.impl" exported="" />
     <orderEntry type="module" module-name="intellij.platform.lang" exported="" />
     <orderEntry type="module" module-name="intellij.platform.lang.impl" exported="" />

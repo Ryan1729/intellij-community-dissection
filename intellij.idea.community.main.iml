@@ -67,15 +67,9 @@
     <orderEntry type="module" module-name="intellij.java.guiForms.designer" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.devkit" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.eclipse" scope="RUNTIME" />
-    <orderEntry type="module" module-name="intellij.vcs.git" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.platform.images" scope="RUNTIME" />
-    <orderEntry type="module" module-name="intellij.groovy" scope="RUNTIME" />
-    <orderEntry type="module" module-name="intellij.junit" scope="RUNTIME" />
-    <orderEntry type="module" module-name="intellij.maven" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.regexp" scope="RUNTIME" />
-    <orderEntry type="module" module-name="intellij.vcs.svn" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.vcs.svn.tests" scope="TEST" />
-    <orderEntry type="module" module-name="intellij.testng" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.java.langInjection" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.xml.langInjection" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.xpath" scope="RUNTIME" />
@@ -84,9 +78,6 @@
     <orderEntry type="module" module-name="intellij.java.i18n" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.tasks" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.tasks.java" scope="RUNTIME" />
-    <orderEntry type="module" module-name="intellij.tasks.tests" scope="TEST" />
-    <orderEntry type="module" module-name="intellij.vcs.github" scope="RUNTIME" />
-    <orderEntry type="module" module-name="intellij.vcs.hg" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.relaxng" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.gradle.java" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.platform.remoteServers.impl" scope="RUNTIME" />
@@ -116,7 +107,6 @@
     <orderEntry type="module" module-name="intellij.platform.diff.tests" scope="TEST" />
     <orderEntry type="module" module-name="intellij.platform.builtInServer.tests" scope="TEST" />
     <orderEntry type="module" module-name="intellij.platform.updater" scope="TEST" />
-    <orderEntry type="module" module-name="intellij.java.coverage" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.platform.scriptDebugger.ui" scope="TEST" />
     <orderEntry type="module" module-name="intellij.java.remoteServers.git" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.terminal" scope="RUNTIME" />
@@ -132,7 +122,6 @@
     <orderEntry type="module" module-name="intellij.editorconfig" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.vcs.changeReminder" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.sh" scope="RUNTIME" />
-    <orderEntry type="module" module-name="intellij.gradle.java.maven" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.markdown" scope="TEST" />
     <orderEntry type="module" module-name="intellij.statsCollector.tests" scope="TEST" />
   </component>

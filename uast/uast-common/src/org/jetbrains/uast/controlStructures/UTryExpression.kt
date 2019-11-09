@@ -1,7 +1,7 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package org.jetbrains.uast
 
-import com.intellij.psi.PsiType
 import org.jetbrains.uast.internal.acceptList
 import org.jetbrains.uast.internal.log
 import org.jetbrains.uast.visitor.UastTypedVisitor
@@ -109,12 +109,6 @@ interface UCatchClause : UElement {
    * Returns the exception type references for this `catch` clause.
    */
   val typeReferences: List<UTypeReferenceExpression>
-
-  /**
-   * Returns the expression types for this `catch` clause.
-   */
-  val types: List<PsiType>
-    get() = typeReferences.map { it.type }
 
   override fun accept(visitor: UastVisitor) {
     if (visitor.visitCatchClause(this)) return

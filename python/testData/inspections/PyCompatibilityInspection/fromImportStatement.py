@@ -1,1 +1,0 @@
-from <warning descr="Python version 3.4, 3.5, 3.6, 3.7, 3.8 do not have module Bastion">Bastion</warning> import BastionClass
