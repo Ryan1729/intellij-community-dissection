@@ -1,5 +1,4 @@
 // Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package org.jetbrains.idea.devkit.references;
 
 import com.intellij.ide.ui.UIThemeProvider;
@@ -14,6 +13,7 @@ import com.intellij.util.xml.DomManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.idea.devkit.dom.Extension;
 import org.jetbrains.idea.devkit.dom.ExtensionPoint;
+import org.jetbrains.idea.devkit.themes.metadata.UIThemeMetadataService;
 import org.jetbrains.idea.devkit.util.PsiUtil;
 
 public class ThemeEPPathReferenceContributor extends PsiReferenceContributor {
@@ -33,7 +33,8 @@ public class ThemeEPPathReferenceContributor extends PsiReferenceContributor {
         if (extensionPoint == null) return PsiReference.EMPTY_ARRAY;
 
         final String extensionPointQualifiedName = extensionPoint.getEffectiveQualifiedName();
-        if (!UIThemeProvider.EP_NAME.getName().equals(extensionPointQualifiedName)) {
+        if (!UIThemeProvider.EP_NAME.getName().equals(extensionPointQualifiedName) &&
+            !UIThemeMetadataService.EP_NAME.getName().equals(extensionPointQualifiedName)) {
           return PsiReference.EMPTY_ARRAY;
         }
 
