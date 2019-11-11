@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package org.jetbrains.idea.devkit.inspections;
 
 import com.intellij.codeInsight.navigation.NavigationUtil;
@@ -17,8 +18,6 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.idea.devkit.DevKitBundle;
-import org.jetbrains.idea.devkit.themes.metadata.ThemeMetadataJsonSchemaProviderFactory;
-import org.jetbrains.idea.devkit.themes.metadata.UIThemeMetadataService;
 import org.jetbrains.idea.devkit.util.PsiUtil;
 import org.jetbrains.uast.*;
 import org.jetbrains.uast.visitor.AbstractUastNonRecursiveVisitor;
@@ -87,7 +86,7 @@ public class UnregisteredNamedColorInspection extends DevKitUastInspectionBase {
   }
 
   private static boolean isRegisteredNamedColor(@NotNull String key) {
-    return UIThemeMetadataService.getInstance().findByKey(key) != null;
+    return false;
   }
 
   private static void registerProblem(@NotNull String key,
@@ -117,7 +116,7 @@ public class UnregisteredNamedColorInspection extends DevKitUastInspectionBase {
                              @Override
                              public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
                                final Collection<VirtualFile> metadataFiles =
-                                 FilenameIndex.getAllFilesByExt(project, ThemeMetadataJsonSchemaProviderFactory.EXTENSION);
+                                 FilenameIndex.getAllFilesByExt(project, "themeMetadata.json");
                                if (metadataFiles.isEmpty()) return;
 
                                final PsiFile[] psiFiles =
