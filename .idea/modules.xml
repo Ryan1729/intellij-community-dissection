@@ -497,7 +497,6 @@
       <module fileurl="file://$PROJECT_DIR$/plugins/google-app-engine/jps-plugin/intellij.java.googleAppEngine.jps.iml" filepath="$PROJECT_DIR$/plugins/google-app-engine/jps-plugin/intellij.java.googleAppEngine.jps.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/google-app-engine/runtime/intellij.java.googleAppEngine.runtime.iml" filepath="$PROJECT_DIR$/plugins/google-app-engine/runtime/intellij.java.googleAppEngine.runtime.iml" />
       <module fileurl="file://$PROJECT_DIR$/java/compiler/forms-compiler/intellij.java.guiForms.compiler.iml" filepath="$PROJECT_DIR$/java/compiler/forms-compiler/intellij.java.guiForms.compiler.iml" />
-      <module fileurl="file://$PROJECT_DIR$/plugins/ui-designer/intellij.java.guiForms.designer.iml" filepath="$PROJECT_DIR$/plugins/ui-designer/intellij.java.guiForms.designer.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/ui-designer/jps-plugin/intellij.java.guiForms.jps.iml" filepath="$PROJECT_DIR$/plugins/ui-designer/jps-plugin/intellij.java.guiForms.jps.iml" />
       <module fileurl="file://$PROJECT_DIR$/platform/forms_rt/intellij.java.guiForms.rt.iml" filepath="$PROJECT_DIR$/platform/forms_rt/intellij.java.guiForms.rt.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/java-i18n/intellij.java.i18n.iml" filepath="$PROJECT_DIR$/plugins/java-i18n/intellij.java.i18n.iml" />
@@ -722,7 +721,6 @@
       <module fileurl="file://$PROJECT_DIR$/jps/standalone-builder/intellij.tools.jps.build.standalone.iml" filepath="$PROJECT_DIR$/jps/standalone-builder/intellij.tools.jps.build.standalone.iml" />
       <module fileurl="file://$PROJECT_DIR$/platform/build-scripts/intellij.tools.jps.buildScriptDependencies.iml" filepath="$PROJECT_DIR$/platform/build-scripts/intellij.tools.jps.buildScriptDependencies.iml" />
       <module fileurl="file://$PROJECT_DIR$/platform/testFramework/bootstrap/intellij.tools.testsBootstrap.iml" filepath="$PROJECT_DIR$/platform/testFramework/bootstrap/intellij.tools.testsBootstrap.iml" />
-      <module fileurl="file://$PROJECT_DIR$/plugins/ui-designer-core/intellij.uiDesigner.iml" filepath="$PROJECT_DIR$/plugins/ui-designer-core/intellij.uiDesigner.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/changeReminder/intellij.vcs.changeReminder.iml" filepath="$PROJECT_DIR$/plugins/changeReminder/intellij.vcs.changeReminder.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/cvs/cvs-plugin/intellij.vcs.cvs.iml" filepath="$PROJECT_DIR$/plugins/cvs/cvs-plugin/intellij.vcs.cvs.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/cvs/cvs-core/intellij.vcs.cvs.core.iml" filepath="$PROJECT_DIR$/plugins/cvs/cvs-core/intellij.vcs.cvs.core.iml" />
@@ -743,7 +741,6 @@
       <module fileurl="file://$PROJECT_DIR$/xml/xml-structure-view-api/intellij.xml.structureView.iml" filepath="$PROJECT_DIR$/xml/xml-structure-view-api/intellij.xml.structureView.iml" />
       <module fileurl="file://$PROJECT_DIR$/xml/xml-structure-view-impl/intellij.xml.structureView.impl.iml" filepath="$PROJECT_DIR$/xml/xml-structure-view-impl/intellij.xml.structureView.impl.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/xpath/intellij.xpath.iml" filepath="$PROJECT_DIR$/plugins/xpath/intellij.xpath.iml" />
-      <module fileurl="file://$PROJECT_DIR$/plugins/xslt-debugger/intellij.xslt.debugger.iml" filepath="$PROJECT_DIR$/plugins/xslt-debugger/intellij.xslt.debugger.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/xslt-debugger/engine/intellij.xslt.debugger.engine.iml" filepath="$PROJECT_DIR$/plugins/xslt-debugger/engine/intellij.xslt.debugger.engine.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/xslt-debugger/engine/impl/intellij.xslt.debugger.engine.impl.iml" filepath="$PROJECT_DIR$/plugins/xslt-debugger/engine/impl/intellij.xslt.debugger.engine.impl.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/xpath/xslt-rt/intellij.xslt.debugger.rt.iml" filepath="$PROJECT_DIR$/plugins/xpath/xslt-rt/intellij.xslt.debugger.rt.iml" />
