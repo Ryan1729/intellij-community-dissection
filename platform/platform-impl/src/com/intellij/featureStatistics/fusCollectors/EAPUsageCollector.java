@@ -1,7 +1,6 @@
 // Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.intellij.featureStatistics.fusCollectors;
 
-import com.intellij.idea.Main;
 import com.intellij.internal.statistic.beans.MetricEvent;
 import com.intellij.internal.statistic.beans.MetricEventFactoryKt;
 import com.intellij.internal.statistic.service.fus.collectors.ApplicationUsagesCollector;
@@ -38,7 +37,7 @@ public class EAPUsageCollector extends ApplicationUsagesCollector {
   @NotNull
   private static Set<MetricEvent> collectMetrics() {
     try {
-      if (!Main.isHeadless()) {
+      if (!false) {
         final Set<MetricEvent> result = new HashSet<>();
         if (ApplicationInfoEx.getInstanceEx().isEAP()) {
           result.add(MetricEventFactoryKt.newMetric("eap"));

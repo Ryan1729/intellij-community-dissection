@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.idea;
 
 import com.intellij.Patches;
@@ -114,9 +115,6 @@ public final class StartupUtil {
     /* called from EDT */
     default void beforeStartupWizard() {}
 
-    /* called from EDT */
-    default void startupWizardFinished(@NotNull CustomizeIDEWizardStepsProvider provider) {}
-
     /* called from IDE init thread */
     default void importFinished(@NotNull Path newConfigDir) {}
 
@@ -140,121 +138,24 @@ public final class StartupUtil {
     }
   }
 
-  public static void prepareApp(@NotNull String[] args, @NotNull String mainClass) throws Exception {
+  public static void prepareApp() throws Exception {
     LoadingState.setStrictMode();
 
     Activity activity = StartUpMeasurer.startMainActivity("ForkJoin CommonPool configuration");
-    IdeaForkJoinWorkerThreadFactory.setupForkJoinCommonPool(Main.isHeadless(args));
+    IdeaForkJoinWorkerThreadFactory.setupForkJoinCommonPool(false);
 
     activity = activity.endAndStart("main class loading scheduling");
     ExecutorService executorService = AppExecutorUtil.getAppExecutorService();
-
-    Future<Class<AppStarter>> mainStartFuture = executorService.submit(() -> {
-      Activity subActivity = StartUpMeasurer.startActivity("main class loading");
-      @SuppressWarnings("unchecked")
-      Class<AppStarter> aClass = (Class<AppStarter>)Class.forName(mainClass);
-      subActivity.end();
-      return aClass;
-    });
 
     activity = activity.endAndStart("log4j configuration");
     configureLog4j();
 
     activity = activity.endAndStart("LaF init scheduling");
-    CompletableFuture<?> initUiTask = scheduleInitUi(args, executorService);
-    activity.end();
-
-    if (!checkJdkVersion()) {
-      System.exit(Main.JDK_CHECK_FAILED);
-    }
-
-    activity = StartUpMeasurer.startMainActivity("config path computing");
-    String configPath = PathManager.getConfigPath();
-    activity = activity.endAndStart("config path existence check");
-
-    // this check must be performed before system directories are locked
-    boolean configImportNeeded = !Main.isHeadless() && !Files.exists(Paths.get(configPath));
-
-    activity = activity.endAndStart("system dirs checking");
-    // note: uses config directory
-    if (!checkSystemDirs()) {
-      System.exit(Main.DIR_CHECK_FAILED);
-    }
-    activity = activity.endAndStart("system dirs locking");
-    lockSystemDirs(args);
-    activity = activity.endAndStart("file logger configuration");
-    // log initialization should happen only after locking the system directory
-    Logger log = setupLogger();
-    activity.end();
-
-    NonUrgentExecutor.getInstance().execute(() -> {
-      ApplicationInfo appInfo = ApplicationInfoImpl.getShadowInstance();
-      Activity subActivity = StartUpMeasurer.startActivity("essential IDE info logging");
-      logEssentialInfoAboutIde(log, appInfo);
-      subActivity.end();
-    });
-
-    Future<?> extraTaskFuture = executorService.submit(StartupUtil::setupSystemLibraries);
-
-    fixProcessEnvironment();
-
-    if (!configImportNeeded) {
-      installPluginUpdates();
-      runPreAppClass(log);
-    }
-
-    NonUrgentExecutor.getInstance().execute(() -> loadSystemLibraries(log));
-
-    activity = StartUpMeasurer.startMainActivity("tasks waiting");
-    extraTaskFuture.get();
-
-    activity = activity.endAndStart("main class loading waiting");
-    Class<AppStarter> aClass = mainStartFuture.get();
-    activity.end();
-
-    startApp(args, initUiTask, log, configImportNeeded, aClass.newInstance());
-  }
-
-  private static void startApp(@NotNull String[] args,
-                               @NotNull CompletableFuture<?> initUiTask,
-                               @NotNull Logger log,
-                               boolean configImportNeeded,
-                               @NotNull AppStarter appStarter) throws Exception {
-    if (!Main.isHeadless()) {
-      Activity activity = StartUpMeasurer.startMainActivity("config importing");
-
-      if (configImportNeeded) {
-        appStarter.beforeImportConfigs();
-        Path newConfigDir = Paths.get(PathManager.getConfigPath());
-        runInEdtAndWait(log, () -> ConfigImportHelper.importConfigsTo(newConfigDir, log), initUiTask);
-        appStarter.importFinished(newConfigDir);
-      }
-
-      showUserAgreementAndConsentsIfNeeded(log, initUiTask);
-
-      if (configImportNeeded && !ConfigImportHelper.isConfigImported()) {
-        // exception handler is already set by ConfigImportHelper; event queue and icons already initialized as part of old config import
-        EventQueue.invokeAndWait(() -> runStartupWizard(appStarter));
-      }
-
-      activity.end();
-    }
-
-    EdtInvocationManager.executeWithCustomManager(new EdtInvocationManager.SwingEdtInvocationManager() {
-      @Override
-      public void invokeAndWait(@NotNull Runnable task) {
-        runInEdtAndWait(log, task, initUiTask);
-      }
-    }, () -> appStarter.start(Arrays.asList(args), initUiTask));
-  }
-
-  @NotNull
-  private static CompletableFuture<?> scheduleInitUi(@NotNull String[] args, @NotNull ExecutorService executor) {
     // mainly call sun.util.logging.PlatformLogger.getLogger - it takes enormous time (up to 500 ms)
     // Before lockDirsAndConfigureLogger can be executed only tasks that do not require log,
     // because we don't want to complicate logging. It is OK, because lockDirsAndConfigureLogger is not so heavy-weight as UI tasks.
     CompletableFuture<Void> future = new CompletableFuture<>();
-    executor.execute(() -> {
+    executorService.execute(() -> {
       try {
         checkHiDPISettings();
 
@@ -277,20 +178,20 @@ public final class StartupUtil {
           future.complete(null);
           StartUpMeasurer.setCurrentState(LAF_INITIALIZED);
 
-          if (Main.isHeadless()) {
+          if (false) {
             return;
           }
 
           // UIUtil.initDefaultLaF must be called before this call (required for getSystemFontData(), and getSystemFontData() can be called to compute scale also)
-          Activity activity = StartUpMeasurer.startActivity("system font data initialization");
+          Activity activity2 = StartUpMeasurer.startActivity("system font data initialization");
           JBUIScale.getSystemFontData();
 
-          activity = activity.endAndStart("init JBUIScale");
+          activity2 = activity2.endAndStart("init JBUIScale");
           JBUIScale.scale(1f);
 
-          Activity prepareSplashActivity = activity.endAndStart("splash preparation");
+          Activity prepareSplashActivity = activity2.endAndStart("splash preparation");
           EventQueue.invokeLater(() -> {
-            SplashManager.show(args);
+            SplashManager.show(new String[]{});
             prepareSplashActivity.end();
           });
 
@@ -303,13 +204,69 @@ public final class StartupUtil {
       }
     });
 
-    if (!Main.isHeadless()) {
-      // do not wait, approach like AtomicNotNullLazyValue is used under the hood
-      future.thenRunAsync(() -> {
-        updateFrameClassAndWindowIcon();
-      }, executor);
+    // do not wait, approach like AtomicNotNullLazyValue is used under the hood
+    future.thenRunAsync(() -> {
+      updateFrameClassAndWindowIcon();
+    }, executorService);
+    CompletableFuture<?> initUiTask = future;
+    activity.end();
+
+    if (!checkJdkVersion()) {
+      System.exit(Main.JDK_CHECK_FAILED);
     }
-    return future;
+
+    activity = StartUpMeasurer.startMainActivity("config path computing");
+    String configPath = PathManager.getConfigPath();
+    activity = activity.endAndStart("config path existence check");
+
+    // this check must be performed before system directories are locked
+
+    activity = activity.endAndStart("system dirs checking");
+    // note: uses config directory
+    if (!checkSystemDirs()) {
+      System.exit(Main.DIR_CHECK_FAILED);
+    }
+    activity = activity.endAndStart("system dirs locking");
+    lockSystemDirs(new String[]{});
+    activity = activity.endAndStart("file logger configuration");
+    // log initialization should happen only after locking the system directory
+    Logger log = setupLogger();
+    activity.end();
+
+    NonUrgentExecutor.getInstance().execute(() -> {
+      ApplicationInfo appInfo = ApplicationInfoImpl.getShadowInstance();
+      Activity subActivity = StartUpMeasurer.startActivity("essential IDE info logging");
+      logEssentialInfoAboutIde(log, appInfo);
+      subActivity.end();
+    });
+
+    Future<?> extraTaskFuture = executorService.submit(StartupUtil::setupSystemLibraries);
+
+    fixProcessEnvironment();
+
+    installPluginUpdates();
+    runPreAppClass(log);
+
+    NonUrgentExecutor.getInstance().execute(() -> loadSystemLibraries(log));
+
+    activity = StartUpMeasurer.startMainActivity("tasks waiting");
+    extraTaskFuture.get();
+
+    activity = activity.endAndStart("main class loading waiting");
+    activity.end();
+
+    Activity activity1 = StartUpMeasurer.startMainActivity("config importing");
+
+    showUserAgreementAndConsentsIfNeeded(log, initUiTask);
+
+    activity1.end();
+
+    EdtInvocationManager.executeWithCustomManager(new EdtInvocationManager.SwingEdtInvocationManager() {
+      @Override
+      public void invokeAndWait(@NotNull Runnable task) {
+        runInEdtAndWait(log, task, initUiTask);
+      }
+    }, () -> ApplicationLoader.initApplication(initUiTask));
   }
 
   private static void updateFrameClassAndWindowIcon() {
@@ -512,7 +469,7 @@ public final class StartupUtil {
   private static void fixProcessEnvironment() {
     Activity subActivity = StartUpMeasurer.startActivity("process env fixing");
 
-    if (!Main.isCommandLine()) {
+    if (!false) {
       System.setProperty("__idea.mac.env.lock", "unlocked");
     }
 
@@ -583,7 +540,7 @@ public final class StartupUtil {
   }
 
   private static void installPluginUpdates() {
-    if (!Main.isCommandLine() || Boolean.getBoolean(FORCE_PLUGIN_UPDATES)) {
+    if (!false || Boolean.getBoolean(FORCE_PLUGIN_UPDATES)) {
       try {
         StartupActionScriptManager.executeActionScript();
       }
@@ -599,29 +556,6 @@ public final class StartupUtil {
     }
   }
 
-  private static void runStartupWizard(@NotNull AppStarter appStarter) {
-    String stepsProviderName = ApplicationInfoImpl.getShadowInstance().getCustomizeIDEWizardStepsProvider();
-    if (stepsProviderName == null) {
-      return;
-    }
-
-    CustomizeIDEWizardStepsProvider provider;
-    try {
-      Class<?> providerClass = Class.forName(stepsProviderName);
-      provider = (CustomizeIDEWizardStepsProvider)providerClass.newInstance();
-    }
-    catch (Throwable e) {
-      Main.showMessage("Configuration Wizard Failed", e);
-      return;
-    }
-
-    appStarter.beforeStartupWizard();
-    new CustomizeIDEWizardDialog(provider, appStarter, true, false).showIfNeeded();
-
-    PluginManagerCore.invalidatePlugins();
-    appStarter.startupWizardFinished(provider);
-  }
-
   // must be called from EDT
   public static boolean patchSystem(@NotNull Logger log) {
     if (!ourSystemPatched.compareAndSet(false, true)) {
@@ -630,7 +564,7 @@ public final class StartupUtil {
 
     Activity activity = StartUpMeasurer.startActivity("event queue replacing");
     replaceSystemEventQueue(log);
-    if (!Main.isHeadless()) {
+    if (!false) {
       patchSystemForUi(log);
     }
     activity.end();

@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.openapi.application;
 
 import com.intellij.openapi.util.text.StringUtil;
@@ -25,7 +26,6 @@ public final class JetBrainsProtocolHandler {
   private static String ourMainParameter = null;
   private static String ourCommand = null;
   private static Map<String, String> ourParameters = Collections.emptyMap();
-  private static boolean initialized = false;
 
   public static void processJetBrainsLauncherParameters(@NotNull String url) {
     System.setProperty(JetBrainsProtocolHandler.class.getName(), url);
@@ -51,7 +51,6 @@ public final class JetBrainsProtocolHandler {
     }
     parameters.put(FRAGMENT_PARAM_NAME, uri.getFragment());
     ourParameters = Collections.unmodifiableMap(parameters);
-    initialized = true;
   }
 
   // well, Netty cannot be added as dependency and so, QueryStringDecoder cannot be used
@@ -80,20 +79,10 @@ public final class JetBrainsProtocolHandler {
 
   @Nullable
   public static String getCommand() {
-    init();
     return ourCommand;
   }
 
-  private static void init() {
-    if (initialized) return;
-    String property = System.getProperty(JetBrainsProtocolHandler.class.getName());
-    if (property != null && property.startsWith(PROTOCOL)) {
-      processJetBrainsLauncherParameters(property);
-    }
-  }
-
   public static String getMainParameter() {
-    init();
     return ourMainParameter;
   }
 
@@ -108,7 +97,6 @@ public final class JetBrainsProtocolHandler {
 
   @NotNull
   public static Map<String, String> getParameters() {
-    init();
     return ourParameters;
   }
 

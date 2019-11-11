@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 @file:JvmName("ApplicationLoader")
 package com.intellij.idea
 
@@ -71,64 +72,22 @@ import java.util.concurrent.Future
 import java.util.concurrent.atomic.AtomicReference
 import java.util.function.Function
 import javax.swing.JOptionPane
-import kotlin.system.exitProcess
 
-private val SAFE_JAVA_ENV_PARAMETERS = arrayOf(JetBrainsProtocolHandler.REQUIRED_PLUGINS_KEY)
 private val LOG = Logger.getInstance("#com.intellij.idea.ApplicationLoader")
 
 private var filesToLoad: List<File> = emptyList()
 private var wizardStepProvider: CustomizeIDEWizardStepsProvider? = null
 
-private fun executeInitAppInEdt(args: List<String>,
-                                initAppActivity: Activity,
+private fun executeInitAppInEdt(initAppActivity: Activity,
                                 pluginDescriptorFuture: CompletableFuture<List<IdeaPluginDescriptorImpl>>) {
   StartupUtil.patchSystem(LOG)
   val app = runActivity("create app") {
-    ApplicationImpl(java.lang.Boolean.getBoolean(PluginManagerCore.IDEA_IS_INTERNAL_PROPERTY), false, Main.isHeadless(), Main.isCommandLine())
+    ApplicationImpl(java.lang.Boolean.getBoolean(PluginManagerCore.IDEA_IS_INTERNAL_PROPERTY), false, false, false)
   }
 
   val registerFuture = registerAppComponents(pluginDescriptorFuture, app)
 
-  if (args.isEmpty()) {
-    startApp(app, IdeStarter(), initAppActivity, registerFuture, args)
-    return
-  }
-
-  // ApplicationStarter it is extension, so, to find starter, extensions must be registered prior to that
-  registerFuture.thenRunOrHandleError {
-    val starter = findStarter(args.first()) ?: IdeStarter()
-    if (Main.isHeadless() && !starter.isHeadless) {
-      Main.showMessage("Startup Error", "Application cannot start in a headless mode", true)
-      exitProcess(Main.NO_GRAPHICS)
-    }
-
-    starter.premain(args)
-    startApp(app, starter, initAppActivity, registerFuture, args)
-  }
-}
-
-@ApiStatus.Internal
-fun registerAppComponents(pluginFuture: CompletableFuture<List<IdeaPluginDescriptorImpl>>, app: ApplicationImpl): CompletableFuture<List<IdeaPluginDescriptor>> {
-  return pluginFuture
-    .thenApply {
-      runActivity("app component registration", ActivityCategory.MAIN) {
-        app.registerComponents(it, false)
-      }
-      it
-    }
-}
-
-private fun startApp(app: ApplicationImpl,
-                     starter: ApplicationStarter,
-                     initAppActivity: Activity,
-                     registerFuture: CompletableFuture<List<IdeaPluginDescriptor>>,
-                     args: List<String>) {
-  // this code is here for one simple reason - here we have application,
-  // and after plugin loading we don't have - ApplicationManager.getApplication() can be used, but it doesn't matter
-  // but it is very important to call registerRegistryAndMessageBusAndComponent immediately after application creation
-  // and do not place any time-consuming code in between (e.g. showLicenseeInfoOnSplash)
   val registerRegistryAndInitStoreFuture = registerRegistryAndInitStore(registerFuture, app)
-
   val headless = app.isHeadlessEnvironment
   if (!headless) {
     runActivity("icon loader activation") {
@@ -137,22 +96,17 @@ private fun startApp(app: ApplicationImpl,
       IconLoader.setStrictGlobally(app.isInternal)
     }
   }
-
   val nonEdtExecutor = Executor {
     when {
       app.isDispatchThread -> AppExecutorUtil.getAppExecutorService().execute(it)
       else -> it.run()
     }
   }
-
   val boundedExecutor = createExecutorToPreloadServices()
-
-  // preload services only after icon activation
   val preloadSyncServiceFuture = registerRegistryAndInitStoreFuture
     .thenComposeAsync<Void?>(Function {
       preloadServices(it, app, boundedExecutor, activityPrefix = "")
     }, nonEdtExecutor)
-
   if (!headless) {
     if (SystemInfo.isMac) {
       runActivity("mac app init") {
@@ -186,16 +140,14 @@ private fun startApp(app: ApplicationImpl,
     }
 
     NonUrgentExecutor.getInstance().execute {
-      runActivity("icons preloading") {
+      runActivity<Unit>("icons preloading") {
         AsyncProcessIcon("")
         AnimatedIcon.Blinking(AllIcons.Ide.FatalError)
         AnimatedIcon.FS()
       }
     }
   }
-
   val edtExecutor = Executor { EventQueue.invokeLater(it) }
-
   CompletableFuture.allOf(registerRegistryAndInitStoreFuture, StartupUtil.getServerFuture())
     .thenCompose {
       // `invokeLater()` is needed to place the app starting code on a freshly minted `IdeEventQueue` instance
@@ -222,7 +174,7 @@ private fun startApp(app: ApplicationImpl,
 
       // should be after scheduling all app initialized listeners (because this activity is not important)
       boundedExecutor.execute {
-        runActivity("project converter provider preloading") {
+        runActivity<Unit>("project converter provider preloading") {
           app.extensionArea.getExtensionPoint<Any>("com.intellij.project.converterProvider").extensionList
         }
       }
@@ -239,7 +191,7 @@ private fun startApp(app: ApplicationImpl,
     }, nonEdtExecutor /* if loadComponentInEdtFuture will be completed after preloadSyncServiceFuture, then this task will be executed in EDT — it is not good, so, force execution not in EDT */)
     .thenRunAsync(Runnable {
       (TransactionGuard.getInstance() as TransactionGuardImpl).performUserActivity {
-        starter.main(ArrayUtilRt.toStringArray(args))
+        IdeStarter().main(ArrayUtilRt.toStringArray(emptyList()))
       }
 
       if (PluginManagerCore.isRunningFromSources()) {
@@ -251,6 +203,17 @@ private fun startApp(app: ApplicationImpl,
     .exceptionally {
       StartupAbortedException.processException(it)
       null
+    }
+}
+
+@ApiStatus.Internal
+fun registerAppComponents(pluginFuture: CompletableFuture<List<IdeaPluginDescriptorImpl>>, app: ApplicationImpl): CompletableFuture<List<IdeaPluginDescriptor>> {
+  return pluginFuture
+    .thenApply {
+      runActivity("app component registration", ActivityCategory.MAIN) {
+        app.registerComponents(it, false)
+      }
+      it
     }
 }
 
@@ -345,28 +308,25 @@ private fun addActivateAndWindowsCliListeners() {
 }
 
 @JvmOverloads
-fun initApplication(rawArgs: List<String>, initUiTask: CompletionStage<*> = CompletableFuture.completedFuture(null)) {
+fun initApplication(initUiTask: CompletionStage<*>) {
   val initAppActivity = MainRunner.startupStart.endAndStart(Phases.INIT_APP)
   val pluginDescriptorsFuture = CompletableFuture<List<IdeaPluginDescriptorImpl>>()
   initUiTask
     .thenRunAsync(Runnable {
-      val args = processProgramArguments(rawArgs)
       EventQueue.invokeLater {
-        executeInitAppInEdt(args, initAppActivity, pluginDescriptorsFuture)
+        executeInitAppInEdt(initAppActivity, pluginDescriptorsFuture)
       }
 
-      if (!Main.isHeadless()) {
-        runActivity("system fonts loading") {
-          // editor and other UI components need the list of system fonts to implement font fallback
-          // this list is pre-loaded here, in parallel to other activities, to speed up project opening
-          // ideally, it shouldn't overlap with other font-related activities to avoid contention on JDK-internal font manager locks
-          loadSystemFonts()
-        }
+      runActivity("system fonts loading") {
+        // editor and other UI components need the list of system fonts to implement font fallback
+        // this list is pre-loaded here, in parallel to other activities, to speed up project opening
+        // ideally, it shouldn't overlap with other font-related activities to avoid contention on JDK-internal font manager locks
+        loadSystemFonts()
+      }
 
-        // pre-load cursors used by drag'n'drop AWT subsystem
-        runActivity("DnD setup") {
-          DragSource.getDefaultDragSource()
-        }
+      // pre-load cursors used by drag'n'drop AWT subsystem
+      runActivity("DnD setup") {
+        DragSource.getDefaultDragSource()
       }
     }, AppExecutorUtil.getAppExecutorService() /* must be not executed neither in idea main thread, nor in EDT */)
 
@@ -466,17 +426,6 @@ open class IdeStarter : ApplicationStarter {
     return CliResult.error(1, "Can't find file: $file")
   }
 
-  private fun loadProjectFromExternalCommandLine(commandLineArgs: List<String>): Project? {
-    var project: Project? = null
-    if (commandLineArgs.firstOrNull() != null) {
-      LOG.info("ApplicationLoader.loadProject")
-      val currentDirectory: String? = System.getenv(LAUNCHER_INITIAL_DIRECTORY_ENV_VAR)
-      LOG.info("$LAUNCHER_INITIAL_DIRECTORY_ENV_VAR: $currentDirectory")
-      project = CommandLineProcessor.processExternalCommandLine(commandLineArgs, currentDirectory).getFirst()
-    }
-    return project
-  }
-
   override fun main(args: Array<String>) {
     val frameInitActivity = StartUpMeasurer.startMainActivity("frame initialization")
 
@@ -488,15 +437,12 @@ open class IdeStarter : ApplicationStarter {
       IdeEventQueue.getInstance().setWindowManager(WindowManagerEx.getInstanceEx())
     }
 
-    val commandLineArgs = args.toList()
-
     val appFrameCreatedActivity = frameInitActivity.startChild("app frame created callback")
     val lifecyclePublisher = app.messageBus.syncPublisher(AppLifecycleListener.TOPIC)
-    lifecyclePublisher.appFrameCreated(commandLineArgs)
     appFrameCreatedActivity.end()
 
     // must be after appFrameCreated because some listeners can mutate state of RecentProjectsManager
-    val willOpenProject = commandLineArgs.isNotEmpty() || filesToLoad.isNotEmpty() || RecentProjectsManager.getInstance().willReopenProjectOnStart()
+    val willOpenProject = filesToLoad.isNotEmpty() || RecentProjectsManager.getInstance().willReopenProjectOnStart()
 
     // temporary check until the JRE implementation has been checked and bundled
     if (java.lang.Boolean.getBoolean("ide.popup.enablePopupType")) {
@@ -523,7 +469,6 @@ open class IdeStarter : ApplicationStarter {
     TransactionGuard.submitTransaction(app, Runnable {
       val project = when {
         filesToLoad.isNotEmpty() -> ProjectUtil.tryOpenFileList(null, filesToLoad, "MacMenu")
-        commandLineArgs.isNotEmpty() -> loadProjectFromExternalCommandLine(commandLineArgs)
         else -> null
       }
 
@@ -597,37 +542,6 @@ private fun invokeLaterWithAnyModality(name: String, task: () -> Unit) {
   EventQueue.invokeLater {
     runActivity(name, task = task)
   }
-}
-
-/**
- * Method looks for `-Dkey=value` program arguments and stores some of them in system properties.
- * We should use it for a limited number of safe keys.
- * One of them is a list of ids of required plugins
- *
- * @see SAFE_JAVA_ENV_PARAMETERS
- */
-@Suppress("SpellCheckingInspection")
-private fun processProgramArguments(args: List<String>): List<String> {
-  if (args.isEmpty()) {
-    return emptyList()
-  }
-
-  val arguments = mutableListOf<String>()
-  for (arg in args) {
-    if (arg.startsWith("-D")) {
-      val keyValue = arg.substring(2).split('=')
-      if (keyValue.size == 2 && SAFE_JAVA_ENV_PARAMETERS.contains(keyValue[0])) {
-        System.setProperty(keyValue[0], keyValue[1])
-        continue
-      }
-    }
-    if (SplashManager.NO_SPLASH == arg) {
-      continue
-    }
-
-    arguments.add(arg)
-  }
-  return arguments
 }
 
 private fun CompletableFuture<*>.thenRunOrHandleError(handler: () -> Unit): CompletableFuture<Void>? {

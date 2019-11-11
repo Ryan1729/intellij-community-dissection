@@ -1,7 +1,6 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.intellij.diagnostic;
 
-import com.intellij.idea.Main;
 import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.ErrorLogger;
@@ -35,7 +34,7 @@ public class DialogAppender extends AppenderSkeleton {
 
   @Override
   protected synchronized void append(@NotNull LoggingEvent event) {
-    if (!event.getLevel().isGreaterOrEqual(Level.ERROR) || Main.isCommandLine()) {
+    if (!event.getLevel().isGreaterOrEqual(Level.ERROR) || false) {
       return;  // the dialog appender doesn't deal with non-critical errors and is meaningless when there is no frame to show an error icon
     }
 

@@ -97,28 +97,6 @@ public class BootstrapClassLoaderUtil {
     return builder.get();
   }
 
-  /**
-   * A version of PathManager.getSystemPath() with no dependencies on external classes (to avoid classloading)
-   */
-  private static String getSystemPath() {
-    String systemPath = System.getProperty(PathManager.PROPERTY_SYSTEM_PATH);
-    if (systemPath != null) {
-      if (systemPath.length() >= 3 && systemPath.startsWith("\"") && systemPath.endsWith("\"")) {
-        systemPath = systemPath.substring(1, systemPath.length() - 1);
-      }
-      if (systemPath.startsWith("~/") || systemPath.startsWith("~\\")) {
-        systemPath = System.getProperty("user.home") + systemPath.substring(1);
-      }
-    }
-    else{
-      String pathSelector = System.getProperty(PathManager.PROPERTY_PATHS_SELECTOR);
-      if (pathSelector != null) {
-        systemPath = PathManager.getDefaultSystemPathFor(pathSelector);
-      }
-    }
-    return systemPath;
-  }
-
 
   private static void addParentClasspath(Collection<? super URL> classpath, boolean ext) throws MalformedURLException {
     if (!SystemInfo.IS_AT_LEAST_JAVA9) {

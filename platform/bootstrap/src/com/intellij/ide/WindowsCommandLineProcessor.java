@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.ide;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 /**
  * This class is initialized in two class loaders: the bootstrap classloader and the main IDEA classloader. The bootstrap instance
@@ -33,15 +31,6 @@ public class WindowsCommandLineProcessor {
    */
   @SuppressWarnings("unused")
   public static int processWindowsLauncherCommandLine(final String currentDirectory, final String[] args) {
-    if (ourMainRunnerClass != null) {
-      try {
-        Method method = ourMainRunnerClass.getMethod("processWindowsLauncherCommandLine", String.class, String[].class);
-        return (Integer)method.invoke(null, currentDirectory, args);
-      }
-      catch (NoSuchMethodException ignored) { }
-      catch (InvocationTargetException ignored) { }
-      catch (IllegalAccessException ignored) { }
-    }
     return 1;
   }
 }
