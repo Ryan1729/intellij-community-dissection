@@ -81,7 +81,7 @@ public class DarculaRadioButtonUI extends MetalRadioButtonUI {
       g.fillRect(0, 0, size.width, size.height);
     }
 
-    paintIcon(c, g, viewRect, iconRect);
+    paintIcon(c, g, iconRect);
     drawText(b, g, text, textRect, fm);
   }
 
@@ -92,7 +92,7 @@ public class DarculaRadioButtonUI extends MetalRadioButtonUI {
     return viewRect;
   }
 
-  protected void paintIcon(JComponent c, Graphics2D g, Rectangle viewRect, Rectangle iconRect) {
+  protected void paintIcon(JComponent c, Graphics2D g, Rectangle iconRect) {
     Icon icon = LafIconLookup.getIcon("radio", ((AbstractButton)c).isSelected(), c.hasFocus(), c.isEnabled());
     icon.paintIcon(c, g, iconRect.x, iconRect.y);
   }

@@ -327,7 +327,7 @@ class JsonSchemaStatusWidget extends EditorBasedStatusBarPopup {
   }
 
   @Override
-  protected void handleFileChange(VirtualFile file) {
+  protected void handleFileChange() {
     myIsNotified.set(false);
   }
 

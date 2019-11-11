@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.util.ui.table;
 
 import com.intellij.openapi.Disposable;
@@ -36,20 +37,18 @@ public abstract class EditorTextFieldJBTableRowRenderer extends EditorTextFieldC
   }
 
   @Override
-  protected final String getText(JTable table, Object value, int row, int column) {
+  protected String getText(JTable table, int row) {
     return getText(table, row);
   }
 
   @Nullable
   @Override
-  protected final TextAttributes getTextAttributes(JTable table, Object value, int row, int column) {
-    return getTextAttributes(table, row);
+  protected final TextAttributes getTextAttributes(JTable table, int row) {
+    return getTextAttributes();
   }
 
-  protected abstract String getText(JTable table, int row);
-
   @Nullable
-  protected TextAttributes getTextAttributes(JTable table, int row) {
+  protected TextAttributes getTextAttributes() {
     return null;
   }
 }

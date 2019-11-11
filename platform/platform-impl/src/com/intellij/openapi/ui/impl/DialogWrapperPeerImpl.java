@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.openapi.ui.impl;
 
 import com.intellij.ide.DataManager;
@@ -156,7 +157,7 @@ public class DialogWrapperPeerImpl extends DialogWrapperPeer {
       if (Registry.is("ide.perProjectModality", false)) {
         modalityType = ideModalityType.toAwtModality();
       }
-      myDialog.setModalityType(modalityType);
+      myDialog.setModalityType();
     }
   }
 
@@ -197,22 +198,22 @@ public class DialogWrapperPeerImpl extends DialogWrapperPeer {
 
   @Override
   public void setUndecorated(boolean undecorated) {
-    myDialog.setUndecorated(undecorated);
+    myDialog.setUndecorated();
   }
 
   @Override
   public void addMouseListener(MouseListener listener) {
-    myDialog.addMouseListener(listener);
+    myDialog.addMouseListener();
   }
 
   @Override
   public void addMouseListener(MouseMotionListener listener) {
-    myDialog.addMouseMotionListener(listener);
+    myDialog.addMouseMotionListener();
   }
 
   @Override
   public void addKeyListener(KeyListener listener) {
-    myDialog.addKeyListener(listener);
+    myDialog.addKeyListener();
   }
 
   @Override
@@ -239,7 +240,7 @@ public class DialogWrapperPeerImpl extends DialogWrapperPeer {
 
       SwingUtilities.invokeLater(() -> {
         if (myDialog.getRootPane() != null) {
-          myDialog.remove(myDialog.getRootPane());
+          myDialog.remove();
         }
       });
     };
@@ -353,7 +354,7 @@ public class DialogWrapperPeerImpl extends DialogWrapperPeer {
 
   @Override
   public void setResizable(boolean resizable) {
-    myDialog.setResizable(resizable);
+    myDialog.setResizable();
   }
 
   @NotNull
@@ -364,12 +365,12 @@ public class DialogWrapperPeerImpl extends DialogWrapperPeer {
 
   @Override
   public void setLocation(@NotNull Point p) {
-    myDialog.setLocation(p);
+    myDialog.setLocation();
   }
 
   @Override
   public void setLocation(int x, int y) {
-    myDialog.setLocation(x, y);
+    myDialog.setLocation();
   }
 
   @Override
@@ -578,8 +579,38 @@ public class DialogWrapperPeerImpl extends DialogWrapperPeer {
     }
 
     @Override
+    public void setUndecorated() {
+
+    }
+
+    @Override
+    public void addMouseListener() {
+
+    }
+
+    @Override
+    public void addMouseMotionListener() {
+
+    }
+
+    @Override
+    public void addKeyListener() {
+
+    }
+
+    @Override
+    public void setContentPane() {
+
+    }
+
+    @Override
     public void centerInParent() {
       setLocationRelativeTo(getOwner());
+    }
+
+    @Override
+    public void remove() {
+
     }
 
     @Override
@@ -598,6 +629,21 @@ public class DialogWrapperPeerImpl extends DialogWrapperPeer {
     @Override
     public void setSize(int width, int height) {
       _setSizeForLocation(width, height, null);
+    }
+
+    @Override
+    public void setResizable() {
+
+    }
+
+    @Override
+    public void setLocation() {
+
+    }
+
+    @Override
+    public void setModalityType() {
+
     }
 
     private void _setSizeForLocation(int width, int height, @Nullable Point initial) {
@@ -701,7 +747,7 @@ public class DialogWrapperPeerImpl extends DialogWrapperPeer {
       // Workaround for switching workspaces on dialog show
       if (SystemInfo.isMac && myProject != null && Registry.is("ide.mac.fix.dialog.showing", false) && !dialogWrapper.isModalProgress()) {
         final IdeFrame frame = WindowManager.getInstance().getIdeFrame(myProject.get());
-        AppIcon.getInstance().requestFocus(frame);
+        AppIcon.getInstance().requestFocus();
       }
 
       setBackground(UIUtil.getPanelBackground());
@@ -862,16 +908,16 @@ public class DialogWrapperPeerImpl extends DialogWrapperPeer {
             } else {
               toFocus.requestFocusInWindow();
             }
-            notifyFocused(wrapper);
+            notifyFocused();
           } else {
             if (isShowing()) {
-              notifyFocused(wrapper);
+              notifyFocused();
             }
           }
         });
       }
 
-      private void notifyFocused(DialogWrapper wrapper) {
+      private void notifyFocused() {
         myFocusedCallback.setDone();
       }
 
@@ -988,7 +1034,7 @@ public class DialogWrapperPeerImpl extends DialogWrapperPeer {
 
   @Override
   public void setContentPane(JComponent content) {
-    myDialog.setContentPane(content);
+    myDialog.setContentPane();
   }
 
   @Override

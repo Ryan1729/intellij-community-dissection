@@ -1171,7 +1171,7 @@ public class BalloonImpl implements Balloon, IdeTooltip.Ui, ScreenAreaConsumer {
       if (bounds == null) {
         int distance = getDistance(balloon, preferredSize);
         Point location = balloon.myShowPointer
-                         ? getLocation(layeredPaneSize, point, preferredSize, distance) // Now distance is used for pointer enabled balloons only
+                         ? getLocation(point, preferredSize, distance) // Now distance is used for pointer enabled balloons only
                          : new Point(point.x - preferredSize.width / 2, point.y - preferredSize.height / 2);
         bounds = new Rectangle(location.x, location.y, preferredSize.width, preferredSize.height);
 
@@ -1193,7 +1193,7 @@ public class BalloonImpl implements Balloon, IdeTooltip.Ui, ScreenAreaConsumer {
       return balloon.myCornerToPointerDistance;
     }
 
-    abstract Point getLocation(final Dimension containerSize, final Point targetPoint, final Dimension balloonSize, int distance);
+    abstract Point getLocation(final Point targetPoint, final Dimension balloonSize, int distance);
 
     void paintComponent(BalloonImpl balloon, final Rectangle bounds, final Graphics2D g, Point pointTarget) {
       final GraphicsConfig cfg = new GraphicsConfig(g);
@@ -1393,7 +1393,7 @@ public class BalloonImpl implements Balloon, IdeTooltip.Ui, ScreenAreaConsumer {
     }
 
     @Override
-    Point getLocation(final Dimension containerSize, final Point targetPoint, final Dimension balloonSize, int distance) {
+    Point getLocation(final Point targetPoint, final Dimension balloonSize, int distance) {
       if (distance > 0) {
         return new Point(targetPoint.x - distance, targetPoint.y);
       } else {
@@ -1463,7 +1463,7 @@ public class BalloonImpl implements Balloon, IdeTooltip.Ui, ScreenAreaConsumer {
     }
 
     @Override
-    Point getLocation(final Dimension containerSize, final Point targetPoint, final Dimension balloonSize, int distance) {
+    Point getLocation(final Point targetPoint, final Dimension balloonSize, int distance) {
       if (distance > 0) {
         return new Point(targetPoint.x - distance, targetPoint.y - balloonSize.height);
       } else {
@@ -1533,7 +1533,7 @@ public class BalloonImpl implements Balloon, IdeTooltip.Ui, ScreenAreaConsumer {
     }
 
     @Override
-    Point getLocation(final Dimension containerSize, final Point targetPoint, final Dimension balloonSize, int distance) {
+    Point getLocation(final Point targetPoint, final Dimension balloonSize, int distance) {
       if (distance > 0) {
         return new Point(targetPoint.x, targetPoint.y - distance);
       } else {
@@ -1603,7 +1603,7 @@ public class BalloonImpl implements Balloon, IdeTooltip.Ui, ScreenAreaConsumer {
     }
 
     @Override
-    Point getLocation(final Dimension containerSize, final Point targetPoint, final Dimension balloonSize, int distance) {
+    Point getLocation(final Point targetPoint, final Dimension balloonSize, int distance) {
       if (distance > 0) {
         return new Point(targetPoint.x - balloonSize.width, targetPoint.y - distance);
       } else {

@@ -70,10 +70,10 @@ public abstract class EditorTextFieldCellRenderer implements TableCellRenderer, 
     Disposer.register(parent, this);
   }
 
-  protected abstract String getText(JTable table, Object value, int row, int column);
+  protected abstract String getText(JTable table, int row);
 
   @Nullable
-  protected TextAttributes getTextAttributes(JTable table, Object value, int row, int column) {
+  protected TextAttributes getTextAttributes(JTable table, int row) {
     return null;
   }
 
@@ -82,9 +82,9 @@ public abstract class EditorTextFieldCellRenderer implements TableCellRenderer, 
     return getEditorPanel(table).getEditor().getColorsScheme();
   }
 
-  protected void customizeEditor(@NotNull EditorEx editor, JTable table, Object value, boolean selected, int row, int column) {
-    String text = getText(table, value, row, column);
-    getEditorPanel(table).setText(text, getTextAttributes(table, value, row, column), selected);
+  protected void customizeEditor(JTable table, Object value, boolean selected, int row, int column) {
+    String text = getText(table, row);
+    getEditorPanel(table).setText(text, getTextAttributes(table, row), selected);
   }
 
   @Override
@@ -100,7 +100,7 @@ public abstract class EditorTextFieldCellRenderer implements TableCellRenderer, 
 
     panel.setBorder(null); // prevents double border painting when ExtendedItemRendererComponentWrapper is used
 
-    customizeEditor(editor, table, value, selected, row, column);
+    customizeEditor(table, value, selected, row, column);
     return panel;
   }
 

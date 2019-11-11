@@ -51,7 +51,7 @@ public class CustomizeIDEWizardDialog extends DialogWrapper implements ActionLis
     setTitle("Customize " + ApplicationNamesInfo.getInstance().getFullProductName());
     getPeer().setAppIcons();
 
-    if (beforeSplash) stepsProvider.initSteps(this, mySteps);
+    if (beforeSplash) stepsProvider.initSteps(mySteps);
     if (afterSplash) stepsProvider.initStepsAfterSplash(this, mySteps);
 
     if (appStarter != null) {
@@ -207,7 +207,7 @@ public class CustomizeIDEWizardDialog extends DialogWrapper implements ActionLis
 
   private void initCurrentStep(boolean forward) {
     final AbstractCustomizeWizardStep myCurrentStep = mySteps.get(myIndex);
-    myCurrentStep.beforeShown(forward);
+    myCurrentStep.beforeShown();
     myCardLayout.swipe(myContentPanel, myCurrentStep.getTitle(), JBCardLayout.SwipeDirection.AUTO, () -> {
       Component component = myCurrentStep.getDefaultFocusedComponent();
       if (component != null) {

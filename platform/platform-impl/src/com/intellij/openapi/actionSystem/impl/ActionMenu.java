@@ -131,7 +131,7 @@ public final class ActionMenu extends JBMenu {
 
   @Override
   public void updateUI() {
-    setUI(IdeaMenuUI.createUI(this));
+    setUI(IdeaMenuUI.createUI());
     setFont(UIUtil.getMenuFont());
 
     JPopupMenu popupMenu = getPopupMenu();

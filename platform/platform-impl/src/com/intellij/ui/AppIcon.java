@@ -72,11 +72,8 @@ public abstract class AppIcon {
 
   public abstract void requestAttention(@Nullable Project project, boolean critical);
 
-  public void requestFocus(IdeFrame frame) {
-    requestFocus();
-  }
-
   public void requestFocus() {
+
   }
 
   private static abstract class BaseIcon extends AppIcon {
@@ -654,7 +651,7 @@ public abstract class AppIcon {
     }
 
     @Override
-    public void requestFocus(IdeFrame frame) { }
+    public void requestFocus() { }
 
     private static boolean isValid(@Nullable JFrame frame) {
       return frame != null && frame.isDisplayable();

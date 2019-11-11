@@ -96,7 +96,7 @@ public class Highlighters implements DnDEvent.DropTargetHighlightingType {
         vanish();
         aPane.add(this, getLayer());
       }
-      _show(aPane, aRectangle, aEvent);
+      _show(aRectangle);
     }
 
     protected Integer getLayer() {
@@ -113,7 +113,7 @@ public class Highlighters implements DnDEvent.DropTargetHighlightingType {
       }
     }
 
-    protected abstract void _show(JLayeredPane aPane, Rectangle aRectangle, DnDEvent aEvent);
+    protected abstract void _show(Rectangle aRectangle);
   }
 
   public abstract static class BaseTextHighlighter implements DropTargetHighlighter {
@@ -195,7 +195,7 @@ public class Highlighters implements DnDEvent.DropTargetHighlightingType {
     }
 
     @Override
-    protected void _show(JLayeredPane aPane, Rectangle aRectangle, DnDEvent aEvent) {
+    protected void _show(Rectangle aRectangle) {
       setBounds(aRectangle);
     }
 
@@ -213,7 +213,7 @@ public class Highlighters implements DnDEvent.DropTargetHighlightingType {
     }
 
     @Override
-    protected void _show(JLayeredPane aPane, Rectangle aRectangle, DnDEvent aEvent) {
+    protected void _show(Rectangle aRectangle) {
       setBounds(aRectangle);
     }
 
@@ -226,7 +226,7 @@ public class Highlighters implements DnDEvent.DropTargetHighlightingType {
   private static class HorizontalLinesHighlighter extends AbstractComponentHighlighter {
 
     @Override
-    protected void _show(JLayeredPane aPane, Rectangle aRectangle, DnDEvent aEvent) {
+    protected void _show(Rectangle aRectangle) {
       final Rectangle rectangle = new Rectangle(aRectangle.x - AllIcons.Ide.Dnd.Left.getIconWidth(), aRectangle.y - AllIcons.Ide.Dnd.Left
         .getIconHeight(), aRectangle.width + AllIcons.Ide.Dnd.Left.getIconWidth() + AllIcons.Ide.Dnd.Right.getIconWidth(), aRectangle.height + AllIcons.Ide.Dnd.Left
         .getIconHeight());
@@ -250,7 +250,7 @@ public class Highlighters implements DnDEvent.DropTargetHighlightingType {
     private static final Icon BOTTOM = AllIcons.Ide.Dnd.Bottom;
 
     @Override
-    protected void _show(JLayeredPane aPane, Rectangle aRectangle, DnDEvent aEvent) {
+    protected void _show(Rectangle aRectangle) {
       final Rectangle rectangle = new Rectangle(aRectangle.x, aRectangle.y - TOP.getIconHeight(), aRectangle.width, aRectangle.height + TOP.getIconHeight() + BOTTOM
         .getIconHeight());
       setBounds(rectangle);

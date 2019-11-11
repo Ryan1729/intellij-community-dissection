@@ -38,7 +38,7 @@ public class IdeaMenuUI extends BasicMenuUI{
   private Icon myDisabledArrowIcon;
 
   /** invoked by reflection */
-  public static ComponentUI createUI(JComponent component) {
+  public static ComponentUI createUI() {
     return new IdeaMenuUI();
   }
 
@@ -190,7 +190,7 @@ public class IdeaMenuUI extends BasicMenuUI{
     g.setColor(jMenu.getBackground());
     g.fillRect(0, 0, jMenu.getWidth(), jMenu.getHeight());
     if (buttonmodel.isArmed() || buttonmodel.isSelected()){
-      paintHover(g, comp, jMenu, allowedIcon);
+      paintHover(g, jMenu, allowedIcon);
     }
     g.setColor(mainColor);
   }
@@ -198,13 +198,13 @@ public class IdeaMenuUI extends BasicMenuUI{
   protected void fillOpaqueFalse(Graphics g, JComponent comp, JMenu jMenu, ButtonModel buttonmodel, Icon allowedIcon, Color mainColor) {
     if(IdeFrameDecorator.isCustomDecorationActive()) {
       if (buttonmodel.isArmed() || buttonmodel.isSelected()) {
-        paintHover(g, comp, jMenu, allowedIcon);
+        paintHover(g, jMenu, allowedIcon);
       }
       g.setColor(mainColor);
     }
   }
 
-  protected final void paintHover(Graphics g, JComponent comp, JMenu jMenu, Icon allowedIcon) {
+  protected final void paintHover(Graphics g, JMenu jMenu, Icon allowedIcon) {
     g.setColor(selectionBackground);
     if (allowedIcon != null && !(UIUtil.isUnderIntelliJLaF() || StartupUiUtil.isUnderDarcula())) {
       g.fillRect(k, 0, jMenu.getWidth() - k, jMenu.getHeight());

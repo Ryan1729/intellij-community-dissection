@@ -68,7 +68,7 @@ public class ConsoleExecutionEditor implements Disposable {
     }
 
     @Override
-    public void focusLost(@NotNull Editor editor) {
+    public void focusLost() {
     }
   };
 

@@ -126,7 +126,7 @@ public final class IdePopupManager implements IdeEventQueue.EventDispatcher {
     return closeAllPopups(true);
   }
 
-  public boolean requestDefaultFocus(boolean forced) {
+  public boolean requestDefaultFocus() {
     if (!isPopupActive()) return false;
 
     return myDispatchStack.get(myDispatchStack.size() - 1).requestFocus();

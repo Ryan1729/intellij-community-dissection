@@ -48,7 +48,7 @@ public abstract class ChooseElementsDialog<T> extends DialogWrapper {
   /**
    * @return true if elements should have checkboxes
    * @see #getMarkedElements()
-   * @see #isElementMarkedByDefault(Object)
+   * @see #isElementMarkedByDefault()
    */
   protected boolean canElementsBeMarked() {
     return false;
@@ -102,7 +102,7 @@ public abstract class ChooseElementsDialog<T> extends DialogWrapper {
    * Override this method and return non-null value to specify location of {@code item}.
    * It will be shown as grayed text next to the {@link #getItemText(T) item text}.
    */
-  protected String getItemLocation(T item) {
+  protected String getItemLocation() {
     return null; // default implementation
   }
 
@@ -133,7 +133,7 @@ public abstract class ChooseElementsDialog<T> extends DialogWrapper {
   private void setElements(final Collection<? extends T> elements, final Collection<? extends T> elementsToSelect) {
     myChooser.clear();
     for (final T item : elements) {
-      myChooser.addElement(item, isElementMarkedByDefault(item), createElementProperties(item));
+      myChooser.addElement(item, isElementMarkedByDefault(), createElementProperties(item));
     }
     myChooser.selectElements(elementsToSelect);
   }
@@ -142,14 +142,14 @@ public abstract class ChooseElementsDialog<T> extends DialogWrapper {
    * @return true if element's checkbox should be selected by default
    * Takes effect if {@link #canElementsBeMarked()} returns true
    */
-  protected boolean isElementMarkedByDefault(T element) {
+  protected boolean isElementMarkedByDefault() {
     return false;
   }
 
   /**
    * @return list of elements with selected checkboxes
    * Works only if {@link #canElementsBeMarked()} returns true
-   * @see #isElementMarkedByDefault(Object)
+   * @see #isElementMarkedByDefault()
    */
   public List<T> getMarkedElements() {
     return myChooser.getMarkedElements();
@@ -166,7 +166,7 @@ public abstract class ChooseElementsDialog<T> extends DialogWrapper {
       @Override
       @Nullable
       public String getLocation() {
-        return getItemLocation(item);
+        return getItemLocation();
       }
     };
   }

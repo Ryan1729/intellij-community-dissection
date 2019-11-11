@@ -87,7 +87,7 @@ public class ErrorStripePainter extends RegionPainter.Image {
     }
   }
 
-  public int findIndex(int x, int y) {
+  public int findIndex(int y) {
     if (0 < myImageHeight && myImageY <= y) {
       int index = myArraySize * (y - myImageY) / myImageHeight;
       if (index < myArraySize) return index;

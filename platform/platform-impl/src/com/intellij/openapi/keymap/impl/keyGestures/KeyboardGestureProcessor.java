@@ -107,7 +107,7 @@ public final class KeyboardGestureProcessor {
     }
 
     @Override
-    public void onUpdatePassed(final InputEvent inputEvent, @NotNull final AnAction action, @NotNull final AnActionEvent actionEvent) {
+    public void onUpdatePassed(final InputEvent inputEvent) {
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.intellij.ide.troubleshooting;
 
 import com.intellij.ide.plugins.IdeaPluginDescriptor;
 import com.intellij.ide.plugins.PluginManagerCore;
-import com.intellij.openapi.project.Project;
 import com.intellij.troubleshooting.GeneralTroubleInfoCollector;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +18,7 @@ final class PluginTroubleInfoCollector implements GeneralTroubleInfoCollector {
 
   @NotNull
   @Override
-  public String collectInfo(@NotNull Project project) {
+  public String collectInfo() {
     IdeaPluginDescriptor[] ourPlugins = PluginManagerCore.getPlugins();
     List<String> loadedCustom = new ArrayList<>();
     List<String> disabled = new ArrayList<>();

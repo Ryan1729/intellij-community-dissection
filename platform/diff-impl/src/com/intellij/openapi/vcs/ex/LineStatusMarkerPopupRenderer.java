@@ -53,7 +53,6 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.EventObject;
 import java.util.List;
 
 import static com.intellij.diff.util.DiffUtil.getDiffType;
@@ -146,7 +145,7 @@ public abstract class LineStatusMarkerPopupRenderer extends LineStatusMarkerRend
     PopupPanel popupPanel = new PopupPanel(editor, toolbar, editorComponent, additionalInfoPanel);
 
     LightweightHint hint = new LightweightHint(popupPanel);
-    HintListener closeListener = __ -> Disposer.dispose(disposable);
+    HintListener closeListener = () -> Disposer.dispose(disposable);
     hint.addHintListener(closeListener);
 
     int line = editor.getCaretModel().getLogicalPosition().line;
@@ -174,7 +173,7 @@ public abstract class LineStatusMarkerPopupRenderer extends LineStatusMarkerRend
       });
 
     if (!hint.isVisible()) {
-      closeListener.hintHidden(new EventObject(hint));
+      closeListener.hintHidden();
     }
   }
 

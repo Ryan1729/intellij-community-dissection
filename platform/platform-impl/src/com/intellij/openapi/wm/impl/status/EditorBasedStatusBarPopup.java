@@ -94,11 +94,11 @@ public abstract class EditorBasedStatusBarPopup extends EditorBasedWidget implem
   }
 
   private void fileChanged(VirtualFile newFile) {
-    handleFileChange(newFile);
+    handleFileChange();
     update();
   }
 
-  protected void handleFileChange(VirtualFile file) {
+  protected void handleFileChange() {
   }
 
   @Override

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.openapi.ui.impl;
 
 import com.intellij.openapi.ui.DialogWrapper;
@@ -22,9 +23,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 /**
 * @author Konstantin Bulenkov
@@ -38,19 +36,19 @@ class HeadlessDialog implements AbstractDialog {
   }
 
   @Override
-  public void setUndecorated(boolean undecorated) {
+  public void setUndecorated() {
   }
 
   @Override
-  public void addMouseListener(MouseListener listener) {
+  public void addMouseListener() {
   }
 
   @Override
-  public void addMouseMotionListener(MouseMotionListener listener) {
+  public void addMouseMotionListener() {
   }
 
   @Override
-  public void addKeyListener(KeyListener listener) {
+  public void addKeyListener() {
   }
 
   @Override
@@ -62,7 +60,7 @@ class HeadlessDialog implements AbstractDialog {
   }
 
   @Override
-  public void setContentPane(Container content) {
+  public void setContentPane() {
   }
 
   @Override
@@ -79,7 +77,7 @@ class HeadlessDialog implements AbstractDialog {
   }
 
   @Override
-  public void remove(Component root) {
+  public void remove() {
   }
 
   @Override
@@ -149,7 +147,7 @@ class HeadlessDialog implements AbstractDialog {
   }
 
   @Override
-  public void setResizable(boolean resizable) {
+  public void setResizable() {
   }
 
   @NotNull
@@ -159,11 +157,7 @@ class HeadlessDialog implements AbstractDialog {
   }
 
   @Override
-  public void setLocation(@NotNull Point p) {
-  }
-
-  @Override
-  public void setLocation(int x, int y) {
+  public void setLocation() {
   }
 
   @Override
@@ -172,7 +166,7 @@ class HeadlessDialog implements AbstractDialog {
   }
 
   @Override
-  public void setModalityType(Dialog.ModalityType modalityType) {
+  public void setModalityType() {
   }
 
   @Override

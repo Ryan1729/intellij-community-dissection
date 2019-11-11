@@ -26,7 +26,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.EventListener;
-import java.util.EventObject;
 
 public class LightweightHint extends UserDataHolderBase implements Hint {
   public static final Key<Boolean> SHOWN_AT_DEBUG = Key.create("shown.at.debug");
@@ -300,7 +299,7 @@ public class LightweightHint extends UserDataHolderBase implements Hint {
   private void fireHintHidden() {
     final EventListener[] listeners = myListenerList.getListeners(HintListener.class);
     for (EventListener listener : listeners) {
-      ((HintListener)listener).hintHidden(new EventObject(this));
+      ((HintListener)listener).hintHidden();
     }
   }
 

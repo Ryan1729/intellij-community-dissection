@@ -273,7 +273,7 @@ public final class FileBasedIndexImpl extends FileBasedIndex {
 
     connection.subscribe(AppLifecycleListener.TOPIC, new AppLifecycleListener() {
       @Override
-      public void appWillBeClosed(boolean isRestart) {
+      public void appWillBeClosed() {
         if (!myStateFuture.isDone() || !myAllIndicesInitializedFuture.isDone()) {
           ProgressManager.getInstance().run(new Task.Modal(null, "Preparing Indexes to Shutdown", false) {
             @Override

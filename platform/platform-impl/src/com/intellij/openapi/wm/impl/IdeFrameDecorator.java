@@ -183,7 +183,7 @@ public abstract class IdeFrameDecorator implements IdeFrameImpl.FrameDecorator {
 
         if (myFrame.getJMenuBar() instanceof IdeMenuBar) {
           IdeMenuBar frameMenuBar = (IdeMenuBar)myFrame.getJMenuBar();
-          frameMenuBar.onToggleFullScreen(state);
+          frameMenuBar.onToggleFullScreen();
         }
       }
       return Promises.resolvedPromise(state);

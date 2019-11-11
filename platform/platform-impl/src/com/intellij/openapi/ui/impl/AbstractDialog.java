@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.openapi.ui.impl;
 
 import com.intellij.openapi.Disposable;
@@ -21,31 +22,28 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 /**
  * @author Konstantin Bulenkov
  */
 interface AbstractDialog extends Disposable {
-  void setUndecorated(boolean undecorated);
+  void setUndecorated();
 
-  void addMouseListener(MouseListener listener);
+  void addMouseListener();
 
-  void addMouseMotionListener(MouseMotionListener listener);
+  void addMouseMotionListener();
 
-  void addKeyListener(KeyListener listener);
+  void addKeyListener();
 
   /**
-   * @deprecated use {@link #setModalityType(Dialog.ModalityType)}
+   * @deprecated use {@link #setModalityType()}
    */
   @Deprecated
   void setModal(boolean b);
 
   void toFront();
 
-  void setContentPane(Container content);
+  void setContentPane();
 
   void centerInParent();
 
@@ -53,7 +51,7 @@ interface AbstractDialog extends Disposable {
 
   JRootPane getRootPane();
 
-  void remove(Component root);
+  void remove();
 
   Container getContentPane();
 
@@ -83,14 +81,12 @@ interface AbstractDialog extends Disposable {
 
   boolean isResizable();
 
-  void setResizable(boolean resizable);
+  void setResizable();
 
   @NotNull
   Point getLocation();
 
-  void setLocation(@NotNull Point p);
-
-  void setLocation(int x, int y);
+  void setLocation();
 
   /**
    * @deprecated use {@link #getModalityType()}
@@ -98,7 +94,7 @@ interface AbstractDialog extends Disposable {
   @Deprecated
   boolean isModal();
 
-  void setModalityType(Dialog.ModalityType modalityType);
+  void setModalityType();
 
   Dialog.ModalityType getModalityType();
 

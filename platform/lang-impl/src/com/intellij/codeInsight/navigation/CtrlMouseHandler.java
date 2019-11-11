@@ -760,7 +760,7 @@ public final class CtrlMouseHandler {
       final LightweightHint hint = new LightweightHint(wrapInScrollPaneIfNeeded(component, editor));
 
       myHint = hint;
-      hint.addHintListener(__ -> myHint = null);
+      hint.addHintListener(() -> myHint = null);
 
       showHint(hint, editor);
 
@@ -800,7 +800,7 @@ public final class CtrlMouseHandler {
                                     @NotNull Editor editor) {
       if (!hint.isVisible()) return;
       Disposable hintDisposable = Disposer.newDisposable("CtrlMouseHandler.TooltipProvider.updateOnPsiChanges");
-      hint.addHintListener(__ -> Disposer.dispose(hintDisposable));
+      hint.addHintListener(() -> Disposer.dispose(hintDisposable));
       myProject.getMessageBus().connect(hintDisposable).subscribe(PsiModificationTracker.TOPIC, () -> ReadAction
         .nonBlocking(() -> {
           try {

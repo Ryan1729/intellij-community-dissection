@@ -325,7 +325,7 @@ public class FlatWelcomeFrame extends JFrame implements IdeFrame, Disposable, Ac
           List<File> list = FileCopyPasteUtil.getFileList(transferable);
           if (list != null && list.size() > 0) {
             PluginDropHandler pluginHandler = new PluginDropHandler();
-            if (!pluginHandler.canHandle(transferable, null) || !pluginHandler.handleDrop(transferable, null, null)) {
+            if (!pluginHandler.canHandle(transferable) || !pluginHandler.handleDrop(transferable, null, null)) {
               ProjectUtil.tryOpenFileList(null, list, "WelcomeFrame");
             }
             e.dropComplete(true);

@@ -67,7 +67,7 @@ public class TextCompletionUtil {
         }
 
         @Override
-        public void focusLost(@NotNull Editor editor) {
+        public void focusLost() {
           // Do nothing
         }
       });

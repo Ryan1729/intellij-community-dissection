@@ -133,7 +133,7 @@ public class TodoConfigurable implements SearchableConfigurable, Configurable.No
     typeColumn.setCellRenderer(new IconTableCellRenderer<Icon>() {
       @NotNull
       @Override
-      protected Icon getIcon(@NotNull Icon value, JTable table, int row) {
+      protected Icon getIcon(@NotNull Icon value) {
         return value;
       }
 

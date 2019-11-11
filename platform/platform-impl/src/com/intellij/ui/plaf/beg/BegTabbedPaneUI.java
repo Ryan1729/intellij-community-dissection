@@ -325,7 +325,7 @@ public class BegTabbedPaneUI extends MetalTabbedPaneUI {
   /**
    * invoked by reflection
    */
-  public static ComponentUI createUI(JComponent c) {
+  public static ComponentUI createUI() {
     return new BegTabbedPaneUI();
   }
 

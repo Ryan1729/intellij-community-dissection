@@ -13,7 +13,7 @@ public class MacPopupMenuUI extends BasicPopupMenuUI {
   public MacPopupMenuUI() {
   }
 
-  public static ComponentUI createUI(final JComponent c) {
+  public static ComponentUI createUI() {
     return new MacPopupMenuUI();
   }
 

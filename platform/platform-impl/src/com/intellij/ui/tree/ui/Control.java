@@ -17,7 +17,7 @@ public interface Control {
 
   int getHeight();
 
-  void paint(@NotNull Component c, @NotNull Graphics g, int x, int y, int width, int height, boolean expanded, boolean selected);
+  void paint(@NotNull Graphics g, int x, int y, int width, int height, boolean expanded, boolean selected);
 
 
   interface Painter {
@@ -35,7 +35,7 @@ public interface Control {
 
     int getControlOffset(@NotNull Control control, int depth, boolean leaf);
 
-    void paint(@NotNull Component c, @NotNull Graphics g, int x, int y, int width, int height,
+    void paint(@NotNull Component c, @NotNull Graphics g, int x, int y, int height,
                @NotNull Control control, int depth, boolean leaf, boolean expanded, boolean selected);
   }
 }

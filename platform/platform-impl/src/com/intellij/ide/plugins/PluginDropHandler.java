@@ -15,7 +15,7 @@ import java.util.List;
 
 public class PluginDropHandler extends CustomFileDropHandler {
   @Override
-  public boolean canHandle(@NotNull Transferable t, @Nullable Editor editor) {
+  public boolean canHandle(@NotNull Transferable t) {
     File file = getFile(t);
     if (file == null) return false;
     String path = file.getPath();

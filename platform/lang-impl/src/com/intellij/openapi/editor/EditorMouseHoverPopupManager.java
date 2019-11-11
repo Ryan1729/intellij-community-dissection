@@ -559,7 +559,7 @@ public final class EditorMouseHoverPopupManager implements Disposable {
 
     private static void bindHintHiding(LightweightHint hint, PopupBridge popupBridge) {
       AtomicBoolean inProcess = new AtomicBoolean();
-      hint.addHintListener(e -> {
+      hint.addHintListener(() -> {
         if (hint.getUserData(DISABLE_BINDING) == null && inProcess.compareAndSet(false, true)) {
           try {
             AbstractPopup popup = popupBridge.getPopup();

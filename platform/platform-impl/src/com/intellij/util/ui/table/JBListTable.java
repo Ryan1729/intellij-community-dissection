@@ -85,7 +85,7 @@ public abstract class JBListTable {
     };
   }
 
-  protected boolean isRowEditable(int row) {
+  protected boolean isRowEditable() {
     return true;
   }
 
@@ -487,7 +487,7 @@ public abstract class JBListTable {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-      return isRowEditable(rowIndex);
+      return isRowEditable();
     }
 
     @Override

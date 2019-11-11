@@ -36,7 +36,7 @@ public class WinIntelliJRadioButtonUI extends DarculaRadioButtonUI {
   }
 
   @Override
-  protected void paintIcon(JComponent c, Graphics2D g, Rectangle viewRect, Rectangle iconRect) {
+  protected void paintIcon(JComponent c, Graphics2D g, Rectangle iconRect) {
     AbstractButton b = (AbstractButton)c;
     ButtonModel bm = b.getModel();
     boolean focused = c.hasFocus() || bm.isRollover();

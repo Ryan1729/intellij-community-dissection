@@ -103,7 +103,7 @@ public abstract class FileEditorManagerEx extends FileEditorManager implements B
    * tabbed container.
    */
   @NotNull
-  public abstract VirtualFile[] getSiblings(@NotNull VirtualFile file);
+  public abstract VirtualFile[] getSiblings();
 
   public abstract void createSplitter(int orientation, @Nullable EditorWindow window);
 

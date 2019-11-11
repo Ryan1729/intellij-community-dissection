@@ -14,7 +14,7 @@ public class CompositeGeneralTroubleInfoCollector implements TroubleInfoCollecto
     StringBuilder builder = new StringBuilder();
     for (GeneralTroubleInfoCollector collector : GeneralTroubleInfoCollector.EP_SETTINGS.getExtensions()) {
       builder.append("=== " + collector.getTitle() + " ===\n");
-      builder.append(collector.collectInfo(project).trim());
+      builder.append(collector.collectInfo().trim());
       builder.append("\n\n");
     }
     return builder.toString();

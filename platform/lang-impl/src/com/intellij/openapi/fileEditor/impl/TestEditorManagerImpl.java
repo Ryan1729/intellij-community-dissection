@@ -364,7 +364,7 @@ final class TestEditorManagerImpl extends FileEditorManagerEx implements Disposa
 
   @Override
   @NotNull
-  public VirtualFile[] getSiblings(@NotNull VirtualFile file) {
+  public VirtualFile[] getSiblings() {
     throw new UnsupportedOperationException();
   }
 

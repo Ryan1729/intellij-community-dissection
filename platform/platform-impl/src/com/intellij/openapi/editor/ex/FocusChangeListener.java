@@ -12,10 +12,10 @@ import java.util.EventListener;
  */
 public interface FocusChangeListener extends EventListener {
   void focusGained(@NotNull Editor editor);
-  default void focusLost(@NotNull Editor editor) { }
+  default void focusLost() { }
 
   default void focusLost(@NotNull Editor editor, @SuppressWarnings("unused") @NotNull FocusEvent event) {
-    focusLost(editor);
+    focusLost();
   }
   default void focusGained(@NotNull Editor editor, @SuppressWarnings("unused") @NotNull FocusEvent event) {
     focusGained(editor);

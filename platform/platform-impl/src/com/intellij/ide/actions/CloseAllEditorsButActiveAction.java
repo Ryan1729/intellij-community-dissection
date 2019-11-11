@@ -25,7 +25,7 @@ public class CloseAllEditorsButActiveAction extends AnAction implements DumbAwar
       return;
     }
     selectedFile = fileEditorManager.getSelectedFiles()[0];
-    final VirtualFile[] siblings = fileEditorManager.getSiblings(selectedFile);
+    final VirtualFile[] siblings = fileEditorManager.getSiblings();
     for (final VirtualFile sibling : siblings) {
       if (!Comparing.equal(selectedFile, sibling)) {
         fileEditorManager.closeFile(sibling);
@@ -54,7 +54,7 @@ public class CloseAllEditorsButActiveAction extends AnAction implements DumbAwar
       }
       selectedFile = fileEditorManager.getSelectedFiles()[0];
     }
-    VirtualFile[] siblings = fileEditorManager.getSiblings(selectedFile);
+    VirtualFile[] siblings = fileEditorManager.getSiblings();
     presentation.setEnabled(siblings.length > 1);
   }
 }

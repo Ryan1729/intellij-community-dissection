@@ -51,7 +51,7 @@ public class ComboboxEditorTextField extends EditorTextField {
       }
 
       @Override
-      public void focusLost(@NotNull Editor editor) {
+      public void focusLost() {
         repaintComboBox();
       }
     });

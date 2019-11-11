@@ -4,7 +4,6 @@ package com.intellij.ide.troubleshooting;
 import com.intellij.ide.IdeBundle;
 import com.intellij.openapi.application.ex.ApplicationInfoEx;
 import com.intellij.openapi.application.impl.ApplicationInfoImpl;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.troubleshooting.GeneralTroubleInfoCollector;
 import com.intellij.util.text.DateFormatUtil;
@@ -23,7 +22,7 @@ public class AboutTroubleInfoCollector implements GeneralTroubleInfoCollector {
 
   @NotNull
   @Override
-  public String collectInfo(@NotNull Project project) {
+  public String collectInfo() {
     ApplicationInfoImpl appInfo = (ApplicationInfoImpl)ApplicationInfoEx.getInstanceEx();
     Calendar cal = appInfo.getBuildDate();
 

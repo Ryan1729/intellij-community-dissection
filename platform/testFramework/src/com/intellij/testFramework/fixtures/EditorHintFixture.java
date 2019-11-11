@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.testFramework.fixtures;
 
 import com.intellij.codeInsight.hint.EditorHintListener;
@@ -34,11 +35,6 @@ public class EditorHintFixture implements EditorHintListener {
   public void hintShown(Project project, @NotNull LightweightHint hint, int flags) {
     hint.putUserData(LightweightHint.SHOWN_AT_DEBUG, Boolean.TRUE);
     myCurrentHint = hint;
-    hint.addHintListener(event -> {
-      LightweightHint source = (LightweightHint)event.getSource();
-      source.putUserData(LightweightHint.SHOWN_AT_DEBUG, null);
-      if (source == myCurrentHint) myCurrentHint = null;
-    });
   }
   
   @Nullable

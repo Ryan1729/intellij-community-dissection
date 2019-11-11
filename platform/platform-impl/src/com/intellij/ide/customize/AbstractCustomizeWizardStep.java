@@ -80,7 +80,7 @@ public abstract class AbstractCustomizeWizardStep extends JPanel {
     return null;
   }
 
-  public void beforeShown(boolean forward) {
+  public void beforeShown() {
   }
 
   public boolean beforeOkAction() {

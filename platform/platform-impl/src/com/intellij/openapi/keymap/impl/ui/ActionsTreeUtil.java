@@ -219,10 +219,14 @@ public class ActionsTreeUtil {
                                   Icon openIcon,
                                   boolean ignore,
                                   Condition<? super AnAction> filtered) {
-    return createGroup(actionGroup, groupName, icon, openIcon, ignore, filtered, true);
+    return createGroup(actionGroup, groupName, icon, ignore, filtered, true);
   }
 
-  public static Group createGroup(ActionGroup actionGroup, String groupName, Icon icon, Icon openIcon, boolean ignore, Condition<? super AnAction> filtered,
+  public static Group createGroup(ActionGroup actionGroup,
+                                  String groupName,
+                                  Icon icon,
+                                  boolean ignore,
+                                  Condition<? super AnAction> filtered,
                                   boolean normalizeSeparators) {
     ActionManager actionManager = ActionManager.getInstance();
     Group group = new Group(groupName, actionManager.getId(actionGroup), icon);
@@ -234,7 +238,7 @@ public class ActionsTreeUtil {
         continue;
       }
       if (action instanceof ActionGroup) {
-        Group subGroup = createGroup((ActionGroup)action, getName(action), null, null, ignore, filtered, normalizeSeparators);
+        Group subGroup = createGroup((ActionGroup)action, getName(action), null, ignore, filtered, normalizeSeparators);
         if (!ignore && !((ActionGroup)action).isPopup()) {
           group.addAll(subGroup);
         }

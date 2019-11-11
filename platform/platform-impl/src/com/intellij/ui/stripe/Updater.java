@@ -68,13 +68,13 @@ public abstract class Updater<Painter extends ErrorStripePainter> implements Dis
   }
 
   private int findErrorStripeIndex(Painter painter, int x, int y) {
-    int index = painter.findIndex(x, y);
+    int index = painter.findIndex(y);
     if (null != painter.getErrorStripe(index)) return index;
-    index = painter.findIndex(x, y + 1);
+    index = painter.findIndex(y + 1);
     if (null != painter.getErrorStripe(index)) return index;
-    index = painter.findIndex(x, y - 1);
+    index = painter.findIndex(y - 1);
     if (null != painter.getErrorStripe(index)) return index;
-    index = painter.findIndex(x, y + 2);
+    index = painter.findIndex(y + 2);
     if (null != painter.getErrorStripe(index)) return index;
     return -1;
   }

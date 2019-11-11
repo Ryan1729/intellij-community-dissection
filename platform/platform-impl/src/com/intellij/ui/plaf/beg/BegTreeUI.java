@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 public class BegTreeUI extends MetalTreeUI {
 
   /* Invoked by reflection */
-  public static ComponentUI createUI(JComponent c) {
+  public static ComponentUI createUI() {
     return new BegTreeUI();
   }
 

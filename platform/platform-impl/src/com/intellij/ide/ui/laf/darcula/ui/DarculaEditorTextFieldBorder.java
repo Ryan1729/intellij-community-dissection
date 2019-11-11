@@ -38,7 +38,7 @@ public class DarculaEditorTextFieldBorder extends DarculaTextBorder implements V
         }
 
         @Override
-        public void focusLost(@NotNull Editor editor) {
+        public void focusLost() {
           editorTextField.repaint();
         }
       });

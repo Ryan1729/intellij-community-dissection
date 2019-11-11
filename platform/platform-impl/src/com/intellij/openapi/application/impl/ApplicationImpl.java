@@ -616,7 +616,7 @@ public class ApplicationImpl extends PlatformComponentManagerImpl implements App
         return;
       }
 
-      lifecycleListener.appWillBeClosed(restart);
+      lifecycleListener.appWillBeClosed();
       LifecycleUsageTriggerCollector.onIdeClose(restart);
 
       SaveAndSyncHandler.getInstance().saveSettingsUnderModalProgress(this, /* isSaveAppAlso = */ false);

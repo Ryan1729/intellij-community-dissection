@@ -46,7 +46,7 @@ final class IdeaFreezeReporter implements IdePerformanceListener {
 
     app.getMessageBus().connect().subscribe(AppLifecycleListener.TOPIC, new AppLifecycleListener() {
       @Override
-      public void appWillBeClosed(boolean isRestart) {
+      public void appWillBeClosed() {
         myAppClosing = true;
       }
     });

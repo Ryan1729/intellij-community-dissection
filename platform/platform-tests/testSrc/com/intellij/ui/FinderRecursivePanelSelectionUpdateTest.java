@@ -137,7 +137,7 @@ public class FinderRecursivePanelSelectionUpdateTest extends LightPlatformTestCa
 
     @Nullable
     @Override
-    protected JComponent createRightComponent(@NotNull String s) {
+    protected JComponent createRightComponent() {
       return myRightComponent;
     }
 

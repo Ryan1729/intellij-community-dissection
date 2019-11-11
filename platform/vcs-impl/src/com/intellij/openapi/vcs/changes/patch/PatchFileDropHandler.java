@@ -29,7 +29,7 @@ import java.util.List;
 public class PatchFileDropHandler extends CustomFileDropHandler {
 
   @Override
-  public boolean canHandle(@NotNull Transferable t, @Nullable Editor editor) {
+  public boolean canHandle(@NotNull Transferable t) {
     List<File> list = FileCopyPasteUtil.getFileList(t);
     if (list == null || list.size() != 1) return false;
     return PatchFileType.isPatchFile(list.get(0));

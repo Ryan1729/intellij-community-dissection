@@ -117,7 +117,7 @@ public final class FilePreviewPanelProvider extends PreviewPanelProvider<Virtual
     protected EditorWindow createEditorWindow() {
       return new EditorWindow(this) {
         @Override
-        protected void onBeforeSetEditor(VirtualFile file) {
+        protected void onBeforeSetEditor() {
           for (EditorWithProviderComposite composite : getEditorsComposites()) {
             if (composite.isModified()) {
               //Estimation: no more than one file is modified at the same time

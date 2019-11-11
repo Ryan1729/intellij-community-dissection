@@ -225,13 +225,15 @@ public class EditorsSplitters extends IdePanePanel implements UISettingsListener
       EditorWithProviderComposite[] composites = window.getEditors();
       for (int i = 0; i < composites.length; i++) {
         VirtualFile file = window.getFileAt(i);
-        res.addContent(writeComposite(file, composites[i], window.isFilePinned(file), window.getSelectedEditor()));
+        res.addContent(writeComposite(composites[i], window.isFilePinned(file), window.getSelectedEditor()));
       }
     }
   }
 
   @NotNull
-  private Element writeComposite(VirtualFile file, EditorWithProviderComposite composite, boolean pinned, EditorWithProviderComposite selectedEditor) {
+  private Element writeComposite(EditorWithProviderComposite composite,
+                                 boolean pinned,
+                                 EditorWithProviderComposite selectedEditor) {
     Element fileElement = new Element("file");
     composite.currentStateAsHistoryEntry().writeExternal(fileElement, getManager().getProject());
     fileElement.setAttribute(PINNED, Boolean.toString(pinned));

@@ -139,7 +139,7 @@ public class ActionsCollectorImpl extends ActionsCollector {
     }
   }
 
-  public static void onActionLoadedFromXml(@NotNull AnAction action, @NotNull String actionId, @Nullable IdeaPluginDescriptor plugin) {
+  public static void onActionLoadedFromXml(@NotNull String actionId, @Nullable IdeaPluginDescriptor plugin) {
     ourWhitelist.addActionLoadedFromXml(actionId, plugin);
   }
 

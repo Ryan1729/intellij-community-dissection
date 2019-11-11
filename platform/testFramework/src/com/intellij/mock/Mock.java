@@ -242,7 +242,7 @@ public class Mock {
 
     @Override
     @NotNull
-    public VirtualFile[] getSiblings(@NotNull VirtualFile file) {
+    public VirtualFile[] getSiblings() {
       return VirtualFile.EMPTY_ARRAY;
     }
 

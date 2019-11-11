@@ -36,7 +36,7 @@ public class Diagnostic {
     return Logger.getInstance(category).assertTrue(condition, message);
   }
 
-  public static boolean isAssertEnabled(String category) {
+  public static boolean isAssertEnabled() {
     return true;
   }
 

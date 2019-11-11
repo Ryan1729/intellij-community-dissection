@@ -338,7 +338,7 @@ public class SearchUtil {
   }
 
   private static void highlightComponent(@NotNull JComponent rootComponent, @NotNull String searchString) {
-    ApplicationManager.getApplication().getMessageBus().syncPublisher(ComponentHighligtingListener.TOPIC).highlight(rootComponent, searchString);
+    ApplicationManager.getApplication().getMessageBus().syncPublisher(ComponentHighligtingListener.TOPIC).highlight(rootComponent);
   }
 
   public static boolean isComponentHighlighted(String text, String option, boolean force, final SearchableConfigurable configurable) {

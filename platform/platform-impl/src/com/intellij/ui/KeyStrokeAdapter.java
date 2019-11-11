@@ -26,12 +26,12 @@ public class KeyStrokeAdapter implements KeyListener {
     keyTyped(event, getKeyStroke(event, false));
   }
 
-  protected boolean keyTyped(KeyStroke stroke) {
+  protected boolean keyTyped() {
     return false;
   }
 
   private void keyTyped(KeyEvent event, KeyStroke stroke) {
-    if (stroke != null && keyTyped(stroke)) {
+    if (stroke != null && keyTyped()) {
       event.consume();
     }
   }
@@ -42,12 +42,12 @@ public class KeyStrokeAdapter implements KeyListener {
     keyPressed(event, getKeyStroke(event, false));
   }
 
-  protected boolean keyPressed(KeyStroke stroke) {
+  protected boolean keyPressed() {
     return false;
   }
 
   private void keyPressed(KeyEvent event, KeyStroke stroke) {
-    if (stroke != null && keyPressed(stroke)) {
+    if (stroke != null && keyPressed()) {
       event.consume();
     }
   }
@@ -58,12 +58,12 @@ public class KeyStrokeAdapter implements KeyListener {
     keyReleased(event, getKeyStroke(event, false));
   }
 
-  protected boolean keyReleased(KeyStroke stroke) {
+  protected boolean keyReleased() {
     return false;
   }
 
   private void keyReleased(KeyEvent event, KeyStroke stroke) {
-    if (stroke != null && keyReleased(stroke)) {
+    if (stroke != null && keyReleased()) {
       event.consume();
     }
   }

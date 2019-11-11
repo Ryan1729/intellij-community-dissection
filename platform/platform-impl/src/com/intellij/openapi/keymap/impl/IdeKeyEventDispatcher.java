@@ -576,7 +576,7 @@ public final class IdeKeyEventDispatcher implements Disposable {
     }
 
     @Override
-    public void onUpdatePassed(final InputEvent inputEvent, @NotNull final AnAction action, @NotNull final AnActionEvent actionEvent) {
+    public void onUpdatePassed(final InputEvent inputEvent) {
       setState(KeyState.STATE_PROCESSED);
       setPressedWasProcessed(inputEvent.getID() == KeyEvent.KEY_PRESSED);
     }
@@ -639,7 +639,7 @@ public final class IdeKeyEventDispatcher implements Disposable {
         continue;
       }
 
-      processor.onUpdatePassed(e, action, actionEvent);
+      processor.onUpdatePassed(e);
 
       if (myContext.getDataContext() instanceof DataManagerImpl.MyDataContext) { // this is not true for test data contexts
         ((DataManagerImpl.MyDataContext)myContext.getDataContext()).setEventCount(IdeEventQueue.getInstance().getEventCount(), this);

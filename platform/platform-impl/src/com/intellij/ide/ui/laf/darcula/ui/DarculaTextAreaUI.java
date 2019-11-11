@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 
 public class DarculaTextAreaUI extends BasicTextAreaUI {
   @SuppressWarnings("MethodOverridesStaticMethodOfSuperclass")
-  public static ComponentUI createUI(final JComponent c) {
+  public static ComponentUI createUI() {
     return new DarculaTextAreaUI();
   }
 

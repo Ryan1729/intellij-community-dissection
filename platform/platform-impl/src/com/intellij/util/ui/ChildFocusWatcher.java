@@ -25,9 +25,9 @@ public abstract class ChildFocusWatcher implements AWTEventListener, Disposable 
       if (!SwingUtilities.isDescendingFrom(component, myParent)) return;
 
       if (fe.getID() == FocusEvent.FOCUS_GAINED) {
-        onFocusGained(fe);
+        onFocusGained();
       } else if (fe.getID() == FocusEvent.FOCUS_LAST) {
-        onFocusLost(fe);
+        onFocusLost();
       }
     }
   }
@@ -37,6 +37,6 @@ public abstract class ChildFocusWatcher implements AWTEventListener, Disposable 
     Toolkit.getDefaultToolkit().removeAWTEventListener(this);
   }
 
-  protected abstract void onFocusGained(FocusEvent event);
-  protected abstract void onFocusLost(FocusEvent event);
+  protected abstract void onFocusGained();
+  protected abstract void onFocusLost();
 }

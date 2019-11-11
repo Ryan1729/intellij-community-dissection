@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class DirectoryProjectGeneratorBase<T> implements DirectoryProjectGenerator<T> {
   @NotNull
   @Override
-  public ValidationResult validate(@NotNull String baseDirPath) {
+  public ValidationResult validate() {
     return ValidationResult.OK;
   }
 }

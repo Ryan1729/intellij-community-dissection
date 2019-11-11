@@ -176,7 +176,7 @@ public class ActionMenuItem extends JBCheckBoxMenuItem {
 
   @Override
   public void updateUI() {
-    setUI(BegMenuItemUI.createUI(this));
+    setUI(BegMenuItemUI.createUI());
   }
 
   /**

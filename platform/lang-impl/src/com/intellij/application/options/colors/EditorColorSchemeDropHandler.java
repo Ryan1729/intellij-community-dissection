@@ -8,7 +8,6 @@ import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.application.ApplicationBundle;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.CustomFileDropHandler;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
@@ -19,7 +18,6 @@ import com.intellij.openapi.editor.colors.impl.EmptyColorScheme;
 import com.intellij.openapi.options.SchemeImportException;
 import com.intellij.openapi.project.DefaultProjectFactory;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VfsUtil;
@@ -41,7 +39,7 @@ public class EditorColorSchemeDropHandler extends CustomFileDropHandler {
   public static final String ADDED = "Color scheme added";
 
   @Override
-  public boolean canHandle(@NotNull Transferable t, @Nullable Editor editor) {
+  public boolean canHandle(@NotNull Transferable t) {
     return getColorSchemeFile(t) != null;
   }
 

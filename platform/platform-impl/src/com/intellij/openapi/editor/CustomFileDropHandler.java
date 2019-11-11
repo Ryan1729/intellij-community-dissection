@@ -26,7 +26,7 @@ public abstract class CustomFileDropHandler {
   public static final ExtensionPointName<CustomFileDropHandler> CUSTOM_DROP_HANDLER_EP =
     ExtensionPointName.create("com.intellij.customFileDropHandler");
 
-  public abstract boolean canHandle(@NotNull Transferable t, @Nullable Editor editor);
+  public abstract boolean canHandle(@NotNull Transferable t);
 
   public abstract boolean handleDrop(@NotNull Transferable t, @Nullable Editor editor, final Project project);
 }

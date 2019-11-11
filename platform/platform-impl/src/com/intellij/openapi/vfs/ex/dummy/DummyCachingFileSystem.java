@@ -39,7 +39,7 @@ public abstract class DummyCachingFileSystem<T extends VirtualFile> extends Dumm
     application.getMessageBus().connect(application).subscribe(ProjectManager.TOPIC, new ProjectManagerListener() {
       @Override
       public void projectOpened(@NotNull final Project project) {
-        onProjectOpened(project);
+        onProjectOpened();
       }
 
       @Override
@@ -80,7 +80,7 @@ public abstract class DummyCachingFileSystem<T extends VirtualFile> extends Dumm
 
   protected abstract T findFileByPathInner(@NotNull String path);
 
-  protected void doRenameFile(VirtualFile vFile, String newName) {
+  protected void doRenameFile() {
     throw new UnsupportedOperationException("not implemented");
   }
 
@@ -109,7 +109,7 @@ public abstract class DummyCachingFileSystem<T extends VirtualFile> extends Dumm
     }
   }
 
-  public void onProjectOpened(final Project project) {
+  public void onProjectOpened() {
     clearCache();
   }
 
@@ -129,7 +129,7 @@ public abstract class DummyCachingFileSystem<T extends VirtualFile> extends Dumm
 
   private void initProjectMap() {
     for (Project project : ProjectManager.getInstance().getOpenProjects()) {
-      if (project.isOpen()) onProjectOpened(project);
+      if (project.isOpen()) onProjectOpened();
     }
   }
 
@@ -156,7 +156,7 @@ public abstract class DummyCachingFileSystem<T extends VirtualFile> extends Dumm
     String oldName = vFile.getName();
     beforeFileRename(vFile, requestor, oldName, newName);
     try {
-      doRenameFile(vFile, newName);
+      doRenameFile();
     }
     finally {
       fileRenamed(vFile, requestor, oldName, newName);

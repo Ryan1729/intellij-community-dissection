@@ -279,7 +279,7 @@ public abstract class WizardPopup extends AbstractPopup implements ActionListene
 
   @Override
   @NotNull
-  protected MyContentPanel createContentPanel(final boolean resizable, final PopupBorder border, final boolean isToDrawMacCorner) {
+  protected MyContentPanel createContentPanel(final PopupBorder border) {
     return new MyContainer(border);
   }
 

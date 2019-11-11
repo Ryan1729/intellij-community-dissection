@@ -47,7 +47,7 @@ public class FileDropHandler implements EditorDropHandler {
       final List<File> fileList = FileCopyPasteUtil.getFileList(t);
       if (fileList != null) {
         boolean dropResult = ContainerUtil.process(CustomFileDropHandler.CUSTOM_DROP_HANDLER_EP.getExtensions(project),
-                                                   handler -> !(handler.canHandle(t, myEditor) && handler.handleDrop(t, myEditor, project)));
+                                                   handler -> !(handler.canHandle(t) && handler.handleDrop(t, myEditor, project)));
         if (!dropResult) return;
 
         openFiles(project, fileList, editorWindow);

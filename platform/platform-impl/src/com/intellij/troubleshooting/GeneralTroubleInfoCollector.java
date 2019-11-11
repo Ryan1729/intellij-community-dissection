@@ -2,7 +2,6 @@
 package com.intellij.troubleshooting;
 
 import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -17,5 +16,5 @@ public interface GeneralTroubleInfoCollector {
   String getTitle();
 
   @NotNull
-  String collectInfo(@NotNull Project project);
+  String collectInfo();
 }

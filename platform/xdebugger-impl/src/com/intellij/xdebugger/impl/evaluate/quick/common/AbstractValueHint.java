@@ -37,7 +37,6 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.EventObject;
 import java.util.Objects;
 
 /**
@@ -239,7 +238,7 @@ public abstract class AbstractValueHint {
     };
     myCurrentHint.addHintListener(new HintListener() {
       @Override
-      public void hintHidden(@NotNull EventObject event) {
+      public void hintHidden() {
         if (myHideRunnable != null && !myInsideShow) {
           myHideRunnable.run();
         }

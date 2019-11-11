@@ -25,7 +25,7 @@ public abstract class WebProjectGenerator<T> extends DirectoryProjectGeneratorBa
    */
   @NotNull
   @Override
-  public final ValidationResult validate(@NotNull String baseDirPath) {
+  public final ValidationResult validate() {
     return ValidationResult.OK;
   }
 

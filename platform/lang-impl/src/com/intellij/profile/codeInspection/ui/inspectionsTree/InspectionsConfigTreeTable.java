@@ -83,7 +83,7 @@ public class InspectionsConfigTreeTable extends TreeTable {
       }
 
       @Override
-      protected Icon getIcon(@NotNull Icon value, JTable table, int row) {
+      protected Icon getIcon(@NotNull Icon value) {
         return value;
       }
     });

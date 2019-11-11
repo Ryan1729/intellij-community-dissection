@@ -1,7 +1,6 @@
 // Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.intellij.ide.ui.laf.darcula.ui;
 
-import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
@@ -10,7 +9,7 @@ import javax.swing.plaf.basic.BasicRootPaneUI;
  */
 public class DarculaRootPaneUI extends BasicRootPaneUI {
   @SuppressWarnings("MethodOverridesStaticMethodOfSuperclass")
-  public static ComponentUI createUI(JComponent comp) {
+  public static ComponentUI createUI() {
     return createDefaultWindowsRootPaneUI();
   }
 

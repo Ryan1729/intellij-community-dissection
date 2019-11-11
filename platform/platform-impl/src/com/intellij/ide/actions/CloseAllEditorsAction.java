@@ -33,7 +33,7 @@ public class CloseAllEditorsAction extends AnAction implements DumbAware {
         }
         FileEditorManagerEx fileEditorManager = FileEditorManagerEx.getInstanceEx(project);
         VirtualFile selectedFile = fileEditorManager.getSelectedFiles()[0];
-        VirtualFile[] openFiles = fileEditorManager.getSiblings(selectedFile);
+        VirtualFile[] openFiles = fileEditorManager.getSiblings();
         for (final VirtualFile openFile : openFiles) {
           fileEditorManager.closeFile(openFile);
         }

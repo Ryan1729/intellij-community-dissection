@@ -53,7 +53,7 @@ public class BegMenuItemUI extends BasicMenuItemUI {
   private Border myAquaSelectedBackgroundPainter;
 
   /** invoked by reflection */
-  public static ComponentUI createUI(JComponent component) {
+  public static ComponentUI createUI() {
     return new BegMenuItemUI();
   }
 
@@ -141,7 +141,7 @@ public class BegMenuItemUI extends BasicMenuItemUI {
       }
       g.setColor(color2);
       if (menuItem.isArmed()){
-        drawIconBorder(g);
+        drawIconBorder();
       }
     }
     if (icon1 != null){
@@ -425,7 +425,7 @@ public class BegMenuItemUI extends BasicMenuItemUI {
     return i.getSize();
   }
 
-  private void drawIconBorder(Graphics g) {
+  private void drawIconBorder() {
 /*
     int i1 = a - 1;
     int j1 = e - 2;

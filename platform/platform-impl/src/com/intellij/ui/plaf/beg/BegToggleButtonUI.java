@@ -25,7 +25,7 @@ import java.awt.*;
 public class BegToggleButtonUI extends MetalToggleButtonUI{
   private final static BegToggleButtonUI begToggleButtonUI = new BegToggleButtonUI();
 
-  public static ComponentUI createUI(JComponent c) {
+  public static ComponentUI createUI() {
     return begToggleButtonUI;
   }
 

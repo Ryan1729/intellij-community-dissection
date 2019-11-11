@@ -4,7 +4,6 @@ package com.intellij.platform;
 import com.intellij.facet.ui.ValidationResult;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -71,5 +70,5 @@ public interface DirectoryProjectGenerator<T> {
                        @NotNull final Module module);
 
   @NotNull
-  ValidationResult validate(@NotNull String baseDirPath);
+  ValidationResult validate();
 }

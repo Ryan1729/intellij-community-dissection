@@ -64,7 +64,7 @@ public interface AppLifecycleListener {
   /**
    * Fired after saving settings and after final 'can exit?' check.
    */
-  default void appWillBeClosed(boolean isRestart) { }
+  default void appWillBeClosed() { }
 
   /** @deprecated please use {@link AppLifecycleListener} directly */
   @Deprecated

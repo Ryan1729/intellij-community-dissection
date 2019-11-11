@@ -505,7 +505,7 @@ public class EditorWindow {
 
   public void setEditor(@Nullable final EditorWithProviderComposite editor, final boolean selectEditor, final boolean focusEditor) {
     if (editor != null) {
-      onBeforeSetEditor(editor.getFile());
+      onBeforeSetEditor();
 
       final int index = findEditorIndex(editor);
       if (index != -1) {
@@ -549,7 +549,7 @@ public class EditorWindow {
     if (!myOwner.isInsideChange()) myOwner.validate();
   }
 
-  protected void onBeforeSetEditor(VirtualFile file) {
+  protected void onBeforeSetEditor() {
   }
 
   private boolean splitAvailable() {

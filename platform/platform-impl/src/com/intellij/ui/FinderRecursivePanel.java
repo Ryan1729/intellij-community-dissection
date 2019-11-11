@@ -162,7 +162,7 @@ public abstract class FinderRecursivePanel<T> extends OnePixelSplitter implement
   protected abstract String getItemText(@NotNull T t);
 
   @Nullable
-  protected Icon getItemIcon(@NotNull T t) {
+  protected Icon getItemIcon() {
     return null;
   }
 
@@ -170,14 +170,13 @@ public abstract class FinderRecursivePanel<T> extends OnePixelSplitter implement
    * Returns tooltip text for the given list item or null if no tooltip is available.
    * <p>
    * <p>This method is invoked by panel's list cell render in order to set a tooltip text for the list cell render component.
-   * It is invoked before {@link #doCustomizeCellRenderer(SimpleColoredComponent, JList, Object, int, boolean, boolean)},
+   * It is invoked before {@link #doCustomizeCellRenderer()},
    * thus the tooltip may still be reset in {@code doCustomizeCellRenderer}.
    *
-   * @param t the list item
    * @return the text to display in a tooltip for the given list item
    */
   @Nullable
-  protected String getItemTooltipText(@NotNull T t) {
+  protected String getItemTooltipText() {
     return null;
   }
 
@@ -186,11 +185,10 @@ public abstract class FinderRecursivePanel<T> extends OnePixelSplitter implement
   /**
    * To determine item list background color (if enabled).
    *
-   * @param t Current item.
    * @return Containing file.
    */
   @Nullable
-  protected VirtualFile getContainingFile(@NotNull T t) {
+  protected VirtualFile getContainingFile() {
     return null;
   }
 
@@ -199,7 +197,7 @@ public abstract class FinderRecursivePanel<T> extends OnePixelSplitter implement
   }
 
   @Nullable
-  protected JComponent createRightComponent(@NotNull T t) {
+  protected JComponent createRightComponent() {
     return new JPanel();
   }
 
@@ -355,8 +353,7 @@ public abstract class FinderRecursivePanel<T> extends OnePixelSplitter implement
     return new MyListCellRenderer();
   }
 
-  protected void doCustomizeCellRenderer(@NotNull SimpleColoredComponent comp, @NotNull JList list, @NotNull T value,
-                                         int index, boolean selected, boolean hasFocus) {
+  protected void doCustomizeCellRenderer() {
   }
 
   /**
@@ -610,7 +607,7 @@ public abstract class FinderRecursivePanel<T> extends OnePixelSplitter implement
     }
     T value = getSelectedValue();
     if (value != null) {
-      myChild = createRightComponent(value);
+      myChild = createRightComponent();
       if (myChild instanceof FinderRecursivePanel) {
         FinderRecursivePanel<?> childPanel = (FinderRecursivePanel<?>)myChild;
         if (withUpdatePanel) {
@@ -670,7 +667,7 @@ public abstract class FinderRecursivePanel<T> extends OnePixelSplitter implement
       }
       @SuppressWarnings("unchecked")
       T value = (T)getClientProperty(ITEM_PROPERTY);
-      return FinderRecursivePanel.this.getItemTooltipText(value);
+      return FinderRecursivePanel.this.getItemTooltipText();
     }
 
     @Override
@@ -690,7 +687,7 @@ public abstract class FinderRecursivePanel<T> extends OnePixelSplitter implement
       final T t = (T)value;
       try {
         putClientProperty(ITEM_PROPERTY, t);
-        setIcon(getItemIcon(t));
+        setIcon(getItemIcon());
         append(getItemText(t));
       }
       catch (IndexNotReadyException e) {
@@ -698,7 +695,7 @@ public abstract class FinderRecursivePanel<T> extends OnePixelSplitter implement
       }
 
       try {
-        doCustomizeCellRenderer(this, list, t, index, isSelected, cellHasFocus);
+        doCustomizeCellRenderer();
       }
       catch (IndexNotReadyException ignored) {
         // ignore
@@ -706,7 +703,7 @@ public abstract class FinderRecursivePanel<T> extends OnePixelSplitter implement
 
       Color bg = UIUtil.getTreeBackground(isSelected, cellHasFocus);
       if (!isSelected) {
-        VirtualFile file = getContainingFile(t);
+        VirtualFile file = getContainingFile();
         Color bgColor = file == null ? null : getFileBackgroundColor(myProject, file);
         bg = bgColor == null ? bg : bgColor;
       }

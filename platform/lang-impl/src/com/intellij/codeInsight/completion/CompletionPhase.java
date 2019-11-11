@@ -36,7 +36,6 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.event.FocusEvent;
-import java.util.EventObject;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -248,7 +247,7 @@ public abstract class CompletionPhase implements Disposable {
       @NotNull Editor editor = indicator.getEditor();
       final HintListener hintListener = new HintListener() {
         @Override
-        public void hintHidden(@NotNull final EventObject event) {
+        public void hintHidden() {
           CompletionServiceImpl.setCompletionPhase(NoCompletion);
         }
       };

@@ -95,7 +95,7 @@ public class DarculaCheckBoxUI extends MetalCheckBoxUI {
     }
 
     drawCheckIcon(c, g, b, iconRect, b.isSelected(), b.isEnabled());
-    drawText(c, g, b, fm, textRect, text);
+    drawText(g, b, fm, textRect, text);
   }
 
   protected Rectangle updateViewRect(AbstractButton b, Rectangle viewRect) {
@@ -135,7 +135,7 @@ public class DarculaCheckBoxUI extends MetalCheckBoxUI {
     }
   }
 
-  protected void drawText(JComponent c, Graphics2D g, AbstractButton b, FontMetrics fm, Rectangle textRect, String text) {
+  protected void drawText(Graphics2D g, AbstractButton b, FontMetrics fm, Rectangle textRect, String text) {
     if (text != null) {
       View v = (View)b.getClientProperty(BasicHTML.propertyKey);
       if (v != null) {

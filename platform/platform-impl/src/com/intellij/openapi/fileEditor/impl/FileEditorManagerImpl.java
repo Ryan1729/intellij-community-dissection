@@ -1957,7 +1957,7 @@ public class FileEditorManagerImpl extends FileEditorManagerEx implements Persis
 
   @Override
   @NotNull
-  public VirtualFile[] getSiblings(@NotNull VirtualFile file) {
+  public VirtualFile[] getSiblings() {
     return getOpenFiles();
   }
 

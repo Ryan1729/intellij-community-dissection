@@ -315,7 +315,7 @@ public final class CustomActionsSchema implements PersistentStateComponent<Eleme
     for (String id : myIdToName.keySet()) {
       ActionGroup actionGroup = (ActionGroup)actionManager.getAction(id);
       if (actionGroup != null) { //J2EE/Commander plugin was disabled
-        root.add(ActionsTreeUtil.createNode(ActionsTreeUtil.createGroup(actionGroup, myIdToName.get(id), null, null, true, null, false)));
+        root.add(ActionsTreeUtil.createNode(ActionsTreeUtil.createGroup(actionGroup, myIdToName.get(id), null, true, null, false)));
       }
     }
   }

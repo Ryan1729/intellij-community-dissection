@@ -15,14 +15,11 @@
  */
 package com.intellij.ui;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.EventListener;
-import java.util.EventObject;
 
 /**
  * @author mike
  */
 public interface HintListener extends EventListener{
-  void hintHidden(@NotNull EventObject event);
+  void hintHidden();
 }

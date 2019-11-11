@@ -371,7 +371,7 @@ public class ProjectUtil {
     if (f != null) {
       Component mostRecentFocusOwner = f.getMostRecentFocusOwner();
       if (executeIfAppInactive) {
-        AppIcon.getInstance().requestFocus((IdeFrame)WindowManager.getInstance().getFrame(p));
+        AppIcon.getInstance().requestFocus();
         f.toFront();
         if (!SystemInfo.isMac && !f.isAutoRequestFocus()) {
           IdeFocusManager.getInstance(p).requestFocus(mostRecentFocusOwner, true);

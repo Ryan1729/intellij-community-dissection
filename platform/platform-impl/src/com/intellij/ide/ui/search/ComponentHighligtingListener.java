@@ -12,5 +12,5 @@ import javax.swing.*;
 public interface ComponentHighligtingListener {
   Topic<ComponentHighligtingListener> TOPIC = Topic.create("highlightComponent", ComponentHighligtingListener.class);
 
-  void highlight(@NotNull JComponent component, @NotNull String seachString);
+  void highlight(@NotNull JComponent component);
 }

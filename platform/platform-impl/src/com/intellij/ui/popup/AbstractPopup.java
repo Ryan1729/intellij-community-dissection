@@ -239,7 +239,7 @@ public class AbstractPopup implements JBPopup, ScreenAreaConsumer {
                                  PopupBorder.Factory.create(true, showShadow) :
                                  PopupBorder.Factory.createEmpty();
     myShadowed = showShadow;
-    myContent = createContentPanel(resizable, myPopupBorder, false);
+    myContent = createContentPanel(myPopupBorder);
     myMayBeParent = mayBeParent;
     myCancelOnWindowDeactivation = cancelOnWindowDeactivation;
 
@@ -338,7 +338,7 @@ public class AbstractPopup implements JBPopup, ScreenAreaConsumer {
 
 
   @NotNull
-  protected MyContentPanel createContentPanel(final boolean resizable, PopupBorder border, boolean isToDrawMacCorner) {
+  protected MyContentPanel createContentPanel(PopupBorder border) {
     return new MyContentPanel(border);
   }
 
@@ -1168,12 +1168,12 @@ public class AbstractPopup implements JBPopup, ScreenAreaConsumer {
 
     ChildFocusWatcher focusWatcher = new ChildFocusWatcher(myContent) {
       @Override
-      protected void onFocusGained(final FocusEvent event) {
+      protected void onFocusGained() {
         setWindowActive(true);
       }
 
       @Override
-      protected void onFocusLost(final FocusEvent event) {
+      protected void onFocusLost() {
         setWindowActive(false);
       }
     };

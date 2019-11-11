@@ -170,7 +170,7 @@ public class ShowExpressionTypeHandler implements CodeInsightActionHandler {
       AccessibleContextUtil.setName(label, "Expression type hint");
       HintManagerImpl hintManager = (HintManagerImpl)HintManager.getInstance();
       LightweightHint hint = new LightweightHint(label);
-      hint.addHintListener(e -> ApplicationManager.getApplication().invokeLater(() -> setInstance(null)));
+      hint.addHintListener(() -> ApplicationManager.getApplication().invokeLater(() -> setInstance(null)));
       Point p = hintManager.getHintPosition(hint, myEditor, HintManager.ABOVE);
       int flags = HintManager.HIDE_BY_ANY_KEY | HintManager.HIDE_BY_TEXT_CHANGE | HintManager.HIDE_BY_SCROLLING;
       hintManager.showEditorHint(hint, myEditor, p, flags, 0, false);

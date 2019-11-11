@@ -80,7 +80,7 @@ public class EventLogToolWindowFactory implements ToolWindowFactory, DumbAware {
     panel.setContent(editorPanel);
     panel.addAncestorListener(new LogShownTracker(project));
 
-    ActionToolbar toolbar = createToolbar(project, editor, console);
+    ActionToolbar toolbar = createToolbar(project, console);
     toolbar.setTargetComponent(editor.getContentComponent());
     panel.setToolbar(toolbar.getComponent());
 
@@ -89,7 +89,7 @@ public class EventLogToolWindowFactory implements ToolWindowFactory, DumbAware {
     contentManager.setSelectedContent(content);
   }
 
-  private static ActionToolbar createToolbar(Project project, Editor editor, EventLogConsole console) {
+  private static ActionToolbar createToolbar(Project project, EventLogConsole console) {
     DefaultActionGroup group = new DefaultActionGroup();
     group.add(ActionManager.getInstance().getAction(IdeActions.ACTION_MARK_ALL_NOTIFICATIONS_AS_READ));
     group.add(new EventLogConsole.ClearLogAction(console));

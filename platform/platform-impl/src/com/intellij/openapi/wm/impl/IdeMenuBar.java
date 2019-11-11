@@ -574,7 +574,7 @@ public class IdeMenuBar extends JMenuBar implements IdeEventQueue.EventDispatche
     // must be called when frame is visible (otherwise frame.getPeer() == null)
     if (menuBar instanceof IdeMenuBar) {
       try {
-        ((IdeMenuBar)menuBar).doInstallAppMenuIfNeeded(frame);
+        ((IdeMenuBar)menuBar).doInstallAppMenuIfNeeded();
       }
       catch (Throwable e) {
         LOG.warn("cannot install app menu", e);
@@ -585,7 +585,7 @@ public class IdeMenuBar extends JMenuBar implements IdeEventQueue.EventDispatche
     }
   }
 
-  protected void doInstallAppMenuIfNeeded(@NotNull JFrame frame) {
+  protected void doInstallAppMenuIfNeeded() {
   }
 
   public static void bindAppMenuOfParent(@NotNull Window frame, IdeFrame parent) {
@@ -594,7 +594,7 @@ public class IdeMenuBar extends JMenuBar implements IdeEventQueue.EventDispatche
     }
   }
 
-  public void onToggleFullScreen(boolean isFullScreen) {
+  public void onToggleFullScreen() {
   }
 
   private static final class MyExitFullScreenButton extends JButton {

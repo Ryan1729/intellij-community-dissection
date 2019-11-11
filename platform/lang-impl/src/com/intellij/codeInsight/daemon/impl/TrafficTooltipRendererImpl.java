@@ -15,7 +15,6 @@ import com.intellij.util.ui.update.ComparableObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
-import java.util.EventObject;
 
 class TrafficTooltipRendererImpl extends ComparableObject.Impl implements TrafficTooltipRenderer {
   private TrafficProgressPanel myPanel;
@@ -50,7 +49,7 @@ class TrafficTooltipRendererImpl extends ComparableObject.Impl implements Traffi
                                HintManager.HIDE_BY_SCROLLING, 0, false, hintHint);
     hint.addHintListener(new HintListener() {
       @Override
-      public void hintHidden(@NotNull EventObject event) {
+      public void hintHidden() {
         if (myPanel == null) return; //double hide?
         myPanel = null;
         onHide.run();

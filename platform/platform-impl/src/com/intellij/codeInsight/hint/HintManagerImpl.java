@@ -40,7 +40,6 @@ import javax.swing.event.HyperlinkListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.EventObject;
 import java.util.List;
 
 public class HintManagerImpl extends HintManager {
@@ -782,7 +781,7 @@ public class HintManagerImpl extends HintManager {
 
     hint.addHintListener(new HintListener() {
       @Override
-      public void hintHidden(@NotNull EventObject event) {
+      public void hintHidden() {
         hint.removeHintListener(this);
         highlighter.dispose();
 

@@ -179,7 +179,7 @@ public class TreeControlPainterTest {
     }
 
     @Override
-    public void paint(@NotNull Component c, @NotNull Graphics g, int x, int y, int width, int height, boolean expanded, boolean selected) {
+    public void paint(@NotNull Graphics g, int x, int y, int width, int height, boolean expanded, boolean selected) {
     }
   }
 }

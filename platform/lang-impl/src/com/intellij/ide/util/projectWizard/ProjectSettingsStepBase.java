@@ -216,7 +216,7 @@ public class ProjectSettingsStepBase<T> extends AbstractActionWithPanel implemen
     }
     if (myProjectGenerator != null) {
       final String baseDirPath = myLocationField.getTextField().getText();
-      ValidationResult validationResult = myProjectGenerator.validate(baseDirPath);
+      ValidationResult validationResult = myProjectGenerator.validate();
       final ValidationInfo peerValidationResult = getPeer().validate();
       if (!validationResult.isOk()) {
         setErrorText(validationResult.getErrorMessage());

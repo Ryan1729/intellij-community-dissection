@@ -30,7 +30,7 @@ public abstract class CaseCollector {
     data.switchOnConnectionType(new CaseCollector() {
 
       @Override
-      protected void processWithType(CredentialsTypeEx typeEx, Object credentials) {
+      protected void processWithType(CredentialsTypeEx typeEx) {
         result.set(typeEx.useRemoteCredentials());
       }
     }.collectCases());
@@ -48,12 +48,12 @@ public abstract class CaseCollector {
 
         @Override
         public void process(Object credentials) {
-          processWithType(typeEx, credentials);
+          processWithType(typeEx);
         }
       });
     }
     return ArrayUtil.mergeArrays(cases, exCases.toArray(new CredentialsCase[0]));
   }
 
-  protected abstract void processWithType(CredentialsTypeEx typeEx, Object credentials);
+  protected abstract void processWithType(CredentialsTypeEx typeEx);
 }

@@ -616,7 +616,7 @@ public class GlassPaneDialogWrapperPeer extends DialogWrapperPeer {
       }
     }
 
-    public void setDefaultButton(JButton defaultButton) {
+    public void setDefaultButton() {
       //((JComponent)myPane).getRootPane().setDefaultButton(defaultButton);
     }
   }
@@ -656,7 +656,7 @@ public class GlassPaneDialogWrapperPeer extends DialogWrapperPeer {
 
     @Override
     public void setDefaultButton(final JButton defaultButton) {
-      myDialog.setDefaultButton(defaultButton);
+      myDialog.setDefaultButton();
     }
 
     @Override

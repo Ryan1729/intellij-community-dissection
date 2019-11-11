@@ -12,6 +12,6 @@ public class FocusChangeListenerImpl implements FocusChangeListener {
   public void focusGained(@NotNull Editor editor) {
   }
   @Override
-  public void focusLost(@NotNull Editor editor) {
+  public void focusLost() {
   }
 }

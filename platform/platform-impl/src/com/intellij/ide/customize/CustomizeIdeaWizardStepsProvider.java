@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CustomizeIdeaWizardStepsProvider implements CustomizeIDEWizardStepsProvider {
   @Override
-  public void initSteps(@NotNull CustomizeIDEWizardDialog dialog, @NotNull List<AbstractCustomizeWizardStep> steps) {
+  public void initSteps(@NotNull List<AbstractCustomizeWizardStep> steps) {
     steps.add(new CustomizeUIThemeStepPanel());
 
     if (CustomizeDesktopEntryStep.isAvailable()) {

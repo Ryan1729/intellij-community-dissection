@@ -44,7 +44,7 @@ public class FileRenderer {
     return new ColoredListCellRenderer<T>() {
       @Override
       protected void customizeCellRenderer(@NotNull JList<? extends T> list, T value, int index, boolean selected, boolean focused) {
-        customize(this, value, selected, focused);
+        customize(this, value);
       }
     };
   }
@@ -53,7 +53,7 @@ public class FileRenderer {
     return new ColoredTableCellRenderer() {
       @Override
       protected void customizeCellRenderer(JTable table, @Nullable Object value, boolean selected, boolean focused, int row, int column) {
-        customize(this, value, selected, focused);
+        customize(this, value);
       }
     };
   }
@@ -63,12 +63,12 @@ public class FileRenderer {
       @Override
       public void customizeCellRenderer(@NotNull JTree tree, Object value,
                                         boolean selected, boolean expanded, boolean leaf, int row, boolean focused) {
-        customize(this, value, selected, focused);
+        customize(this, value);
       }
     };
   }
 
-  protected void customize(SimpleColoredComponent renderer, Object value, boolean selected, boolean focused) {
+  protected void customize(SimpleColoredComponent renderer, Object value) {
     int style = SimpleTextAttributes.STYLE_PLAIN;
     Color color = null;
     Icon icon = null;

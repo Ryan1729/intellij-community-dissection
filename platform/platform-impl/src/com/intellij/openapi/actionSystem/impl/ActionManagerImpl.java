@@ -674,7 +674,7 @@ public final class ActionManagerImpl extends ActionManagerEx implements Disposab
       else {
         registerAction(id, action, plugin.getPluginId(), element.getAttributeValue(PROJECT_TYPE));
       }
-      ActionsCollectorImpl.onActionLoadedFromXml(action, id, plugin);
+      ActionsCollectorImpl.onActionLoadedFromXml(id, plugin);
     }
   }
 
