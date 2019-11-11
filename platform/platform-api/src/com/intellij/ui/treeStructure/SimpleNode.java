@@ -1,11 +1,11 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.ui.treeStructure;
 
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.treeView.NodeDescriptor;
 import com.intellij.ide.util.treeView.PresentableNodeDescriptor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vcs.FileStatus;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.tree.LeafState;
@@ -65,10 +65,6 @@ public abstract class SimpleNode extends PresentableNodeDescriptor implements Co
     return new SimpleTextAttributes(SimpleTextAttributes.STYLE_PLAIN, getColor());
   }
 
-  private FileStatus getFileStatus() {
-    return FileStatus.NOT_CHANGED;
-  }
-
   @Nullable
   protected Object updateElement() {
     return getElement();
@@ -103,12 +99,6 @@ public abstract class SimpleNode extends PresentableNodeDescriptor implements Co
   }
 
   protected void updateFileStatus() {
-    assert getFileStatus() != null : getClass().getName() + ' ' + toString();
-
-    Color fileStatusColor = getFileStatus().getColor();
-    if (fileStatusColor != null) {
-      myColor = fileStatusColor;
-    }
   }
 
   /**

@@ -5,7 +5,6 @@ import com.google.common.annotations.VisibleForTesting;
 import com.intellij.AppTopics;
 import com.intellij.diagnostic.Activity;
 import com.intellij.diagnostic.StartUpMeasurer;
-import com.intellij.history.LocalHistory;
 import com.intellij.ide.AppLifecycleListener;
 import com.intellij.ide.startup.ServiceNotReadyException;
 import com.intellij.lang.ASTNode;
@@ -2065,8 +2064,7 @@ public final class FileBasedIndexImpl extends FileBasedIndex {
     private static boolean memoryStorageCleaningNeeded(@NotNull VFileEvent event) {
       Object requestor = event.getRequestor();
       return requestor instanceof FileDocumentManager ||
-          requestor instanceof PsiManager ||
-          requestor == LocalHistory.VFS_EVENT_REQUESTOR;
+          requestor instanceof PsiManager;
     }
 
     boolean isScheduledForUpdate(VirtualFile file) {

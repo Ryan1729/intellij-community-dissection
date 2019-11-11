@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.largeFilesEditor.search.searchResultsPanel;
 
 import com.intellij.largeFilesEditor.GuiUtils;
@@ -32,7 +33,6 @@ import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.ui.AsyncProcessIcon;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
-import org.jetbrains.annotations.CalledInAwt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
@@ -285,7 +285,6 @@ public class RangeSearch implements RangeSearchTask.Callback {
     }
   }
 
-  @CalledInAwt
   private void updateInEdt() {
     try {
       FileDataProviderForSearch fileDataProviderForSearch
@@ -710,11 +709,8 @@ public class RangeSearch implements RangeSearchTask.Callback {
   }
 
   interface EdtRangeSearchEventsListener {
-
-    @CalledInAwt
     void onSearchStopped();
 
-    @CalledInAwt
     void onSearchFinished();
   }
 }

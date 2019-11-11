@@ -1,9 +1,8 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.ide.actions;
 
 import com.intellij.CommonBundle;
-import com.intellij.history.LocalHistory;
-import com.intellij.history.LocalHistoryAction;
 import com.intellij.ide.IdeBundle;
 import com.intellij.ide.util.DirectoryUtil;
 import com.intellij.openapi.application.ApplicationManager;
@@ -93,7 +92,6 @@ class CreatePackageHandler extends CreateGroupHandler {
     CommandProcessor.getInstance().executeCommand(myProject, () -> ApplicationManager.getApplication().runWriteAction(() -> {
       String dirPath = myPackageRoot.getVirtualFile().getPresentableUrl();
       String actionName = IdeBundle.message("progress.creating.package", dirPath, packageName);
-      LocalHistoryAction action = LocalHistory.getInstance().startAction(actionName);
       try {
         createdElement = DirectoryUtil.createSubdirectories(packageName, myPackageRoot, DELIMITER);
       }
@@ -104,9 +102,6 @@ class CreatePackageHandler extends CreateGroupHandler {
                                            CommonBundle.getErrorTitle(),
                                            Messages.getErrorIcon())
         );
-      }
-      finally {
-        action.finish();
       }
     }), IdeBundle.message("command.create.package"), null);
 

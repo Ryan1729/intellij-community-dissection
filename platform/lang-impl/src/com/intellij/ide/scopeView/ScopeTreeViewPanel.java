@@ -1,10 +1,8 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.ide.scopeView;
 
 import com.intellij.ProjectTopics;
-import com.intellij.history.LocalHistory;
-import com.intellij.history.LocalHistoryAction;
 import com.intellij.ide.*;
 import com.intellij.ide.dnd.aware.DnDAwareTree;
 import com.intellij.ide.projectView.ProjectView;
@@ -141,7 +139,6 @@ public class ScopeTreeViewPanel extends JPanel implements Disposable {
   };
 
   private final MergingUpdateQueue myUpdateQueue = new MergingUpdateQueue("ScopeViewUpdate", 300, isTreeShowing(), myTree);
-  private final ScopeTreeViewPanel.MyChangesListListener myChangesListListener = new MyChangesListListener();
   protected ActionCallback myActionCallback;
 
   public ScopeTreeViewPanel(@NotNull Project project) {
@@ -166,7 +163,6 @@ public class ScopeTreeViewPanel extends JPanel implements Disposable {
     connection.subscribe(ProjectTopics.PROJECT_ROOTS, new MyModuleRootListener());
     PsiManager.getInstance(myProject).addPsiTreeChangeListener(myPsiTreeChangeAdapter);
     connection.subscribe(ProblemListener.TOPIC, new MyProblemListener());
-    ChangeListManager.getInstance(myProject).addChangeListListener(myChangesListListener);
     FileStatusManager.getInstance(myProject).addFileStatusListener(myFileStatusListener, myProject);
   }
 
@@ -174,7 +170,6 @@ public class ScopeTreeViewPanel extends JPanel implements Disposable {
   public void dispose() {
     FileTreeModelBuilder.clearCaches(myProject);
     PsiManager.getInstance(myProject).removePsiTreeChangeListener(myPsiTreeChangeAdapter);
-    ChangeListManager.getInstance(myProject).removeChangeListListener(myChangesListListener);
   }
 
   public void selectNode(final PsiElement element, final PsiFileSystemItem file, final boolean requestFocus) {
@@ -811,19 +806,6 @@ public class ScopeTreeViewPanel extends JPanel implements Disposable {
 
     @Override
     public void deleteElement(@NotNull DataContext dataContext) {
-      ArrayList<PsiElement> validElements = new ArrayList<>();
-      for (PsiElement psiElement : getSelectedPsiElements()) {
-        if (psiElement != null && psiElement.isValid()) validElements.add(psiElement);
-      }
-      final PsiElement[] elements = PsiUtilCore.toPsiElementArray(validElements);
-
-      LocalHistoryAction a = LocalHistory.getInstance().startAction(IdeBundle.message("progress.deleting"));
-      try {
-        DeleteHandler.deletePsiElement(elements, myProject);
-      }
-      finally {
-        a.finish();
-      }
     }
   }
 
@@ -878,59 +860,6 @@ public class ScopeTreeViewPanel extends JPanel implements Disposable {
 
   private boolean isTreeShowing() {
     return myTree.isShowing() || ApplicationManager.getApplication().isUnitTestMode();
-  }
-
-  private class MyChangesListListener extends ChangeListAdapter {
-    @Override
-    public void changeListAdded(ChangeList list) {
-      fireListeners(list, null);
-    }
-
-    @Override
-    public void changeListRemoved(ChangeList list) {
-      fireListeners(list, null);
-    }
-
-    @Override
-    public void changeListRenamed(ChangeList list, String oldName) {
-      fireListeners(list, oldName);
-    }
-
-    private void fireListeners(ChangeList list, @Nullable String oldName) {
-      AbstractProjectViewPane pane = ProjectView.getInstance(myProject).getCurrentProjectViewPane();
-      if (pane == null || !ScopeViewPane.ID.equals(pane.getId())) {
-        return;
-      }
-      final String subId = pane.getSubId();
-      if (!list.getName().equals(subId) && (oldName == null || !oldName.equals(subId))) {
-        return;
-      }
-      ApplicationManager.getApplication().invokeLater(() -> myDependencyValidationManager.fireScopeListeners(), myProject.getDisposed());
-    }
-
-    @Override
-    public void changesRemoved(Collection<Change> changes, ChangeList fromList) {
-      final String name = fromList.getName();
-      final Set<VirtualFile> files = new HashSet<>();
-      collectFiles(changes, files);
-      for (VirtualFile file : files) {
-        removeNode(file, name);
-      }
-    }
-
-    @Override
-    public void changesAdded(Collection<Change> changes, ChangeList toList) {
-      final String name = toList.getName();
-      final Set<VirtualFile> files = new HashSet<>();
-      collectFiles(changes, files);
-      for (VirtualFile file : files) {
-        addNode(file, name);
-      }
-    }
-
-    private void collectFiles(Collection<? extends Change> changes, Set<? super VirtualFile> files) {
-      ChangesUtil.getAfterRevisionsFiles(changes.stream()).forEach(files::add);
-    }
   }
 
   private class SortingExpandListener implements TreeWillExpandListener {

@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 
 package com.intellij.ide.actions;
 
 import com.intellij.CommonBundle;
-import com.intellij.history.LocalHistory;
-import com.intellij.history.LocalHistoryAction;
 import com.intellij.ide.IdeBundle;
-import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.application.WriteActionAware;
-import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.command.UndoConfirmationPolicy;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
@@ -79,22 +75,6 @@ public abstract class ElementCreator implements WriteActionAware {
   @Nullable
   private Exception executeCommand(String commandName, ThrowableRunnable<? extends Exception> invokeCreate) {
     final Exception[] exception = new Exception[1];
-    CommandProcessor.getInstance().executeCommand(myProject, () -> {
-      LocalHistoryAction action = LocalHistory.getInstance().startAction(commandName);
-      try {
-        if (startInWriteAction()) {
-          WriteAction.run(invokeCreate);
-        } else {
-          invokeCreate.run();
-        }
-      }
-      catch (Exception ex) {
-        exception[0] = ex;
-      }
-      finally {
-        action.finish();
-      }
-    }, commandName, null, UndoConfirmationPolicy.REQUEST_CONFIRMATION);
     return exception[0];
   }
 

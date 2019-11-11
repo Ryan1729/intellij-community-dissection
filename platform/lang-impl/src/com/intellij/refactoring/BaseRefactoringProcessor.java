@@ -3,8 +3,6 @@
 package com.intellij.refactoring;
 
 import com.intellij.find.findUsages.PsiElement2UsageTargetAdapter;
-import com.intellij.history.LocalHistory;
-import com.intellij.history.LocalHistoryAction;
 import com.intellij.ide.DataManager;
 import com.intellij.lang.Language;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -467,10 +465,8 @@ public abstract class BaseRefactoringProcessor implements Runnable {
     }
 
     String commandName = getCommandName();
-    LocalHistoryAction action = LocalHistory.getInstance().startAction(commandName);
 
     final UsageInfo[] writableUsageInfos = usageInfoSet.toArray(UsageInfo.EMPTY_ARRAY);
-    try {
       PsiDocumentManager.getInstance(myProject).commitAllDocuments();
       RefactoringListenerManagerImpl listenerManager = (RefactoringListenerManagerImpl)RefactoringListenerManager.getInstance(myProject);
       myTransaction = listenerManager.startTransaction();
@@ -530,10 +526,6 @@ public abstract class BaseRefactoringProcessor implements Runnable {
       else {
         app.runWriteAction(this::performPsiSpoilingRefactoring);
       }
-    }
-    finally {
-      action.finish();
-    }
 
     int count = writableUsageInfos.length;
     if (count > 0) {

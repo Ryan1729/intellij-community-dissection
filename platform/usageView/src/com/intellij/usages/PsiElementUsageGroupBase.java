@@ -2,7 +2,6 @@
 package com.intellij.usages;
 
 import com.intellij.navigation.NavigationItem;
-import com.intellij.navigation.NavigationItemFileStatus;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.vcs.FileStatus;
 import com.intellij.psi.PsiElement;

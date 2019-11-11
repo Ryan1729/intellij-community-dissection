@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.largeFilesEditor.editor;
 
 import com.google.common.collect.EvictingQueue;
@@ -24,7 +25,6 @@ import com.intellij.openapi.wm.impl.status.PositionPanel;
 import com.intellij.ui.components.JBLayeredPane;
 import com.intellij.util.concurrency.AppExecutorUtil;
 import com.intellij.util.ui.JBUI;
-import org.jetbrains.annotations.CalledInAwt;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -261,7 +261,6 @@ public class EditorModel {
     }
   }
 
-  @CalledInAwt
   private void update() {
     if (isBrokenMode) {
       documentOfPagesModel.removeAllPages(dataProvider.getProject());
@@ -951,7 +950,6 @@ public class EditorModel {
              + " bottomOfPage=" + bottomOfPage + " pagesInDocument.size()=" + documentOfPagesModel.getPagesAmount());
   }
 
-  @CalledInAwt
   public void showSearchResult(SearchResult searchResult) {
     targetSelectionState.set(searchResult.startPosition.pageNumber, searchResult.startPosition.symbolOffsetInPage,
                              searchResult.endPostion.pageNumber, searchResult.endPostion.symbolOffsetInPage);
@@ -964,7 +962,6 @@ public class EditorModel {
     requestUpdate();
   }
 
-  @CalledInAwt
   public void setHighlightingCloseSearchResultsEnabled(boolean enabled) {
     if (isNeedToHighlightCloseSearchResults != enabled) {
       isNeedToHighlightCloseSearchResults = enabled;
@@ -973,7 +970,6 @@ public class EditorModel {
     }
   }
 
-  @CalledInAwt
   public void fireEncodingWasChanged() {
     pagesCash.clear();
     isLocalScrollBarStabilized = false;

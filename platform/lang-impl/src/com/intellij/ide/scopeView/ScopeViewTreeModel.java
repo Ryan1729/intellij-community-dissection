@@ -469,11 +469,6 @@ public final class ScopeViewTreeModel extends BaseTreeModel<AbstractTreeNode> im
     // may be called from unexpected thread
     abstract boolean contains(@NotNull VirtualFile file, @NotNull AreaInstance area);
 
-    @Override
-    public Color getFileStatusColor(@NotNull FileStatus status) {
-      return status.getColor();
-    }
-
     @NotNull
     abstract Collection<AbstractTreeNode> createChildren(@NotNull Collection<? extends AbstractTreeNode> old);
 

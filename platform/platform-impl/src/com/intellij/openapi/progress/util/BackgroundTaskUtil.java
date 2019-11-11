@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.openapi.progress.util;
 
 import com.intellij.openapi.Disposable;
@@ -34,8 +35,6 @@ import com.intellij.util.*;
 import com.intellij.util.concurrency.AppExecutorUtil;
 import com.intellij.util.messages.MessageBus;
 import com.intellij.util.messages.Topic;
-import org.jetbrains.annotations.CalledInAny;
-import org.jetbrains.annotations.CalledInAwt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,7 +45,6 @@ public class BackgroundTaskUtil {
   private static final Logger LOG = Logger.getInstance(BackgroundTaskUtil.class);
 
   @NotNull
-  @CalledInAwt
   public static ProgressIndicator executeAndTryWait(@NotNull Function<? super ProgressIndicator, /*@NotNull*/ ? extends Runnable> backgroundTask,
                                                     @Nullable Runnable onSlowAction) {
     return executeAndTryWait(backgroundTask, onSlowAction, ProgressWindow.DEFAULT_PROGRESS_DIALOG_POSTPONE_TIME_MILLIS, false);
@@ -74,7 +72,6 @@ public class BackgroundTaskUtil {
     * This period can be very short and looks like 'jumping' if background operation is fast.
     */
   @NotNull
-  @CalledInAwt
   public static ProgressIndicator executeAndTryWait(@NotNull Function<? super ProgressIndicator, /*@NotNull*/ ? extends Runnable> backgroundTask,
                                                     @Nullable Runnable onSlowAction,
                                                     long waitMillis,
@@ -115,7 +112,6 @@ public class BackgroundTaskUtil {
     }
   }
 
-  @CalledInAwt
   private static void finish(@NotNull Runnable result, @NotNull ProgressIndicator indicator) {
     if (!indicator.isCanceled()) result.run();
   }
@@ -128,7 +124,6 @@ public class BackgroundTaskUtil {
    * </ul>
    */
   @Nullable
-  @CalledInAwt
   public static <T> T tryComputeFast(@NotNull Function<? super ProgressIndicator, ? extends T> backgroundTask,
                                      long waitMillis) {
     Pair<T, ProgressIndicator> pair = computeInBackgroundAndTryWait(
@@ -146,7 +141,6 @@ public class BackgroundTaskUtil {
   }
 
   @Nullable
-  @CalledInAny
   public static <T> T computeInBackgroundAndTryWait(@NotNull Computable<? extends T> computable,
                                                     @NotNull Consumer<? super T> asyncCallback,
                                                     long waitMillis) {
@@ -168,7 +162,6 @@ public class BackgroundTaskUtil {
    * Callback will be executed on the same thread as the background task.
    */
   @NotNull
-  @CalledInAny
   private static <T> Pair<T, ProgressIndicator> computeInBackgroundAndTryWait(@NotNull Function<? super ProgressIndicator, ? extends T> task,
                                                                               @NotNull PairConsumer<? super T, ? super ProgressIndicator> asyncCallback,
                                                                               @NotNull ModalityState modality,
@@ -202,7 +195,6 @@ public class BackgroundTaskUtil {
    * and avoid Already Disposed exceptions (in particular, because checkCanceled() is called in {@link ServiceManager#getService(Class)}.
    */
   @NotNull
-  @CalledInAny
   public static ProgressIndicator executeOnPooledThread(@NotNull Disposable parent, @NotNull Runnable runnable) {
     ProgressIndicator indicator = new EmptyProgressIndicator();
     indicator.start();
@@ -237,7 +229,6 @@ public class BackgroundTaskUtil {
     return indicator;
   }
 
-  @CalledInAny
   public static void runUnderDisposeAwareIndicator(@NotNull Disposable parent, @NotNull Runnable task) {
     runUnderDisposeAwareIndicator(parent, () -> {
       task.run();
@@ -245,7 +236,6 @@ public class BackgroundTaskUtil {
     });
   }
 
-  @CalledInAny
   public static <T> T runUnderDisposeAwareIndicator(@NotNull Disposable parent, @NotNull Computable<T> task) {
     ProgressIndicator indicator = new EmptyProgressIndicator(ModalityState.defaultModalityState());
     indicator.start();
@@ -288,7 +278,6 @@ public class BackgroundTaskUtil {
    *
    * @see #syncPublisher(Topic)
    */
-  @CalledInAny
   @NotNull
   public static <L> L syncPublisher(@NotNull Project project, @NotNull Topic<L> topic) throws ProcessCanceledException {
     return ReadAction.compute(() -> {
@@ -304,7 +293,6 @@ public class BackgroundTaskUtil {
    *
    * @see #syncPublisher(Project, Topic)
    */
-  @CalledInAny
   @NotNull
   public static <L> L syncPublisher(@NotNull Topic<L> topic) throws ProcessCanceledException {
     return ReadAction.compute(() -> {

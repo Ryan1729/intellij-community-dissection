@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.platform
 
 import com.intellij.conversion.CannotConvertException
@@ -21,7 +22,6 @@ import com.intellij.ui.ScreenUtil
 import com.intellij.ui.scale.ScaleContext
 import com.intellij.util.ui.UIUtil
 import org.jetbrains.annotations.ApiStatus
-import org.jetbrains.annotations.CalledInAwt
 import java.awt.Dimension
 import java.awt.Frame
 import java.awt.Image
@@ -80,7 +80,6 @@ internal class ProjectUiFrameAllocator(private var options: OpenProjectTask, pri
     return completed
   }
 
-  @CalledInAwt
   private fun initNewFrame(frame: IdeFrameImpl) {
     if (frame.isVisible) {
       val frameHelper = ProjectFrameHelper(frame, null)

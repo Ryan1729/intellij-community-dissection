@@ -9,16 +9,12 @@ import com.intellij.openapi.ide.CopyPasteManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Queryable;
 import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.vcs.FileStatus;
-import com.intellij.openapi.vcs.FileStatusManager;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.tree.LeafState;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
 
-import java.awt.*;
 import java.util.Collection;
 import java.util.Map;
 
@@ -47,10 +43,6 @@ public abstract class AbstractTreeNode<T> extends PresentableNodeDescriptor<Abst
     return false;
   }
 
-  protected boolean valueIsCut() {
-    return CopyPasteManager.getInstance().isCutElement(getValue());
-  }
-
   @Override
   public PresentableNodeDescriptor getChildToHighlightAt(int index) {
     final Collection<? extends AbstractTreeNode> kids = getChildren();
@@ -73,17 +65,6 @@ public abstract class AbstractTreeNode<T> extends PresentableNodeDescriptor<Abst
   }
 
   private void setForcedForeground(@NotNull PresentationData presentation) {
-    final FileStatus status = getFileStatus();
-    Color fgColor = getFileStatusColor(status);
-    fgColor = fgColor == null ? status.getColor() : fgColor;
-
-    if (valueIsCut()) {
-      fgColor = CopyPasteManager.CUT_COLOR;
-    }
-
-    if (presentation.getForcedTextForeground() == null) {
-      presentation.setForcedTextForeground(fgColor);
-    }
   }
 
   @Override
@@ -214,24 +195,6 @@ public abstract class AbstractTreeNode<T> extends PresentableNodeDescriptor<Abst
       return getValue().toString();
     }
     return null;
-  }
-
-  public Color getFileStatusColor(final FileStatus status) {
-    if (FileStatus.NOT_CHANGED.equals(status) && myProject != null && !myProject.isDefault()) {
-      final VirtualFile vf = getVirtualFile();
-      if (vf != null && vf.isDirectory()) {
-        return FileStatusManager.getInstance(myProject).getRecursiveStatus(vf).getColor();
-      }
-    }
-    return status.getColor();
-  }
-
-  protected VirtualFile getVirtualFile() {
-    return null;
-  }
-
-  public FileStatus getFileStatus() {
-    return FileStatus.NOT_CHANGED;
   }
 
   @Override

@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.configurationStore
 
 import com.intellij.diagnostic.IdeErrorsDialog
@@ -21,8 +22,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.processOpenedProjects
 import com.intellij.openapi.util.text.StringUtil
 import kotlinx.coroutines.runBlocking
-import org.jetbrains.annotations.CalledInAny
-import org.jetbrains.annotations.CalledInAwt
 
 private val LOG = Logger.getInstance("#com.intellij.openapi.components.impl.stores.StoreUtil")
 
@@ -37,7 +36,6 @@ class StoreUtil private constructor() {
      */
     @JvmOverloads
     @JvmStatic
-    @CalledInAny
     fun saveSettings(componentManager: ComponentManager, forceSavingAllSettings: Boolean = false) {
       if (componentManager is Application) {
         SaveAndSyncHandler.getInstance().cancelScheduledSave()
@@ -51,7 +49,6 @@ class StoreUtil private constructor() {
      * Save all unsaved documents and project settings. Must be called from EDT.
      * Use with care because it blocks EDT. Any new usage should be reviewed.
      */
-    @CalledInAwt
     @JvmStatic
     fun saveDocumentsAndProjectSettings(project: Project) {
       FileDocumentManager.getInstance().saveAllDocuments()
@@ -64,7 +61,6 @@ class StoreUtil private constructor() {
      *
      * @param forceSavingAllSettings Whether to force save non-roamable component configuration.
      */
-    @CalledInAwt
     @JvmStatic
     fun saveDocumentsAndProjectsAndApp(forceSavingAllSettings: Boolean) {
       SaveAndSyncHandler.getInstance().cancelScheduledSave()
@@ -77,7 +73,6 @@ class StoreUtil private constructor() {
   }
 }
 
-@CalledInAny
 suspend fun saveSettings(componentManager: ComponentManager, forceSavingAllSettings: Boolean = false): Boolean {
   if (ApplicationManager.getApplication().isDispatchThread) {
     (TransactionGuardImpl.getInstance() as TransactionGuardImpl).assertWriteActionAllowed()
@@ -142,7 +137,6 @@ fun getStateSpec(originalClass: Class<*>): State? {
 /**
  * @param forceSavingAllSettings Whether to force save non-roamable component configuration.
  */
-@CalledInAny
 suspend fun saveProjectsAndApp(forceSavingAllSettings: Boolean, onlyProject: Project? = null) {
   StoreReloadManager.getInstance().reloadChangedStorageFiles()
 
@@ -161,7 +155,6 @@ suspend fun saveProjectsAndApp(forceSavingAllSettings: Boolean, onlyProject: Pro
   }
 }
 
-@CalledInAny
 private suspend fun saveAllProjects(forceSavingAllSettings: Boolean) {
   processOpenedProjects { project ->
     saveSettings(project, forceSavingAllSettings)
