@@ -20,7 +20,6 @@
     <orderEntry type="library" scope="TEST" name="JUnit4" level="project" />
     <orderEntry type="module" module-name="intellij.platform.configurationStore.impl" />
     <orderEntry type="module" module-name="intellij.platform.util.tests" scope="TEST" />
-    <orderEntry type="module" module-name="intellij.settingsRepository" />
     <orderEntry type="library" scope="TEST" name="assertJ" level="project" />
     <orderEntry type="module" module-name="intellij.platform.credentialStore" scope="TEST" />
     <orderEntry type="module" module-name="intellij.platform.testExtensions" scope="TEST" />
