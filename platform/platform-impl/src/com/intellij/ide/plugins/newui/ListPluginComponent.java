@@ -349,9 +349,7 @@ public class ListPluginComponent extends JPanel {
     doLayout();
   }
 
-  public void setListeners(@NotNull LinkListener<? super IdeaPluginDescriptor> listener,
-                           @NotNull LinkListener<String> searchListener,
-                           @NotNull EventHandler eventHandler) {
+  public void setListeners(@NotNull EventHandler eventHandler) {
     myEventHandler = eventHandler;
     eventHandler.addAll(this);
   }

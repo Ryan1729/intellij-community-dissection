@@ -4,13 +4,10 @@ package com.intellij.ide.plugins;
 
 import com.intellij.diagnostic.Activity;
 import com.intellij.diagnostic.StartUpMeasurer;
-import com.intellij.ide.WindowsCommandLineListener;
 import com.intellij.idea.Main;
 import com.intellij.idea.StartupUtil;
 
 public final class MainRunner  {
-  @SuppressWarnings("StaticNonFinalField")
-  public static WindowsCommandLineListener LISTENER;
   @SuppressWarnings("StaticNonFinalField")
   public static Activity startupStart;
 

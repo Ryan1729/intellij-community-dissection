@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="custom-tight-scope" pattern="src[intellij.platform.ide.impl]:com.intellij.ide.plugins..*||src[intellij.platform.ide.impl]:*..*" />
+</component>

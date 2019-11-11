@@ -3,7 +3,6 @@
 package com.intellij.idea;
 
 import com.intellij.ide.BootstrapClassLoaderUtil;
-import com.intellij.ide.WindowsCommandLineProcessor;
 import com.intellij.openapi.application.PathManager;
 
 import javax.swing.*;
@@ -43,7 +42,6 @@ public final class Main {
       Thread.currentThread().setContextClassLoader(newClassLoader);
 
       Class<?> klass = Class.forName("com.intellij.ide.plugins.MainRunner", true, newClassLoader);
-      WindowsCommandLineProcessor.ourMainRunnerClass = klass;
       Method startMethod = klass.getMethod("start");
       startMethod.setAccessible(true);
       startMethod.invoke(null);

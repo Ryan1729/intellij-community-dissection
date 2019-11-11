@@ -288,23 +288,6 @@ private fun addActivateAndWindowsCliListeners() {
 
     ref.get()
   }
-
-  MainRunner.LISTENER = WindowsCommandLineListener { currentDirectory, args ->
-    val app = ApplicationManager.getApplication()
-    val argsList = args.toList()
-    LOG.info("Received external Windows command line: current directory $currentDirectory, command line $argsList")
-    if (argsList.isEmpty()) return@WindowsCommandLineListener 0
-    var state = app.defaultModalityState
-    for (starter in ApplicationStarter.EP_NAME.iterable) {
-      if (starter.canProcessExternalCommandLine() && argsList[0] == starter.commandName && starter.allowAnyModalityState()) {
-        state = app.anyModalityState
-      }
-    }
-
-    val ref = AtomicReference<Future<CliResult>>()
-    app.invokeAndWait({ ref.set(CommandLineProcessor.processExternalCommandLine(argsList, currentDirectory).getSecond()) }, state)
-    CliResult.unmap(ref.get(), 1).exitCode
-  }
 }
 
 @JvmOverloads

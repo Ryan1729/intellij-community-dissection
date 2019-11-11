@@ -27,7 +27,9 @@ import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.ArrayUtilRt;
 import com.intellij.util.Consumer;
+import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.io.Decompressor;
+import com.intellij.util.ui.UIUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -93,7 +95,7 @@ public final class PluginInstaller {
             uninstallAfterRestart(pluginDescriptor);
           }
 
-          PluginStateManager.fireState(pluginDescriptor, false);
+          fireState(pluginDescriptor, false);
           return needRestart;
         }
       }
@@ -146,7 +148,22 @@ public final class PluginInstaller {
 
     StartupActionScriptManager.addActionCommands(commands);
 
-    PluginStateManager.fireState(descriptor, true);
+    fireState(descriptor, true);
+  }
+
+  private static final List<PluginStateListener> myStateListeners = ContainerUtil.createLockFreeCopyOnWriteList();
+
+  static void fireState(@NotNull IdeaPluginDescriptor descriptor, boolean install) {
+    UIUtil.invokeLaterIfNeeded(() -> {
+      for (PluginStateListener listener : myStateListeners) {
+        if (install) {
+          listener.install(descriptor);
+        }
+        else {
+          listener.uninstall(descriptor);
+        }
+      }
+    });
   }
 
   @Nullable
@@ -176,7 +193,7 @@ public final class PluginInstaller {
     if (exception != null) {
       Messages.showErrorDialog(parent, "Plugin installation failed: " + exception.getMessage());
     }
-    PluginStateManager.fireState(descriptor, true);
+    fireState(descriptor, true);
     return exception != null ? null : refTarget.get();
   }
 
@@ -195,10 +212,6 @@ public final class PluginInstaller {
     }
 
     throw new IOException("Corrupted archive (no file entries): " + zip);
-  }
-
-  public static void addStateListener(@NotNull PluginStateListener listener) {
-    PluginStateManager.addStateListener(listener);
   }
 
   public static boolean install(@NotNull InstalledPluginsTableModel model,

@@ -201,7 +201,7 @@ public class PluginsGroupComponent extends JBPanelWithEmptyText {
       group.ui.plugins.add(pluginComponent);
       add(pluginComponent, index);
       myEventHandler.addCell(pluginComponent, eventIndex);
-      pluginComponent.setListeners(myListener, mySearchListener, myEventHandler);
+      pluginComponent.setListeners(myEventHandler);
       if (index != -1) {
         index++;
       }
@@ -233,7 +233,7 @@ public class PluginsGroupComponent extends JBPanelWithEmptyText {
     group.ui.plugins.add(index, pluginComponent);
     add(pluginComponent, uiIndex);
     myEventHandler.addCell(pluginComponent, anchor);
-    pluginComponent.setListeners(myListener, mySearchListener, myEventHandler);
+    pluginComponent.setListeners(myEventHandler);
   }
 
   public void removeGroup(@NotNull PluginsGroup group) {
