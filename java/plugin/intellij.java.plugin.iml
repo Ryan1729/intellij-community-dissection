@@ -14,7 +14,6 @@
     <orderEntry type="module" module-name="intellij.java.execution.impl" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.platform.externalSystem.impl" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.java.ui" scope="RUNTIME" />
-    <orderEntry type="module" module-name="intellij.java.manifest" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.java.remoteServers.impl" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.java.analysis.impl" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.java.indexing.impl" scope="RUNTIME" />
