@@ -9,7 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="kotlin-stdlib-jdk8" level="project" />
     <orderEntry type="module" module-name="intellij.platform.util" />
-    <orderEntry type="module" module-name="intellij.platform.testFramework" />
     <orderEntry type="library" name="JDOM" level="project" />
     <orderEntry type="library" exported="" name="assertJ" level="project" />
     <orderEntry type="library" name="memoryfilesystem" level="project" />
