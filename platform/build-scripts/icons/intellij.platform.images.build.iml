@@ -14,7 +14,6 @@
     <orderEntry type="module" module-name="intellij.platform.util.ui" />
     <orderEntry type="module" module-name="intellij.platform.util" />
     <orderEntry type="library" scope="TEST" name="JUnit4" level="project" />
-    <orderEntry type="module" module-name="intellij.platform.testFramework" scope="PROVIDED" />
     <orderEntry type="library" name="http-client" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="commons-imaging" level="project" />
     <orderEntry type="module" module-name="intellij.platform.projectModel.impl" />

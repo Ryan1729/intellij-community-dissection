@@ -137,11 +137,6 @@ public final class IdeBackgroundUtil {
     PaintersHelper painters = glassPane.getNamedPainters(FRAME_PROP);
     PaintersHelper.initWallpaperPainter(FRAME_PROP, painters);
 
-    //Image centerImage = null;
-    //if (centerImage != null) {
-    //  painters.addPainter(PaintersHelper.newImagePainter(centerImage, Fill.PLAIN, Anchor.TOP_CENTER, 1.0f, JBUI.insets(10, 0, 0, 0)), null);
-    //}
-
     painters.addPainter(new AbstractPainter() {
       final EditorEmptyTextPainter p = ServiceManager.getService(EditorEmptyTextPainter.class);
 

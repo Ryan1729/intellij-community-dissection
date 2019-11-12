@@ -25,6 +25,5 @@
     <orderEntry type="module" module-name="intellij.java.resources.en" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.java.langInjection" scope="RUNTIME" />
     <orderEntry type="module" module-name="intellij.java.tests" scope="TEST" />
-    <orderEntry type="module" module-name="intellij.java.ui.tests" scope="TEST" />
   </component>
 </module>
