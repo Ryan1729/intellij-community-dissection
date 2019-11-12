@@ -468,7 +468,6 @@
       <module fileurl="file://$PROJECT_DIR$/plugins/groovy/structuralsearch-groovy/intellij.groovy.structuralSearch.iml" filepath="$PROJECT_DIR$/plugins/groovy/structuralsearch-groovy/intellij.groovy.structuralSearch.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/groovy/groovy-uast-tests/intellij.groovy.uast.tests.iml" filepath="$PROJECT_DIR$/plugins/groovy/groovy-uast-tests/intellij.groovy.uast.tests.iml" />
       <module fileurl="file://$PROJECT_DIR$/build/intellij.idea.community.build.iml" filepath="$PROJECT_DIR$/build/intellij.idea.community.build.iml" />
-      <module fileurl="file://$PROJECT_DIR$/community-guitests/intellij.idea.community.guiTests.iml" filepath="$PROJECT_DIR$/community-guitests/intellij.idea.community.guiTests.iml" />
       <module fileurl="file://$PROJECT_DIR$/intellij.idea.community.main.iml" filepath="$PROJECT_DIR$/intellij.idea.community.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/python/intellij.idea.community.main.python.iml" filepath="$PROJECT_DIR$/python/intellij.idea.community.main.python.iml" />
       <module fileurl="file://$PROJECT_DIR$/community-resources/intellij.idea.community.resources.iml" filepath="$PROJECT_DIR$/community-resources/intellij.idea.community.resources.iml" />
@@ -535,7 +534,6 @@
       <module fileurl="file://$PROJECT_DIR$/platform/script-debugger/protocol/schema-reader-generator/intellij.javascript.schemaReaderGenerator.iml" filepath="$PROJECT_DIR$/platform/script-debugger/protocol/schema-reader-generator/intellij.javascript.schemaReaderGenerator.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/jps-cache/intellij.jps.cache.iml" filepath="$PROJECT_DIR$/plugins/jps-cache/intellij.jps.cache.iml" />
       <module fileurl="file://$PROJECT_DIR$/json/intellij.json.iml" filepath="$PROJECT_DIR$/json/intellij.json.iml" />
-      <module fileurl="file://$PROJECT_DIR$/json/tests/intellij.json.tests.iml" filepath="$PROJECT_DIR$/json/tests/intellij.json.tests.iml" />
       <module fileurl="file://$PROJECT_DIR$/java/jsp-openapi/intellij.jsp.iml" filepath="$PROJECT_DIR$/java/jsp-openapi/intellij.jsp.iml" />
       <module fileurl="file://$PROJECT_DIR$/java/jsp-base-openapi/intellij.jsp.base.iml" filepath="$PROJECT_DIR$/java/jsp-base-openapi/intellij.jsp.base.iml" />
       <module fileurl="file://$PROJECT_DIR$/java/jsp-spi/intellij.jsp.spi.iml" filepath="$PROJECT_DIR$/java/jsp-spi/intellij.jsp.spi.iml" />
@@ -694,7 +692,6 @@
       <module fileurl="file://$PROJECT_DIR$/RegExpSupport/intellij.regexp.iml" filepath="$PROJECT_DIR$/RegExpSupport/intellij.regexp.iml" />
       <module fileurl="file://$PROJECT_DIR$/xml/relaxng/intellij.relaxng.iml" filepath="$PROJECT_DIR$/xml/relaxng/intellij.relaxng.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/settings-repository/intellij.settingsRepository.tests.iml" filepath="$PROJECT_DIR$/plugins/settings-repository/intellij.settingsRepository.tests.iml" />
-      <module fileurl="file://$PROJECT_DIR$/spellchecker/intellij.spellchecker.iml" filepath="$PROJECT_DIR$/spellchecker/intellij.spellchecker.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/stats-collector/completion-ranker/intellij.statsCollector.completionRanker.iml" filepath="$PROJECT_DIR$/plugins/stats-collector/completion-ranker/intellij.statsCollector.completionRanker.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/stats-collector/log-events/intellij.statsCollector.logEvents.iml" filepath="$PROJECT_DIR$/plugins/stats-collector/log-events/intellij.statsCollector.logEvents.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugins/stats-collector/intellij.statsCollector.tests.iml" filepath="$PROJECT_DIR$/plugins/stats-collector/intellij.statsCollector.tests.iml" />

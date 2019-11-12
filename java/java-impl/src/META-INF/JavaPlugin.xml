@@ -12,6 +12,7 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
+  //This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
   -->
 <idea-plugin xmlns:xi="http://www.w3.org/2001/XInclude">
   <module value="com.intellij.modules.java"/>
@@ -838,7 +839,6 @@
     <nonProjectFileWritingAccessExtension implementation="com.intellij.codeInsight.ExternalAnnotationsNonProjectFileWritingAccessExtension"/>
     <codeInsight.template.postfixTemplateProvider language="JAVA" implementationClass="com.intellij.codeInsight.template.postfix.templates.JavaPostfixTemplateProvider"/>
     <codeInsight.folding.collapseBlockHandler language="JAVA" implementationClass="com.intellij.codeInsight.folding.impl.JavaCollapseBlockHandler"/>
-    <spellchecker.support language="JAVA" implementationClass="com.intellij.spellchecker.JavaSpellcheckingStrategy"/>
     <refactoring.elementListenerProvider implementation="com.intellij.codeInspection.ex.AdditionalAnnotationsRefactoringElementListener"/>
     <outOfSourcesChecker implementation="com.intellij.openapi.projectRoots.JavaOutOfSourcesChecker"/>
     <hierarchy.referenceProcessor implementation="com.intellij.ide.hierarchy.call.JavaCallReferenceProcessor"/>

@@ -34,7 +34,6 @@ import com.intellij.profile.codeInspection.ProjectInspectionProfileManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiFile;
-import com.intellij.spellchecker.engine.Suggestion;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.text.CaseInsensitiveStringHashingStrategy;
@@ -75,41 +74,7 @@ public class MisspelledHeaderInspection extends LocalInspectionTool {
     return new PsiElementVisitor() {
       @Override
       public void visitElement(PsiElement element) {
-        if (element instanceof Header) {
-          Header header = (Header)element;
-          String headerName = header.getName();
 
-          SortedSet<Suggestion> matches = new TreeSet<>();
-          addMatches(headerName, CUSTOM_HEADERS, matches);
-          addMatches(headerName, myRepository.getAllHeaderNames(), matches);
-
-          Suggestion bestMatch = ContainerUtil.getFirstItem(matches);
-          if (bestMatch != null && headerName.equals(bestMatch.getWord())) {
-            return;
-          }
-
-          List<LocalQuickFix> fixes = new ArrayList<>();
-          for (Suggestion match : matches) {
-            fixes.add(new HeaderRenameQuickFix(header, match.getWord()));
-            if (fixes.size() == MAX_SUGGESTIONS) break;
-          }
-          if (bestMatch == null || bestMatch.getMetrics() > TYPO_DISTANCE) {
-            fixes.add(new CustomHeaderQuickFix(header, CUSTOM_HEADERS));
-          }
-          holder.registerProblem(
-            header.getNameElement(), ManifestBundle.message("inspection.header.message"),
-            ProblemHighlightType.GENERIC_ERROR_OR_WARNING, fixes.toArray(LocalQuickFix.EMPTY_ARRAY)
-          );
-        }
-      }
-
-      private void addMatches(String headerName, Collection<String> headers, SortedSet<? super Suggestion> matches) {
-        for (String candidate : headers) {
-          int distance = EditDistance.optimalAlignment(headerName, candidate, false);
-          if (distance <= MAX_DISTANCE) {
-            matches.add(new Suggestion(candidate, distance));
-          }
-        }
       }
     };
   }
