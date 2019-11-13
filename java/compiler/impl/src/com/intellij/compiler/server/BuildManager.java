@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.compiler.server;
 
 import com.intellij.ProjectTopics;
@@ -65,18 +66,10 @@ import com.intellij.util.messages.MessageBusConnection;
 import com.intellij.util.net.NetUtils;
 import com.intellij.util.text.DateFormatUtil;
 import gnu.trove.THashSet;
-import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
-import io.netty.handler.codec.protobuf.ProtobufEncoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.util.internal.ThreadLocalRandom;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.ide.BuiltInServerManager;
-import org.jetbrains.ide.BuiltInServerManagerImpl;
 import org.jetbrains.io.ChannelRegistrar;
 import org.jetbrains.jps.api.*;
 import org.jetbrains.jps.cmdline.BuildMain;
@@ -1368,23 +1361,7 @@ public final class BuildManager implements Disposable {
   }
 
   private int startListening() {
-    BuiltInServerManager builtInServerManager = BuiltInServerManager.getInstance();
-    builtInServerManager.waitForStart();
-    ServerBootstrap bootstrap = ((BuiltInServerManagerImpl)builtInServerManager).createServerBootstrap();
-    bootstrap.childHandler(new ChannelInitializer<Channel>() {
-      @Override
-      protected void initChannel(@NotNull Channel channel) {
-        channel.pipeline().addLast(myChannelRegistrar,
-                                   new ProtobufVarint32FrameDecoder(),
-                                   new ProtobufDecoder(CmdlineRemoteProto.Message.getDefaultInstance()),
-                                   new ProtobufVarint32LengthFieldPrepender(),
-                                   new ProtobufEncoder(),
-                                   myMessageDispatcher);
-      }
-    });
-    Channel serverChannel = bootstrap.bind(InetAddress.getLoopbackAddress(), 0).syncUninterruptibly().channel();
-    myChannelRegistrar.setServerChannel(serverChannel, false);
-    return ((InetSocketAddress)serverChannel.localAddress()).getPort();
+    return -1;
   }
 
   private static String classpathToString(List<String> cp) {

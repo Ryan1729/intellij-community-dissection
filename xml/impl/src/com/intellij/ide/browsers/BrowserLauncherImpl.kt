@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.ide.browsers
 
 import com.intellij.concurrency.JobScheduler
@@ -16,7 +17,6 @@ import com.intellij.openapi.util.SystemInfo
 import com.intellij.openapi.util.registry.Registry
 import com.intellij.ui.AppUIUtil
 import com.intellij.util.Urls
-import org.jetbrains.ide.BuiltInServerManager
 import java.util.concurrent.TimeUnit
 
 class BrowserLauncherImpl : BrowserLauncherAppless() {
@@ -36,14 +36,11 @@ class BrowserLauncherImpl : BrowserLauncherAppless() {
     @Suppress("NAME_SHADOWING")
     var url = url
     @Suppress("NAME_SHADOWING")
-    val serverManager = BuiltInServerManager.getInstance()
     val parsedUrl = Urls.parse(url, false)
-    if (parsedUrl != null && serverManager.isOnBuiltInWebServer(parsedUrl)) {
+    if (parsedUrl != null) {
       if (Registry.`is`("ide.built.in.web.server.activatable", false)) {
         PropertiesComponent.getInstance().setValue("ide.built.in.web.server.active", true)
       }
-
-      url = serverManager.addAuthToken(parsedUrl).toExternalForm()
     }
     return url
   }

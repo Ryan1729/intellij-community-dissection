@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.openapi.fileTypes;
 
 public class StdFileTypes extends FileTypes {
@@ -26,7 +27,6 @@ public class StdFileTypes extends FileTypes {
   public static final LanguageFileType DTD = (LanguageFileType)FileTypeManager.getInstance().getStdFileType("DTD");
   public static final LanguageFileType HTML = (LanguageFileType)FileTypeManager.getInstance().getStdFileType("HTML");
   public static final LanguageFileType XHTML = (LanguageFileType)FileTypeManager.getInstance().getStdFileType("XHTML");
-  public static final LanguageFileType JS = (LanguageFileType)FileTypeManager.getInstance().getStdFileType("JavaScript");
   public static final LanguageFileType PROPERTIES = (LanguageFileType)FileTypeManager.getInstance().getStdFileType("Properties");
   public static final FileType GUI_DESIGNER_FORM = FileTypeManager.getInstance().getStdFileType("GUI_DESIGNER_FORM");
   public static final FileType IDEA_WORKSPACE = FileTypeManager.getInstance().getStdFileType("IDEA_WORKSPACE");

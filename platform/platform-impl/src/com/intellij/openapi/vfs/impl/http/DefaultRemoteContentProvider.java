@@ -30,7 +30,6 @@ import com.intellij.util.io.HttpRequests;
 import com.intellij.util.io.RequestBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.ide.BuiltInServerManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,10 +40,6 @@ public class DefaultRemoteContentProvider extends RemoteContentProvider {
 
   @NotNull
   public static RequestBuilder addRequestTuner(@NotNull Url url, @NotNull RequestBuilder requestBuilder) {
-    BuiltInServerManager builtInServerManager = BuiltInServerManager.getInstance();
-    if (builtInServerManager.isOnBuiltInWebServer(url)) {
-      requestBuilder.tuner(builtInServerManager::configureRequestToWebServer);
-    }
     return requestBuilder;
   }
 

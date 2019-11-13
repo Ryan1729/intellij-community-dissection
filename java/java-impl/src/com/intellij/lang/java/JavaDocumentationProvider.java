@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.lang.java;
 
 import com.intellij.codeInsight.CodeInsightBundle;
@@ -46,12 +47,9 @@ import com.intellij.psi.util.PsiFormatUtilBase;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.util.SmartList;
-import com.intellij.util.Url;
-import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.io.HttpRequests;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.builtInWebServer.BuiltInWebBrowserUrlProviderKt;
 
 import java.util.*;
 
@@ -581,12 +579,6 @@ public class JavaDocumentationProvider extends DocumentationProviderEx implement
   }
 
   @Nullable
-  public static String generateExternalJavadoc(@NotNull final PsiElement element, @NotNull JavaDocInfoGenerator generator) {
-    final List<String> docURLs = getExternalJavaDocUrl(element);
-    return generateExternalJavadoc(generator, docURLs);
-  }
-
-  @Nullable
   private static String generateExternalJavadoc(@NotNull JavaDocInfoGenerator generator, @Nullable List<String> docURLs) {
     return JavaDocExternalFilter.filterInternalDocInfo(generator.generateDocInfo(docURLs));
   }
@@ -783,19 +775,6 @@ public class JavaDocumentationProvider extends DocumentationProviderEx implement
     for (OrderEntry orderEntry : fileIndex.getOrderEntriesForFile(virtualFile)) {
       boolean altUrl = orderEntry instanceof JdkOrderEntry && JavaSdkVersionUtil.isAtLeast(((JdkOrderEntry)orderEntry).getJdk(), JavaSdkVersion.JDK_11);
 
-      for (VirtualFile root : orderEntry.getFiles(JavadocOrderRootType.getInstance())) {
-        if (root.getFileSystem() == JarFileSystem.getInstance()) {
-          VirtualFile file = root.findFileByRelativePath(relPath);
-          if (file == null && altRelPath != null) file = root.findFileByRelativePath(altRelPath);
-          if (file != null) {
-            List<Url> urls = BuiltInWebBrowserUrlProviderKt.getBuiltInServerUrls(file, project, null);
-            if (!urls.isEmpty()) {
-              return ContainerUtil.map(urls, Url::toExternalForm);
-            }
-          }
-        }
-      }
-
       String[] webUrls = JavadocOrderRootType.getUrls(orderEntry);
       if (webUrls.length > 0) {
         List<String> httpRoots = new ArrayList<>();
@@ -849,7 +828,7 @@ public class JavaDocumentationProvider extends DocumentationProviderEx implement
   }
 
   public static String fetchExternalJavadoc(PsiElement element, Project project, List<String> docURLs) {
-    return fetchExternalJavadoc(element, docURLs, new JavaDocExternalFilter(project));
+    return fetchExternalJavadoc(element, docURLs, new JavaDocExternalFilter());
   }
 
   public static String fetchExternalJavadoc(PsiElement element, List<String> docURLs, @NotNull JavaDocExternalFilter docFilter) {

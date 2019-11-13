@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 
 package com.intellij.codeInsight.documentation;
 
@@ -77,7 +78,6 @@ import com.intellij.util.ui.accessibility.ScreenReader;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.ide.BuiltInServerManager;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -165,17 +165,6 @@ public class DocumentationComponent extends JPanel implements Disposable, DataPr
   private AbstractPopup myHint;
 
   private final Map<KeyStroke, ActionListener> myKeyboardActions = new HashMap<>();
-
-  @NotNull
-  public static DocumentationComponent createAndFetch(@NotNull Project project,
-                                                      @NotNull PsiElement element,
-                                                      @NotNull Disposable disposable) {
-    DocumentationManager manager = DocumentationManager.getInstance(project);
-    DocumentationComponent component = new DocumentationComponent(manager);
-    Disposer.register(disposable, component);
-    manager.fetchDocInfo(element, component);
-    return component;
-  }
 
   public DocumentationComponent(DocumentationManager manager) {
     this(manager, true);
@@ -1162,15 +1151,6 @@ public class DocumentationComponent extends JPanel implements Disposable, DataPr
     }
 
     Url parsedUrl = Urls.parseEncoded(url.toExternalForm());
-    BuiltInServerManager builtInServerManager = BuiltInServerManager.getInstance();
-    if (parsedUrl != null && builtInServerManager.isOnBuiltInWebServer(parsedUrl)) {
-      try {
-        url = new URL(builtInServerManager.addAuthToken(parsedUrl).toExternalForm());
-      }
-      catch (MalformedURLException e) {
-        LOG.warn(e);
-      }
-    }
     URL imageUrl = url;
     return Toolkit.getDefaultToolkit().createImage(new RenderableImageProducer(new RenderableImage() {
       private Image myImage;

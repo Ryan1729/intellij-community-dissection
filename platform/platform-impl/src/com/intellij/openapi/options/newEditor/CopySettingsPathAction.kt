@@ -1,8 +1,8 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.openapi.options.newEditor
 
 import com.google.common.net.UrlEscapers
-import com.intellij.CommonBundle
 import com.intellij.idea.ActionsBundle
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.AnAction
@@ -15,7 +15,6 @@ import com.intellij.ui.ComponentUtil
 import com.intellij.ui.tabs.JBTabs
 import com.intellij.util.PlatformUtils
 import com.intellij.util.ui.TextTransferable
-import org.jetbrains.ide.BuiltInServerManager
 import java.awt.datatransfer.Transferable
 import java.awt.event.ActionEvent
 import java.util.*
@@ -34,16 +33,7 @@ class CopySettingsPathAction : AnAction(pathActionName, ActionsBundle.message("a
   companion object {
     @JvmStatic
     fun createSwingActions(supplier: Supplier<Collection<String>>): List<Action> {
-      return listOf(
-        createSwingAction("CopySettingsPath", pathActionName) { copy(supplier.get()) },
-        // disable until REST API is not able to delegate to proper IDE
-        //createSwingAction(null, "Copy ${CommonBundle.settingsTitle()} Link") {
-        //  copyLink(supplier, isHttp = true)
-        //},
-        createSwingAction(null, "Copy ${CommonBundle.settingsTitle()} Link") {
-          copyLink(supplier, isHttp = false)
-        }
-      )
+      return listOf()
     }
 
     @JvmStatic
@@ -168,7 +158,6 @@ private fun copyLink(supplier: Supplier<Collection<String>>, isHttp: Boolean) {
   if (isHttp) {
     builder
       .append("http://localhost:")
-      .append(BuiltInServerManager.getInstance().port)
       .append("/api")
   }
   else {
