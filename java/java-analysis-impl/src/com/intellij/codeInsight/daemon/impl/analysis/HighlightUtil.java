@@ -56,7 +56,6 @@ import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.containers.MultiMap;
 import com.intellij.util.ui.UIUtil;
 import com.intellij.xml.util.XmlStringUtil;
-import com.siyeh.ig.psiutils.ControlFlowUtils;
 import gnu.trove.THashMap;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -288,8 +287,7 @@ public class HighlightUtil extends HighlightUtilBase {
     PsiType operandType = operand.getType();
 
     if (operandType != null &&
-        !TypeConversionUtil.areTypesConvertible(operandType, castType, PsiUtil.getLanguageLevel(expression)) &&
-        !RedundantCastUtil.isInPolymorphicCall(expression)) {
+        !TypeConversionUtil.areTypesConvertible(operandType, castType, PsiUtil.getLanguageLevel(expression))) {
       String message = "String message";
       return HighlightInfo.newHighlightInfo(HighlightInfoType.ERROR).range(expression).descriptionAndTooltip(message).create();
     }
@@ -2012,7 +2010,7 @@ public class HighlightUtil extends HighlightUtilBase {
              rule = PsiTreeUtil.getPrevSiblingOfType(rule, PsiSwitchLabeledRuleStatement.class)) {
           PsiStatement ruleBody = rule.getBody();
           // the expression and throw statements are fine, only the block statement could be an issue
-          if (ruleBody instanceof PsiBlockStatement && ControlFlowUtils.statementMayCompleteNormally(ruleBody)) {
+          if (ruleBody instanceof PsiBlockStatement) {
             PsiElement target = ObjectUtils.notNull(ObjectUtils.tryCast(rule.getFirstChild(), PsiKeyword.class), rule);
             String message = JavaErrorMessages.message("switch.expr.rule.should.produce.result");
             results.add(HighlightInfo.newHighlightInfo(HighlightInfoType.ERROR).range(target).descriptionAndTooltip(message).create());
@@ -2021,7 +2019,7 @@ public class HighlightUtil extends HighlightUtilBase {
         return results;
       }
       // previous statements may have no result as well, but in that case they fall through to the last one, which needs to be checked anyway
-      if (lastStatement != null && ControlFlowUtils.statementMayCompleteNormally(lastStatement)) {
+      if (lastStatement != null) {
         PsiElement target = ObjectUtils.notNull(ObjectUtils.tryCast(switchExpression.getFirstChild(), PsiKeyword.class), switchExpression);
         String message = JavaErrorMessages.message("switch.expr.should.produce.result");
         return Collections.singletonList(HighlightInfo.newHighlightInfo(HighlightInfoType.ERROR).range(target).descriptionAndTooltip(message).create());
@@ -2261,44 +2259,12 @@ public class HighlightUtil extends HighlightUtilBase {
     while (element != null) {
       // check if expression inside super()/this() call
       if (JavaPsiConstructorUtil.isConstructorCall(element)) {
-        PsiElement parentClass = new PsiMatcherImpl(element)
-          .parent(PsiMatchers.hasClass(PsiExpressionStatement.class))
-          .parent(PsiMatchers.hasClass(PsiCodeBlock.class))
-          .parent(PsiMatchers.hasClass(PsiMethod.class))
-          .dot(JavaMatchers.isConstructor(true))
-          .parent(PsiMatchers.hasClass(PsiClass.class))
-          .getElement();
-        if (parentClass == null) {
-          return null;
-        }
-
-        // only this class/superclasses instance methods are not allowed to call
-        PsiClass aClass = (PsiClass)parentClass;
-        if (PsiUtil.isInnerClass(aClass) && referencedClass == aClass.getContainingClass()) return null;
-        // field or method should be declared in this class or super
-        if (!InheritanceUtil.isInheritorOrSelf(aClass, referencedClass, true)) return null;
-        // and point to our instance
-        if (expression instanceof PsiReferenceExpression &&
-            !thisOrSuperReference(((PsiReferenceExpression)expression).getQualifierExpression(), aClass)) {
-          return null;
-        }
-
-        if (expression instanceof PsiJavaCodeReferenceElement &&
-            !aClass.equals(PsiTreeUtil.getParentOfType(expression, PsiClass.class)) &&
-            PsiTreeUtil.getParentOfType(expression, PsiTypeElement.class) != null) {
-          return null;
-        }
-
         if (expression instanceof PsiJavaCodeReferenceElement &&
             PsiTreeUtil.getParentOfType(expression, PsiClassObjectAccessExpression.class) != null) {
           return null;
         }
 
         final HighlightInfo highlightInfo = createMemberReferencedError(resolvedName, expression.getTextRange());
-        if (expression instanceof PsiReferenceExpression && PsiUtil.isInnerClass(aClass)) {
-          final PsiClass containingClass = aClass.getContainingClass();
-          LOG.assertTrue(containingClass != null);
-        }
 
         return highlightInfo;
       }

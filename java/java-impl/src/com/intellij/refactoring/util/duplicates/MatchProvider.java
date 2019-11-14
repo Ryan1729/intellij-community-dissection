@@ -29,18 +29,18 @@ public interface MatchProvider {
    * Call change signature here to avoid refactoring under write action
    * @param match match which requires signature to be changed e.g. due to stronger expected type, etc
    */
-  void prepareSignature(Match match);
+  void prepareSignature(Object match);
 
-  PsiElement processMatch(Match match) throws IncorrectOperationException;
+  PsiElement processMatch(Object match) throws IncorrectOperationException;
 
-  List<Match> getDuplicates();
+  List<Object> getDuplicates();
 
   /**
    * @return null if no confirmation prompt is expected
    */
   @Nullable Boolean hasDuplicates();
 
-  @Nullable String getConfirmDuplicatePrompt(Match match);
+  @Nullable String getConfirmDuplicatePrompt(Object match);
 
   String getReplaceDuplicatesTitle(int idx, int size);
 }

@@ -18,7 +18,6 @@ import com.intellij.structuralsearch.plugin.replace.impl.ReplacerUtil;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.ObjectUtils;
 import com.intellij.util.SmartList;
-import com.siyeh.ig.psiutils.ImportUtils;
 import com.siyeh.ig.psiutils.PsiElementOrderComparator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

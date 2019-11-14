@@ -2,8 +2,6 @@
 package com.intellij.codeInspection.dataFlow.rangeSet;
 
 import com.intellij.codeInsight.AnnotationUtil;
-import com.intellij.codeInspection.dataFlow.DfaFactType;
-import com.intellij.codeInspection.dataFlow.value.*;
 import com.intellij.psi.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.TypeConversionUtil;
@@ -135,31 +133,8 @@ public abstract class LongRangeSet {
    * @param relation relation to be applied to current set (JavaTokenType.EQEQ/NE/GT/GE/LT/LE)
    * @return new set or null if relation is unsupported
    */
-  public LongRangeSet fromRelation(@Nullable DfaRelationValue.RelationType relation) {
-    if (isEmpty() || relation == null) return null;
-    switch (relation) {
-      case EQ:
-        return this;
-      case NE: {
-        long min = min();
-        if (min == max()) return all().without(min);
-        return all();
-      }
-      case GT: {
-        long min = min();
-        return min == Long.MAX_VALUE ? empty() : range(min + 1, Long.MAX_VALUE);
-      }
-      case GE:
-        return range(min(), Long.MAX_VALUE);
-      case LE:
-        return range(Long.MIN_VALUE, max());
-      case LT: {
-        long max = max();
-        return max == Long.MIN_VALUE ? empty() : range(Long.MIN_VALUE, max - 1);
-      }
-      default:
-        return null;
-    }
+  public LongRangeSet fromRelation() {
+    return null;
   }
 
   public abstract String getPresentationText(PsiType type);
@@ -705,16 +680,7 @@ public abstract class LongRangeSet {
   }
 
   @Nullable
-  public static LongRangeSet fromDfaValue(DfaValue value) {
-    if (value instanceof DfaFactMapValue) {
-      return ((DfaFactMapValue)value).get(DfaFactType.RANGE);
-    }
-    if (value instanceof DfaConstValue) {
-      return fromConstant(((DfaConstValue)value).getValue());
-    }
-    if (value instanceof DfaVariableValue) {
-      return fromType(value.getType());
-    }
+  public static LongRangeSet fromDfaValue() {
     return null;
   }
 

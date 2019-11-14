@@ -13,71 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.codeInspection.dataFlow;
 
-import com.intellij.codeInspection.dataFlow.value.*;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface DfaMemoryState {
-  @NotNull
-  DfaMemoryState createCopy();
-
-  @NotNull
-  DfaMemoryState createClosureState();
 
   /**
    * Pops single value from the top of the stack and returns it
    * @return popped value
    * @throws java.util.EmptyStackException if stack is empty
    */
-  @NotNull DfaValue pop();
+  @NotNull Object pop();
 
   /**
    * Reads a value from the top of the stack without popping it
    * @return top of stack value
    * @throws java.util.EmptyStackException if stack is empty
    */
-  @NotNull DfaValue peek();
+  @NotNull Object peek();
 
-  /**
-   * Reads a value from the stack at given offset from the top without popping it
-   * @param offset value from the stack (0 = top of stack, 1 = the next one, etc.)
-   * @return stack value; null if stack does not deep enough
-   * @throws IndexOutOfBoundsException if offset is negative
-   */
-  @Nullable DfaValue getStackValue(int offset);
+  void push(@NotNull Object value);
 
-  /**
-   * Pushes given value to the stack
-   * @param value to push
-   */
-  void push(@NotNull DfaValue value);
-
-  void emptyStack();
-
-  void setVarValue(DfaVariableValue var, DfaValue value);
-
-  /**
-   * Ensures that top-of-stack value is either null or belongs to the supplied type
-   *
-   * @param type the type to cast to
-   * @return true if cast is successful; false if top-of-stack value type is incompatible with supplied type
-   * @throws java.util.EmptyStackException if stack is empty
-   */
-  boolean castTopOfStack(@NotNull DfaPsiType type);
-
-  /**
-   * Returns a relation between given values within this state, if known
-   * @param left first value
-   * @param right second value
-   * @return a relation (EQ, NE, GT, LT), or null if not known.
-   */
-  @Nullable
-  DfaRelationValue.RelationType getRelation(DfaValue left, DfaValue right);
-
-  boolean applyCondition(DfaValue dfaCond);
+  boolean applyCondition(Object dfaCond);
 
   /**
    * Returns true if given two values are known to be equal
@@ -86,41 +46,7 @@ public interface DfaMemoryState {
    * @param value2 second value to check
    * @return true if they are equal; false if not equal or not known
    */
-  boolean areEqual(@NotNull DfaValue value1, @NotNull DfaValue value2);
-
-  boolean applyContractCondition(DfaValue dfaCond);
-
-  /**
-   * Returns a value fact about supplied value within the context of current memory state.
-   * Returns null if the fact of given type is not known or not applicable to a given value.
-   *
-   * @param <T> a type of the fact value
-   * @param value a value to get the fact about
-   * @param factType a type of the fact to get
-   * @return a fact about value, if known
-   */
-  @Nullable
-  <T> T getValueFact(@NotNull DfaValue value, @NotNull DfaFactType<T> factType);
-
-  /**
-   * Forgets given fact if it was known for the supplied value
-   * @param value a value to drop fact for
-   * @param factType a type of the fact to drop
-   */
-  void dropFact(@NotNull DfaValue value, @NotNull DfaFactType<?> factType);
-
-  /**
-   * Updates value fact if it's compatible with current value state. Depending on value passed and memory state implementation
-   * the new fact may or may not be memoized.
-   *
-   * @param <T> a type of the fact value
-   * @param var a value to update its state
-   * @param factType a type of the fact to set
-   * @param value a new fact value
-   * @return true if update was successful; false if current state contradicts with the wanted fact value
-   */
-  <T> boolean applyFact(@NotNull DfaValue var, @NotNull DfaFactType<T> factType, @Nullable T value);
-
+  boolean areEqual(@NotNull Object value1, @NotNull Object value2);
   /**
    * Forces variable to have given fact (ignoring current value of this fact and flushing existing relations with this variable).
    * This might be useful if state is proven to be invalid, but we want to continue analysis to discover subsequent
@@ -135,53 +61,9 @@ public interface DfaMemoryState {
    * @param value the new variable value
    * @param <T> type of fact value
    */
-  <T> void forceVariableFact(@NotNull DfaVariableValue var, @NotNull DfaFactType<T> factType, @Nullable T value);
+  <T> void forceVariableFact(@NotNull Object var, @NotNull Object factType, @Nullable T value);
 
-  /**
-   * Returns a map of known facts associated with given variable
-   *
-   * @param variable a variable to query the facts from
-   * @return facts map
-   */
-  @NotNull
-  DfaFactMap getFacts(@NotNull DfaVariableValue variable);
+  boolean isNull(Object dfaVar);
 
-  void flushFields();
-
-  void flushVariable(@NotNull DfaVariableValue variable);
-
-  boolean isNull(DfaValue dfaVar);
-
-  boolean checkNotNullable(DfaValue value);
-
-  boolean isNotNull(DfaValue dfaVar);
-
-  /**
-   * Returns a constant value which equals to given value, if such.
-   *
-   * @param value a value to find a corresponding constant
-   * @return found constant or null
-   */
-  @Nullable
-  @Contract("null -> null")
-  DfaConstValue getConstantValue(@Nullable DfaValue value);
-
-  /**
-   * Ephemeral means a state that was created when considering a method contract and checking if one of its arguments is null.
-   * With explicit null check, that would result in any non-annotated variable being treated as nullable and producing possible NPE warnings later.
-   * With contracts, we don't want this. So the state where this variable is null is marked ephemeral and no NPE warnings are issued for such states. 
-   */
-  void markEphemeral();
-  
-  boolean isEphemeral();
-
-  boolean isEmptyStack();
-
-  /**
-   * Returns true if two given values should be compared by content, rather than by reference.
-   * @param dfaLeft left value
-   * @param dfaRight right value
-   * @return true if two given values should be compared by content, rather than by reference.
-   */
-  boolean shouldCompareByEquals(DfaValue dfaLeft, DfaValue dfaRight);
+  boolean isNotNull(Object dfaVar);
 }

@@ -11,8 +11,6 @@ import com.intellij.psi.impl.PsiImplUtil;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.ObjectUtils;
 import com.siyeh.ig.controlflow.SwitchStatementWithTooFewBranchesInspection.UnwrapSwitchStatementFix;
-import com.siyeh.ig.psiutils.BreakConverter;
-import com.siyeh.ig.psiutils.CommentTracker;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 

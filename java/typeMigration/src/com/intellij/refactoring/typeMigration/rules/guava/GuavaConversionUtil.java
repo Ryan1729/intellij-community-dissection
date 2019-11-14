@@ -15,7 +15,6 @@
  */
 package com.intellij.refactoring.typeMigration.rules.guava;
 
-import com.intellij.codeInspection.AnonymousCanBeLambdaInspection;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.*;
 import com.intellij.psi.util.InheritanceUtil;

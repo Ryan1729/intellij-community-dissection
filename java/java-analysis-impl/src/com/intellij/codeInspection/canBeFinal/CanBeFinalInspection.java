@@ -101,7 +101,7 @@ public class CanBeFinalInspection extends GlobalJavaBatchInspectionTool {
   @Override
   @Nullable
   public RefGraphAnnotator getAnnotator(@NotNull final RefManager refManager) {
-    return new CanBeFinalAnnotator(refManager);
+    return null;
   }
 
 
@@ -118,10 +118,8 @@ public class CanBeFinalInspection extends GlobalJavaBatchInspectionTool {
       if (!refElement.isReferenced()) return null;
       if (refElement.isSyntheticJSP()) return null;
       if (refElement.isFinal()) return null;
-      if (!((RefElementImpl)refElement).checkFlag(CanBeFinalAnnotator.CAN_BE_FINAL_MASK)) return null;
 
       final PsiMember psiMember = ObjectUtils.tryCast(refElement.getPsiElement(), PsiMember.class);
-      if (psiMember == null || !CanBeFinalHandler.allowToBeFinal(psiMember)) return null;
 
       PsiIdentifier psiIdentifier = null;
       if (refElement instanceof RefClass) {
@@ -170,7 +168,6 @@ public class CanBeFinalInspection extends GlobalJavaBatchInspectionTool {
             if (!refMethod.isStatic() && !PsiModifier.PRIVATE.equals(refMethod.getAccessModifier()) &&
                 !(refMethod instanceof RefImplicitConstructor)) {
               globalContext.enqueueDerivedMethodsProcessor(refMethod, derivedMethod -> {
-                ((RefElementImpl)refMethod).setFlag(false, CanBeFinalAnnotator.CAN_BE_FINAL_MASK);
                 problemsProcessor.ignoreElement(refMethod);
                 return false;
               });
@@ -180,7 +177,6 @@ public class CanBeFinalInspection extends GlobalJavaBatchInspectionTool {
           @Override public void visitClass(@NotNull final RefClass refClass) {
             if (!refClass.isAnonymous()) {
               globalContext.enqueueDerivedClassesProcessor(refClass, inheritor -> {
-                ((RefClassImpl)refClass).setFlag(false, CanBeFinalAnnotator.CAN_BE_FINAL_MASK);
                 problemsProcessor.ignoreElement(refClass);
                 return false;
               });
@@ -193,7 +189,6 @@ public class CanBeFinalInspection extends GlobalJavaBatchInspectionTool {
               public boolean process(PsiReference psiReference) {
                 PsiElement expression = psiReference.getElement();
                 if (expression instanceof PsiReferenceExpression && PsiUtil.isAccessedForWriting((PsiExpression)expression)) {
-                  ((RefFieldImpl)refField).setFlag(false, CanBeFinalAnnotator.CAN_BE_FINAL_MASK);
                   problemsProcessor.ignoreElement(refField);
                   return false;
                 }

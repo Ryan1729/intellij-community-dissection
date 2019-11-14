@@ -21,10 +21,6 @@ import com.intellij.util.ArrayUtilRt;
 import com.intellij.util.ObjectUtils;
 import com.intellij.util.PlatformIcons;
 import com.intellij.util.containers.ContainerUtil;
-import com.siyeh.ig.psiutils.DeclarationSearchUtils;
-import com.siyeh.ig.psiutils.ExpressionUtils;
-import com.siyeh.ig.psiutils.MethodCallUtils;
-import com.siyeh.ig.psiutils.ParenthesesUtils;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -90,7 +86,6 @@ public class JavaReflectionReferenceUtil {
 
   @Contract("null -> null")
   public static ReflectiveType getReflectiveType(@Nullable PsiExpression context) {
-    context = ParenthesesUtils.stripParentheses(context);
     if (context == null) {
       return null;
     }
@@ -107,7 +102,7 @@ public class JavaReflectionReferenceUtil {
         if (method != null && isJavaLangClass(method.getContainingClass())) {
           final PsiExpression[] expressions = methodCall.getArgumentList().getExpressions();
           if (expressions.length == 1) {
-            final PsiExpression argument = findDefinition(ParenthesesUtils.stripParentheses(expressions[0]));
+            final PsiExpression argument = findDefinition(expressions[0]);
             final String className = computeConstantExpression(argument, String.class);
             if (className != null) {
               return ReflectiveType.create(findClass(className, context), true);
@@ -118,7 +113,7 @@ public class JavaReflectionReferenceUtil {
       else if (GET_CLASS.equals(methodReferenceName) && methodCall.getArgumentList().isEmpty()) {
         final PsiMethod method = methodCall.resolveMethod();
         if (method != null && isJavaLangObject(method.getContainingClass())) {
-          final PsiExpression qualifier = ParenthesesUtils.stripParentheses(methodCall.getMethodExpression().getQualifierExpression());
+          final PsiExpression qualifier = methodCall.getMethodExpression().getQualifierExpression();
           if (qualifier instanceof PsiReferenceExpression) {
             final PsiExpression definition = findVariableDefinition((PsiReferenceExpression)qualifier);
             if (definition != null) {
@@ -186,7 +181,6 @@ public class JavaReflectionReferenceUtil {
 
   @Nullable
   private static ReflectiveType getClassInstanceType(@Nullable PsiExpression expression) {
-    expression = ParenthesesUtils.stripParentheses(expression);
     if (expression == null) {
       return null;
     }
@@ -221,7 +215,6 @@ public class JavaReflectionReferenceUtil {
   @Contract("null,_->null")
   @Nullable
   public static <T> T computeConstantExpression(@Nullable PsiExpression expression, @NotNull Class<T> expectedType) {
-    expression = ParenthesesUtils.stripParentheses(expression);
     final Object computed = JavaConstantExpressionEvaluator.computeConstantExpression(expression, false);
     return ObjectUtils.tryCast(computed, expectedType);
   }
@@ -259,7 +252,7 @@ public class JavaReflectionReferenceUtil {
         return findFinalFieldDefinition(referenceExpression, (PsiField)variable);
       }
     }
-    return DeclarationSearchUtils.findDefinition(referenceExpression, variable);
+    return null;
   }
 
   @Nullable
@@ -293,10 +286,7 @@ public class JavaReflectionReferenceUtil {
 
   @Nullable
   private static PsiExpression getAssignedExpression(@NotNull PsiMember maybeContainsAssignment, @NotNull PsiField field) {
-    final PsiAssignmentExpression assignment = SyntaxTraverser.psiTraverser(maybeContainsAssignment)
-      .filter(PsiAssignmentExpression.class)
-      .find(expression -> ExpressionUtils.isReferenceTo(expression.getLExpression(), field));
-    return assignment != null ? assignment.getRExpression() : null;
+    return null;
   }
 
   private static PsiClass findClass(@NotNull String qualifiedName, @NotNull PsiElement context) {
@@ -432,7 +422,7 @@ public class JavaReflectionReferenceUtil {
   }
 
   public static boolean isCallToMethod(@NotNull PsiMethodCallExpression methodCall, @NotNull String className, @NotNull String methodName) {
-    return MethodCallUtils.isCallToMethod(methodCall, className, null, methodName, (PsiType[])null);
+    return false;
   }
 
   /**
@@ -443,9 +433,6 @@ public class JavaReflectionReferenceUtil {
    */
   @Nullable
   public static List<PsiExpression> getVarargs(@Nullable PsiExpression maybeArray) {
-    if (ExpressionUtils.isNullLiteral(maybeArray)) {
-      return Collections.emptyList();
-    }
     if (isVarargAsArray(maybeArray)) {
       final PsiExpression argumentsDefinition = findDefinition(maybeArray);
       if (argumentsDefinition instanceof PsiArrayInitializerExpression) {

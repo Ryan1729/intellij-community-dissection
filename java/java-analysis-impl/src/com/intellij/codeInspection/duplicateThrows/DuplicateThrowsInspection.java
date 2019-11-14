@@ -2,7 +2,6 @@
 package com.intellij.codeInspection.duplicateThrows;
 
 import com.intellij.codeInsight.daemon.GroupNames;
-import com.intellij.codeInsight.daemon.impl.quickfix.MethodThrowsFix;
 import com.intellij.codeInspection.*;
 import com.intellij.codeInspection.ui.SingleCheckboxOptionsPanel;
 import com.intellij.psi.*;
@@ -81,9 +80,6 @@ public class DuplicateThrowsInspection extends AbstractBaseJavaLocalInspectionTo
                   }
                 }
               }
-            }
-            if (problem != null) {
-              holder.registerProblem(ref, problem, ProblemHighlightType.LIKE_UNUSED_SYMBOL, new MethodThrowsFix.RemoveFirst(method, type, false));
             }
           }
         }

@@ -18,7 +18,6 @@ package com.intellij.structuralsearch.impl.matcher.predicates;
 import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiType;
 import com.intellij.structuralsearch.impl.matcher.MatchContext;
-import com.siyeh.ig.psiutils.ExpectedTypeUtils;
 
 public class FormalArgTypePredicate extends ExprTypePredicate {
 

@@ -17,7 +17,6 @@
 package com.intellij.codeInsight.template.macro;
 
 import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.codeInsight.guess.GuessManager;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.template.*;
 import com.intellij.codeInsight.template.impl.JavaTemplateUtil;
@@ -76,12 +75,7 @@ public class GuessElementTypeMacro extends Macro {
     Project project = context.getProject();
 
     PsiExpression expr = MacroUtil.resultToPsiExpression(result, context);
-    if (expr == null) return null;
-    PsiType[] types = GuessManager.getInstance(project).guessContainerElementType(expr, new TextRange(context.getTemplateStartOffset(), context.getTemplateEndOffset()));
-    for (int i = 0; i < types.length; i++) {
-      types[i] = GenericsUtil.getVariableTypeByExpressionType(types[i]);
-    }
-    return types;
+    return null;
   }
 
   @Override

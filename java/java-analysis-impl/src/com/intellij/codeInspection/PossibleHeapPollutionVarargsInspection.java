@@ -1,4 +1,5 @@
 // Copyright 2000-2017 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.codeInspection;
 
 import com.intellij.codeInsight.AnnotationUtil;
@@ -57,44 +58,15 @@ public class PossibleHeapPollutionVarargsInspection extends AbstractBaseJavaLoca
       @Override
       protected void registerProblem(PsiMethod method, PsiIdentifier nameIdentifier) {
         final LocalQuickFix quickFix;
-        if (GenericsHighlightUtil.isSafeVarargsNoOverridingCondition(method, PsiUtil.getLanguageLevel(method))) {
-          quickFix = new AnnotateAsSafeVarargsQuickFix();
-        }
-        else {
-          final PsiClass containingClass = method.getContainingClass();
-          LOG.assertTrue(containingClass != null);
-          boolean canBeFinal = !method.hasModifierProperty(PsiModifier.ABSTRACT) &&
-                               !containingClass.isInterface() &&
-                               OverridingMethodsSearch.search(method).findFirst() == null;
-          quickFix = canBeFinal ? new MakeFinalAndAnnotateQuickFix() : null;
-        }
+        final PsiClass containingClass = method.getContainingClass();
+        LOG.assertTrue(containingClass != null);
+        boolean canBeFinal = !method.hasModifierProperty(PsiModifier.ABSTRACT) &&
+                             !containingClass.isInterface() &&
+                             OverridingMethodsSearch.search(method).findFirst() == null;
+        quickFix = canBeFinal ? new MakeFinalAndAnnotateQuickFix() : null;
         holder.registerProblem(nameIdentifier, "Possible heap pollution from parameterized vararg type #loc", quickFix);
       }
     };
-  }
-
-  private static class AnnotateAsSafeVarargsQuickFix implements LocalQuickFix {
-    @NotNull
-    @Override
-    public String getFamilyName() {
-      return "Annotate as @SafeVarargs";
-    }
-
-    @Override
-    public boolean startInWriteAction() {
-      return false;
-    }
-
-    @Override
-    public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
-      final PsiElement psiElement = descriptor.getPsiElement();
-      if (psiElement instanceof PsiIdentifier) {
-        final PsiMethod psiMethod = (PsiMethod)psiElement.getParent();
-        if (psiMethod != null) {
-          new AddAnnotationPsiFix(CommonClassNames.JAVA_LANG_SAFE_VARARGS, psiMethod, PsiNameValuePair.EMPTY_ARRAY).applyFix(project, descriptor);
-        }
-      }
-    }
   }
 
   private static class MakeFinalAndAnnotateQuickFix implements LocalQuickFix {

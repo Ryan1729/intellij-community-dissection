@@ -18,7 +18,6 @@ package com.intellij.codeInsight.intention.impl;
 import com.intellij.codeInspection.util.OptionalRefactoringUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiUtil;
-import com.siyeh.ig.psiutils.ExpressionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -7,8 +7,6 @@ import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
 import com.intellij.codeInsight.daemon.JavaErrorMessages
 import com.intellij.codeInsight.daemon.QuickFixBundle
 import com.intellij.codeInsight.daemon.impl.analysis.JavaModuleGraphUtil
-import com.intellij.codeInsight.daemon.impl.quickfix.AddExportsDirectiveFix
-import com.intellij.codeInsight.daemon.impl.quickfix.AddRequiresDirectiveFix
 import com.intellij.codeInsight.intention.IntentionAction
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.module.Module
@@ -110,7 +108,6 @@ class JavaPlatformModuleSystem : JavaModuleSystemEx {
         val fixes = when {
           packageName.isEmpty() -> emptyList()
           targetModule is PsiCompiledElement && module != null -> listOf(AddExportsOptionFix(module, targetName, packageName, useName))
-          targetModule !is PsiCompiledElement && useModule != null -> listOf(AddExportsDirectiveFix(targetModule, packageName, useName))
           else -> emptyList()
         }
         return when (useModule) {
@@ -120,13 +117,8 @@ class JavaPlatformModuleSystem : JavaModuleSystemEx {
       }
 
       if (useModule != null && !(targetName == PsiJavaModule.JAVA_BASE || JavaModuleGraphUtil.reads(useModule, targetModule))) {
-        return when {
-          quick -> ERR
-          PsiNameHelper.isValidModuleName(targetName, useModule) -> ErrorWithFixes(
-            JavaErrorMessages.message("module.access.does.not.read", packageName, targetName, useName),
-            listOf(AddRequiresDirectiveFix(useModule, targetName)))
-          else -> ErrorWithFixes(JavaErrorMessages.message("module.access.bad.name", packageName, targetName))
-        }
+        return ErrorWithFixes(JavaErrorMessages.message("module.access.bad.name", packageName, targetName))
+
       }
     }
     else if (useModule != null) {

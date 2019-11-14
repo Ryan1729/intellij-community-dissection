@@ -234,7 +234,7 @@ public abstract class EntryPointsManagerBase extends EntryPointsManager implemen
         else {
           List<RefEntity> children = refClass.getChildren();
           for (RefEntity entity : children) {
-            if (entity instanceof RefMethodImpl && entity.getName().startsWith(pattern.method + "(")) {
+            if (entity.getName().startsWith(pattern.method + "(")) {
               entries.add((RefElementImpl)entity);
             }
           }
