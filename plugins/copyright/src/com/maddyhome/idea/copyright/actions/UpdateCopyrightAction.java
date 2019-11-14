@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 
 package com.maddyhome.idea.copyright.actions;
 
@@ -6,25 +7,19 @@ import com.intellij.analysis.AnalysisScope;
 import com.intellij.analysis.BaseAnalysisAction;
 import com.intellij.analysis.BaseAnalysisActionDialog;
 import com.intellij.codeInsight.FileModificationService;
-import com.intellij.copyright.CopyrightManager;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.VerticalFlowLayout;
 import com.intellij.openapi.util.EmptyRunnable;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.ui.TitledSeparator;
 import com.intellij.util.SequentialModalProgressTask;
 import com.intellij.util.SequentialTask;
-import com.maddyhome.idea.copyright.util.FileTypeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,66 +38,15 @@ public class UpdateCopyrightAction extends BaseAnalysisAction {
 
   @Override
   public void update(@NotNull AnActionEvent event) {
-    final boolean enabled = isEnabled(event);
+    final boolean enabled = isEnabled();
     event.getPresentation().setEnabled(enabled);
     if (ActionPlaces.isPopupPlace(event.getPlace())) {
       event.getPresentation().setVisible(enabled);
     }
   }
 
-  private static boolean isEnabled(AnActionEvent e) {
-    final DataContext context = e.getDataContext();
-    final Project project = e.getProject();
-    if (project == null) {
-      return false;
-    }
-
-    if (!CopyrightManager.getInstance(project).hasAnyCopyrights()) {
-      return false;
-    }
-    final VirtualFile[] files = CommonDataKeys.VIRTUAL_FILE_ARRAY.getData(context);
-    final Editor editor = CommonDataKeys.EDITOR.getData(context);
-    if (editor != null) {
-      final PsiFile file = PsiDocumentManager.getInstance(project).getPsiFile(editor.getDocument());
-      if (file == null || !FileTypeUtil.isSupportedFile(file)) {
-        return false;
-      }
-    }
-    else if (files != null && areFiles(files)) {
-      boolean copyrightEnabled  = false;
-      for (VirtualFile vfile : files) {
-        if (vfile != null && FileTypeUtil.getInstance().isSupportedFile(vfile)) {
-          copyrightEnabled = true;
-          break;
-        }
-      }
-      if (!copyrightEnabled) {
-        return false;
-      }
-
-    }
-    else if ((files == null || files.length != 1) &&
-             LangDataKeys.MODULE_CONTEXT.getData(context) == null &&
-             LangDataKeys.MODULE_CONTEXT_ARRAY.getData(context) == null &&
-             PlatformDataKeys.PROJECT_CONTEXT.getData(context) == null) {
-      final PsiElement[] elems = LangDataKeys.PSI_ELEMENT_ARRAY.getData(context);
-      if (elems != null) {
-        boolean copyrightEnabled = false;
-        for (PsiElement elem : elems) {
-          if (!(elem instanceof PsiDirectory)) {
-            final PsiFile file = elem.getContainingFile();
-            if (file == null || !FileTypeUtil.getInstance().isSupportedFile(file.getVirtualFile())) {
-              copyrightEnabled = true;
-              break;
-            }
-          }
-        }
-        if (!copyrightEnabled){
-          return false;
-        }
-      }
-    }
-    return true;
+  private static boolean isEnabled() {
+    return false;
   }
 
   @Nullable
@@ -129,8 +73,7 @@ public class UpdateCopyrightAction extends BaseAnalysisAction {
             if (indicator.isCanceled()) {
               return;
             }
-            final Module module = ModuleUtilCore.findModuleForPsiElement(file);
-            final UpdateCopyrightProcessor processor = new UpdateCopyrightProcessor(project, module, file);
+            final UpdateCopyrightProcessor processor = new UpdateCopyrightProcessor(project, file);
             final Runnable runnable = processor.preprocessFile(file, myUpdateExistingCopyrightsCb.isSelected());
             if (runnable != EmptyRunnable.getInstance()) {
               preparations.put(file, runnable);
@@ -189,19 +132,5 @@ public class UpdateCopyrightAction extends BaseAnalysisAction {
     public void stop() {
       myIdx = mySize;
     }
-  }
-
-  private static boolean areFiles(VirtualFile[] files) {
-    if (files == null || files.length < 2) {
-      return false;
-    }
-
-    for (VirtualFile file : files) {
-      if (file.isDirectory()) {
-        return false;
-      }
-    }
-
-    return true;
   }
 }

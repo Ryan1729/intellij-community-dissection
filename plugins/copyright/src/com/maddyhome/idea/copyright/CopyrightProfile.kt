@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.maddyhome.idea.copyright
 
 import com.intellij.configurationStore.SerializableScheme
@@ -7,16 +8,8 @@ import com.intellij.openapi.components.BaseState
 import com.intellij.openapi.options.ExternalizableScheme
 import com.intellij.util.xmlb.annotations.OptionTag
 import com.intellij.util.xmlb.annotations.Transient
-import com.maddyhome.idea.copyright.pattern.EntityUtil
 import org.jdom.Element
 
-@JvmField
-val DEFAULT_COPYRIGHT_NOTICE: String = EntityUtil.encode(
-  "Copyright (c) \$today.year. Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n" +
-  "Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan. \n" +
-  "Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna. \n" +
-  "Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus. \n" +
-  "Vestibulum commodo. Ut rhoncus gravida arcu. ")
 class CopyrightProfile @JvmOverloads constructor(profileName: String? = null) : ExternalizableScheme, BaseState(), SerializableScheme {
   // ugly name to preserve compatibility
   // must be not private because otherwise binding is not created for private accessor
@@ -24,8 +17,8 @@ class CopyrightProfile @JvmOverloads constructor(profileName: String? = null) : 
   @get:OptionTag("myName")
   var profileName: String? by string()
 
-  var notice: String? by string(DEFAULT_COPYRIGHT_NOTICE)
-  var keyword: String? by string(EntityUtil.encode("Copyright"))
+  var notice: String? by string("")
+  var keyword: String? by string("Copyright")
   var allowReplaceRegexp: String? by string()
 
   @Deprecated("use allowReplaceRegexp instead", ReplaceWith(""))

@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.util.xml.impl;
 
 import com.intellij.ide.highlighter.DomSupportEnabled;
@@ -11,7 +12,6 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Factory;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.*;
@@ -39,7 +39,6 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.reference.SoftReference;
-import com.intellij.util.ArrayUtil;
 import com.intellij.util.EventDispatcher;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.indexing.FileBasedIndex;
@@ -47,12 +46,8 @@ import com.intellij.util.xml.*;
 import com.intellij.util.xml.events.DomEvent;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import com.intellij.util.xml.reflect.DomGenericInfo;
-import net.sf.cglib.proxy.AdvancedProxy;
-import net.sf.cglib.proxy.InvocationHandler;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.TestOnly;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
@@ -219,15 +214,6 @@ public final class DomManagerImpl extends DomManager {
     if (proxy instanceof DomInvocationHandler) {
       return (DomInvocationHandler)proxy;
     }
-    final InvocationHandler handler = AdvancedProxy.getInvocationHandler(proxy);
-    if (handler instanceof StableInvocationHandler) {
-      //noinspection unchecked
-      final DomElement element = ((StableInvocationHandler<DomElement>)handler).getWrappedElement();
-      return element == null ? null : getDomInvocationHandler(element);
-    }
-    if (handler instanceof DomInvocationHandler) {
-      return (DomInvocationHandler)handler;
-    }
     return null;
   }
 
@@ -240,8 +226,8 @@ public final class DomManagerImpl extends DomManager {
     return handler;
   }
 
-  public static StableInvocationHandler<?> getStableInvocationHandler(Object proxy) {
-    return (StableInvocationHandler<?>)AdvancedProxy.getInvocationHandler(proxy);
+  public static StableInvocationHandler<?> getStableInvocationHandler() {
+    return null;
   }
 
   public DomApplicationComponent getApplicationComponent() {
@@ -271,12 +257,6 @@ public final class DomManagerImpl extends DomManager {
 
   public final Set<DomFileDescription<?>> getAcceptingOtherRootTagNameDescriptions() {
     return myApplicationComponent.getAcceptingOtherRootTagNameDescriptions();
-  }
-
-  @NotNull
-  @NonNls
-  public final String getComponentName() {
-    return getClass().getName();
   }
 
   final void runChange(Runnable change) {
@@ -372,10 +352,6 @@ public final class DomManagerImpl extends DomManager {
     return parentHandler.getGenericInfo().findChildrenDescription(parentHandler, tag);
   }
 
-  public final boolean isDomFile(@Nullable PsiFile file) {
-    return file instanceof XmlFile && getFileElement((XmlFile)file) != null;
-  }
-
   @SuppressWarnings("MethodOverloadsMethodOfSuperclass")
   @Nullable
   public final DomFileDescription<?> getDomFileDescription(PsiElement element) {
@@ -410,21 +386,13 @@ public final class DomManagerImpl extends DomManager {
   public final <T> T createStableValue(final Factory<? extends T> provider, final Condition<? super T> validator) {
     final T initial = provider.create();
     assert initial != null;
-    StableInvocationHandler<?> handler = new StableInvocationHandler<>(initial, provider, validator);
 
     Set<Class<?>> intf = new HashSet<>();
     ContainerUtil.addAll(intf, initial.getClass().getInterfaces());
     intf.add(StableElement.class);
     //noinspection unchecked
 
-    return (T)AdvancedProxy.createProxy(initial.getClass().getSuperclass(), intf.toArray(ArrayUtil.EMPTY_CLASS_ARRAY),
-                                        handler);
-  }
-
-  @TestOnly
-  public final <T extends DomElement> void registerFileDescription(final DomFileDescription<T> description, Disposable parentDisposable) {
-    registerFileDescription(description);
-    Disposer.register(parentDisposable, () -> myApplicationComponent.removeDescription(description));
+    return (T)null;
   }
 
   @Override

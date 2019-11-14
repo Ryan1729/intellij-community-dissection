@@ -1,17 +1,12 @@
 // Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.maddyhome.idea.copyright.actions;
 
-import com.intellij.copyright.CopyrightManager;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
-import com.maddyhome.idea.copyright.ui.CopyrightProjectConfigurable;
-import com.maddyhome.idea.copyright.util.FileTypeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,7 +25,7 @@ public class GenerateCopyrightAction extends AnAction
         }
 
         PsiFile file = getFile(context, project);
-        if (file == null || !FileTypeUtil.isSupportedFile(file)) {
+        if (file == null) {
           presentation.setEnabled(false);
         }
     }
@@ -49,22 +44,5 @@ public class GenerateCopyrightAction extends AnAction
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        DataContext context = e.getDataContext();
-        Project project = e.getProject();
-        assert project != null;
-        Module module = e.getData(LangDataKeys.MODULE);
-        PsiDocumentManager.getInstance(project).commitAllDocuments();
-
-
-        PsiFile file = getFile(context, project);
-        assert file != null;
-        if (CopyrightManager.getInstance(project).getCopyrightOptions(file) == null) {
-          if (Messages.showOkCancelDialog(project, "No copyright configured for current file. Would you like to edit copyright settings?", "No Copyright Available", Messages.getQuestionIcon()) == Messages.OK) {
-            ShowSettingsUtil.getInstance().showSettingsDialog(project, new CopyrightProjectConfigurable(project).getDisplayName());
-          } else {
-            return;
-          }
-        }
-        new UpdateCopyrightProcessor(project, module, file).run();
     }
 }

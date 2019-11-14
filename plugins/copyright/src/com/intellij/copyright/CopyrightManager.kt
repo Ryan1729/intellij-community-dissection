@@ -1,10 +1,9 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.copyright
 
 import com.intellij.configurationStore.*
-import com.intellij.openapi.application.AppUIExecutor
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.components.*
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.editor.EditorFactory
@@ -14,25 +13,16 @@ import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.options.SchemeManagerFactory
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
-import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.openapi.util.InvalidDataException
 import com.intellij.openapi.util.WriteExternalException
 import com.intellij.openapi.util.text.StringUtil
-import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.newvfs.BulkFileListener
 import com.intellij.openapi.vfs.newvfs.events.VFileCreateEvent
 import com.intellij.openapi.vfs.newvfs.events.VFileEvent
 import com.intellij.openapi.vfs.newvfs.events.VFileMoveEvent
-import com.intellij.packageDependencies.DependencyValidationManager
 import com.intellij.project.isDirectoryBased
-import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiManager
 import com.intellij.util.containers.ContainerUtil
 import com.maddyhome.idea.copyright.CopyrightProfile
-import com.maddyhome.idea.copyright.actions.UpdateCopyrightProcessor
-import com.maddyhome.idea.copyright.options.LanguageOptions
-import com.maddyhome.idea.copyright.options.Options
-import com.maddyhome.idea.copyright.util.FileTypeUtil
 import org.jdom.Element
 import org.jetbrains.annotations.TestOnly
 import java.util.*
@@ -63,7 +53,6 @@ class CopyrightManager @JvmOverloads constructor(private val project: Project, s
     }
 
   val scopeToCopyright = LinkedHashMap<String, String>()
-  val options = Options()
 
   private val schemeWriter = { scheme: CopyrightProfile ->
     val element = scheme.writeScheme()
@@ -134,7 +123,6 @@ class CopyrightManager @JvmOverloads constructor(private val project: Project, s
         result.addContent(map)
       }
 
-      options.writeExternal(result)
     }
     catch (e: WriteExternalException) {
       LOG.error(e)
@@ -158,7 +146,6 @@ class CopyrightManager @JvmOverloads constructor(private val project: Project, s
 
     try {
       defaultCopyrightName = data.getAttributeValue(DEFAULT)
-      options.readExternal(data)
     }
     catch (e: InvalidDataException) {
       LOG.error(e)
@@ -169,47 +156,8 @@ class CopyrightManager @JvmOverloads constructor(private val project: Project, s
     schemeManager.addScheme(InitializedSchemeWrapper(profile, schemeWriter))
   }
 
-  fun getCopyrights(): Collection<CopyrightProfile> = schemeManager.allSchemes.map { it.scheme }
-
-  fun clearMappings() {
-    scopeToCopyright.clear()
-  }
-
-  fun removeCopyright(copyrightProfile: CopyrightProfile) {
-    schemeManager.removeScheme(copyrightProfile.name)
-
-    val it = scopeToCopyright.keys.iterator()
-    while (it.hasNext()) {
-      if (scopeToCopyright.get(it.next()) == copyrightProfile.name) {
-        it.remove()
-      }
-    }
-  }
-
-  fun replaceCopyright(name: String, profile: CopyrightProfile) {
-    val existingScheme = schemeManager.findSchemeByName(name)
-    if (existingScheme == null) {
-      addCopyright(profile)
-    }
-    else {
-      existingScheme.scheme.copyFrom(profile)
-    }
-  }
-
-  fun getCopyrightOptions(file: PsiFile): CopyrightProfile? {
-    val virtualFile = file.virtualFile
-    if (virtualFile == null || options.getOptions(virtualFile.fileType.name).getFileTypeOverride() == LanguageOptions.NO_COPYRIGHT) {
-      return null
-    }
-
-    val validationManager = DependencyValidationManager.getInstance(project)
-    for (scopeName in scopeToCopyright.keys) {
-      val packageSet = validationManager.getScope(scopeName)?.value ?: continue
-      if (packageSet.contains(file, validationManager)) {
-        scopeToCopyright.get(scopeName)?.let { schemeManager.findSchemeByName(it) }?.let { return it.scheme }
-      }
-    }
-    return defaultCopyright
+  fun getCopyrightOptions(): CopyrightProfile? {
+    return null
   }
 }
 
@@ -251,30 +199,14 @@ private class CopyrightManagerDocumentListener : BulkFileListener {
             continue
           }
 
-          handleEvent(virtualFile, project)
+          handleEvent()
         }
       }
     }, ApplicationManager.getApplication())
   }
 
-  private fun handleEvent(virtualFile: VirtualFile, project: Project) {
-    val module = ProjectRootManager.getInstance(project).fileIndex.getModuleForFile(virtualFile) ?: return
-    if (!FileTypeUtil.getInstance().isSupportedFile(virtualFile) || PsiManager.getInstance(project).findFile(virtualFile) == null) {
-      return
-    }
-
-    AppUIExecutor.onUiThread(ModalityState.NON_MODAL).later().withDocumentsCommitted(project).execute {
-      if (project.isDisposed || !virtualFile.isValid) {
-        return@execute
-      }
-
-      val file = PsiManager.getInstance(project).findFile(virtualFile)
-      if (file != null && file.isWritable) {
-        CopyrightManager.getInstance(project).getCopyrightOptions(file)?.let {
-          UpdateCopyrightProcessor(project, module, file).run()
-        }
-      }
-    }
+  private fun handleEvent() {
+    return
   }
 }
 

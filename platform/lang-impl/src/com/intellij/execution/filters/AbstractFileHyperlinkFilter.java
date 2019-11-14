@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.execution.filters;
 
 import com.intellij.openapi.application.ReadAction;
@@ -13,7 +14,6 @@ import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.io.LocalFileFinder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,10 +41,7 @@ public abstract class AbstractFileHyperlinkFilter implements Filter {
     if (StringUtil.isEmpty(baseDir)) {
       return null;
     }
-    return ReadAction.compute(() -> {
-      VirtualFile dir = LocalFileFinder.findFile(baseDir);
-      return dir != null && dir.isValid() && dir.isDirectory() ? dir : null;
-    });
+    return ReadAction.compute(() -> null);
   }
 
   protected boolean supportVfsRefresh() {
@@ -66,7 +63,7 @@ public abstract class AbstractFileHyperlinkFilter implements Filter {
     for (FileHyperlinkRawData link : links) {
       String filePath = FileUtil.toSystemIndependentName(link.getFilePath());
       if (StringUtil.isEmptyOrSpaces(filePath)) continue;
-      VirtualFile file = findFile(filePath);
+      VirtualFile file = findFile();
       HyperlinkInfo info = null;
       boolean grayedHyperLink = false;
       if (file != null) {
@@ -113,12 +110,8 @@ public abstract class AbstractFileHyperlinkFilter implements Filter {
   public abstract List<FileHyperlinkRawData> parse(@NotNull String line);
 
   @Nullable
-  public VirtualFile findFile(@NotNull String filePath) {
-    VirtualFile file = LocalFileFinder.findFile(filePath);
-    if (file == null && myBaseDir != null && myBaseDir.isValid()) {
-      file = myBaseDir.findFileByRelativePath(filePath);
-    }
-    return file;
+  public VirtualFile findFile() {
+    return null;
   }
 
   private static class MyFileHyperlinkInfo implements HyperlinkInfo {

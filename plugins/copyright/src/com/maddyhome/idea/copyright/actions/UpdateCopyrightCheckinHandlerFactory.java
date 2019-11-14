@@ -37,7 +37,7 @@ public class UpdateCopyrightCheckinHandlerFactory extends CheckinHandlerFactory 
       @Override
       public ReturnResult beforeCheckin(@Nullable CommitExecutor executor, PairConsumer<Object, Object> additionalDataConsumer) {
         if (getSettings().UPDATE_COPYRIGHT) {
-          new UpdateCopyrightProcessor(panel.getProject(), null, getPsiFiles()).run();
+          new UpdateCopyrightProcessor(panel.getProject(), getPsiFiles()).run();
           FileDocumentManager.getInstance().saveAllDocuments();
         }
         return super.beforeCheckin();

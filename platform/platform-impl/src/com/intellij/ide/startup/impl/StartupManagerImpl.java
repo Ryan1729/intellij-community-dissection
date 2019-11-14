@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.ide.startup.impl;
 
 import com.intellij.diagnostic.Activity;
@@ -45,7 +46,6 @@ import com.intellij.util.TimeoutUtil;
 import com.intellij.util.concurrency.AppExecutorUtil;
 import com.intellij.util.io.storage.HeavyProcessLatch;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.TestOnly;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -487,30 +487,5 @@ public class StartupManagerImpl extends StartupManagerEx implements Disposable {
 
       action.run();
     }, ModalityState.defaultModalityState());
-  }
-
-  @TestOnly
-  public synchronized void prepareForNextTest() {
-    synchronized (myLock) {
-      myPreStartupActivities.clear();
-      myStartupActivities.clear();
-      myDumbAwarePostStartupActivities.clear();
-      myNotDumbAwarePostStartupActivities.clear();
-    }
-  }
-
-  @TestOnly
-  public synchronized void checkCleared() {
-    try {
-      synchronized (myLock) {
-        assert myStartupActivities.isEmpty() : "Activities: " + myStartupActivities;
-        assert myDumbAwarePostStartupActivities.isEmpty() : "DumbAware Post Activities: " + myDumbAwarePostStartupActivities;
-        assert myNotDumbAwarePostStartupActivities.isEmpty() : "Post Activities: " + myNotDumbAwarePostStartupActivities;
-        assert myPreStartupActivities.isEmpty() : "Pre Activities: " + myPreStartupActivities;
-      }
-    }
-    finally {
-      prepareForNextTest();
-    }
   }
 }

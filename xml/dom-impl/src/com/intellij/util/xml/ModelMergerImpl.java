@@ -2,7 +2,6 @@
 package com.intellij.util.xml;
 
 import com.intellij.openapi.util.Pair;
-import com.intellij.util.ArrayUtil;
 import com.intellij.util.ReflectionUtil;
 import com.intellij.util.SmartList;
 import com.intellij.util.containers.ConcurrentFactoryMap;
@@ -11,7 +10,6 @@ import com.intellij.util.xml.impl.DomInvocationHandler;
 import com.intellij.util.xml.impl.DomManagerImpl;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import gnu.trove.THashSet;
-import net.sf.cglib.proxy.AdvancedProxy;
 import net.sf.cglib.proxy.InvocationHandler;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -217,7 +215,7 @@ public final class ModelMergerImpl implements ModelMerger {
     final Set<Class> commonClasses = getCommonClasses(new THashSet<>(), implementations);
     commonClasses.add(MERGED_OBJECT_CLASS);
     commonClasses.add(aClass);
-    return AdvancedProxy.createProxy(handler, null, commonClasses.toArray(ArrayUtil.EMPTY_CLASS_ARRAY));
+    return null;
   }
 
   private static <T extends Collection<Class>> T getCommonClasses(final T result, final Object... implementations) {

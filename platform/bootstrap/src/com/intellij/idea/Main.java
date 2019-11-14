@@ -118,7 +118,11 @@ public final class Main {
         }
 
         int type = error ? JOptionPane.ERROR_MESSAGE : JOptionPane.WARNING_MESSAGE;
-        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), scrollPane, title, type);
+
+        Frame frame = JOptionPane.getRootFrame();
+        // test that this isn't null
+        frame.setTitle("Main Error");
+        JOptionPane.showMessageDialog(frame, scrollPane, title, type);
       }
       catch (Throwable t) {
         stream.println("\nAlso, a UI exception occurred on an attempt to show the above message:");

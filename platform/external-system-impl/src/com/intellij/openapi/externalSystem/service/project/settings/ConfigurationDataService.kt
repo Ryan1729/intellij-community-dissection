@@ -1,8 +1,8 @@
 // Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.openapi.externalSystem.service.project.settings
 
 import com.intellij.openapi.diagnostic.Logger
-import com.intellij.openapi.externalSystem.model.ConfigurationDataImpl
 import com.intellij.openapi.externalSystem.model.DataNode
 import com.intellij.openapi.externalSystem.model.Key
 import com.intellij.openapi.externalSystem.model.ProjectKeys
@@ -79,9 +79,6 @@ class ConfigurationDataService : AbstractProjectDataService<ConfigurationData, V
       if (projectConfigurationNode != null) {
 
         val data = projectConfigurationNode.data
-        if (LOG.isDebugEnabled && data is ConfigurationDataImpl) {
-          LOG.debug("Importing project configuration: " + data.jsonString)
-        }
 
         if (!ExternalSystemApiUtil.isOneToOneMapping(project, projectDataNode.data, ModuleManager.getInstance(project).modules)) {
           LOG.warn(
@@ -109,9 +106,6 @@ class ConfigurationDataService : AbstractProjectDataService<ConfigurationData, V
           }
 
           val data = node.data
-          if (LOG.isDebugEnabled && data is ConfigurationDataImpl) {
-            LOG.debug("Importing module configuration: " + data.jsonString)
-          }
 
           for (handler in ConfigurationHandler.EP_NAME.extensions) {
             handler.acceptModule(module, modelsProvider, data)

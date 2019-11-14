@@ -28,7 +28,6 @@ import com.intellij.util.xml.reflect.DomAttributeChildDescription;
 import com.intellij.util.xml.reflect.DomCollectionChildDescription;
 import com.intellij.util.xml.reflect.DomFixedChildDescription;
 import com.intellij.util.xml.stubs.*;
-import net.sf.cglib.proxy.AdvancedProxy;
 import net.sf.cglib.proxy.InvocationHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -519,7 +518,7 @@ public abstract class DomInvocationHandler extends UserDataHolderBase implements
         //noinspection unchecked
         implementation = (Class<? extends DomElement>)rawType;
       }
-      myProxy = proxy = AdvancedProxy.createProxy(this, implementation, isInterface ? new Class[]{rawType} : ArrayUtil.EMPTY_CLASS_ARRAY);
+      myProxy = proxy = null;
     }
     return proxy;
   }

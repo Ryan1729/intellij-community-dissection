@@ -1,7 +1,7 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.ide.plugins;
 
-import com.google.gson.stream.JsonToken;
 import com.intellij.openapi.application.ex.ApplicationInfoEx;
 import com.intellij.openapi.application.impl.ApplicationInfoImpl;
 import com.intellij.openapi.extensions.PluginId;
@@ -12,8 +12,6 @@ import com.intellij.util.io.HttpRequests;
 import com.intellij.util.io.URLUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.io.JsonReaderEx;
-import org.jetbrains.io.JsonUtil;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -36,32 +34,8 @@ public class PluginRepositoryRequests {
   }
 
   @NotNull
-  public static List<PluginId> requestToPluginRepository(@NotNull Url url) throws IOException {
-    List<PluginId> ids = new ArrayList<>();
-
-    HttpRequests.request(url).throwStatusCodeException(false).productNameAsUserAgent().connect(request -> {
-      URLConnection connection = request.getConnection();
-      if (connection instanceof HttpURLConnection && ((HttpURLConnection)connection).getResponseCode() != HttpURLConnection.HTTP_OK) {
-        return null;
-      }
-
-      try (JsonReaderEx json = new JsonReaderEx(FileUtil.loadTextAndClose(request.getReader()))) {
-        if (json.peek() == JsonToken.BEGIN_OBJECT) {
-          json.beginObject();
-          json.nextName(); // query
-          json.nextString(); // query value
-          json.nextName(); // suggestions
-        }
-        json.beginArray();
-        while (json.hasNext()) {
-          ids.add(PluginId.getId(json.nextString()));
-        }
-      }
-
-      return null;
-    });
-
-    return ids;
+  public static List<PluginId> requestToPluginRepository() {
+    return new ArrayList<>();
   }
 
   public static boolean loadPlugins(@NotNull List<? super IdeaPluginDescriptor> descriptors,
@@ -73,7 +47,7 @@ public class PluginRepositoryRequests {
     int offset = 0;
 
     while (true) {
-      List<PluginId> pluginIds = requestToPluginRepository(offsetUrl);
+      List<PluginId> pluginIds = requestToPluginRepository();
       if (pluginIds.isEmpty()) {
         return false;
       }
@@ -99,16 +73,6 @@ public class PluginRepositoryRequests {
     ApplicationInfoEx instance = ApplicationInfoImpl.getShadowInstance();
     Url url = Urls.newFromEncoded(instance.getPluginManagerUrl() + "/geo/files/prices");
 
-    return HttpRequests.request(url).throwStatusCodeException(false).productNameAsUserAgent().connect(request -> {
-      URLConnection connection = request.getConnection();
-
-      if (connection instanceof HttpURLConnection && ((HttpURLConnection)connection).getResponseCode() != HttpURLConnection.HTTP_OK) {
-        return null;
-      }
-
-      try (JsonReaderEx json = new JsonReaderEx(FileUtil.loadTextAndClose(request.getReader()))) {
-        return JsonUtil.nextAny(json);
-      }
-    });
+    return HttpRequests.request(url).throwStatusCodeException(false).productNameAsUserAgent().connect(request -> null);
   }
 }

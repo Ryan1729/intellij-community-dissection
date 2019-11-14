@@ -1,7 +1,7 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.ide.customize;
 
-import com.intellij.ide.WelcomeWizardUtil;
 import com.intellij.ide.cloudConfig.CloudConfigProvider;
 import com.intellij.ide.plugins.IdeaPluginDescriptor;
 import com.intellij.ide.plugins.PluginManagerCore;
@@ -12,7 +12,6 @@ import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.Pair;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.containers.ContainerUtil;
-import icons.PlatformImplIcons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,7 +36,6 @@ public class PluginGroups {
   private final Collection<PluginId> myDisabledPluginIds = new HashSet<>();
   private final List<? extends IdeaPluginDescriptor> myAllPlugins;
   private boolean myInitialized;
-  private final Set<String> myFeaturedIds = new HashSet<>();
   private Runnable myLoadingCallback;
 
   public PluginGroups() {
@@ -113,117 +111,6 @@ public class PluginGroups {
       "Type Migration",
       "ZKM"
     )));
-    tree.put("Java Frameworks", Pair.create(PlatformImplIcons.JavaFrameworks, Arrays.asList(
-      "com.intellij.appengine",
-      "org.intellij.grails",
-      "com.intellij.gwt",
-      "JBoss Seam:com.intellij.seam,com.intellij.seam.pages,com.intellij.seam.pageflow",
-      "JBoss jBPM:JBPM",
-      "Struts:com.intellij.struts2",
-      "com.intellij.hibernate",
-
-      "Spring:com.intellij.spring.batch," +
-      "com.intellij.spring.data," +
-      "com.intellij.spring.integration," +
-      "com.intellij.spring.osgi," +
-      "com.intellij.spring.security," +
-      "com.intellij.spring," +
-      "com.intellij.spring.webflow," +
-      "com.intellij.spring.ws,com.intellij.aop",
-
-      "com.intellij.micronaut",
-      "com.intellij.quarkus",
-      "com.intellij.helidon",
-
-      "Java EE:com.intellij.javaee.batch," +
-      "com.intellij.beanValidation," +
-      "com.intellij.cdi," +
-      "com.intellij.javaee," +
-      "com.intellij.jsf," +
-      "com.intellij.javaee.extensions," +
-      "com.jetbrains.restWebServices," +
-      "Web Services (JAX-WS)," +
-      "com.intellij.javaee.webSocket," +
-      "com.intellij.jsp," +
-      "com.intellij.persistence",
-      "com.intellij.freemarker",
-      "com.intellij.tapestry",
-      "com.intellij.velocity",
-      "Guice",
-      "com.intellij.aspectj",
-      "Osmorc"
-    )));
-    tree.put("Build Tools", Pair.create(PlatformImplIcons.BuildTools, Arrays.asList(
-      "AntSupport",
-      "Maven:org.jetbrains.idea.maven,org.jetbrains.idea.maven.ext",
-      "org.jetbrains.plugins.gradle"
-    )));
-    tree.put("Web Development", Pair.create(PlatformImplIcons.WebDevelopment, Arrays.asList(
-      "HTML:HtmlTools,W3Validators",
-      "org.jetbrains.plugins.haml",
-      "com.jetbrains.plugins.jade",
-      "com.intellij.css",
-      "org.jetbrains.plugins.less",
-      "org.jetbrains.plugins.sass",
-      "org.jetbrains.plugins.stylus",
-      "JavaScript:JavaScript,JavaScriptDebugger,JSIntentionPowerPack",//TODO: Inspection-JS
-      "org.coffeescript",
-      "com.intellij.flex",
-      "com.intellij.plugins.html.instantEditing",
-      "com.jetbrains.restClient",
-      "com.intellij.swagger"
-    )));
-
-    addVcsGroup(tree);
-
-    tree.put("Test Tools", Pair.create(PlatformImplIcons.TestTools, Arrays.asList(
-      "JUnit",
-      "TestNG-J",
-      "cucumber-java",
-      "cucumber",
-      "Coverage:Coverage,Emma"
-    )));
-    tree.put("Application Servers", Pair.create(PlatformImplIcons.ApplicationServers, Arrays.asList(
-      "com.intellij.javaee.view",
-      "Geronimo",
-      "GlassFish",
-      "JBoss",
-      "Jetty",
-      "Resin",
-      "Tomcat",
-      "Weblogic",
-      "WebSphere",
-      "com.intellij.dmserver",
-      "JSR45Plugin"
-    )));
-    tree.put("Clouds", Pair.create(PlatformImplIcons.Clouds, Collections.singletonList(
-      "CloudFoundry"
-    )));
-    //myTree.put("Groovy", Arrays.asList("org.intellij.grails"));
-    //TODO Scala -> Play 2.x (Play 2.0 Support)
-    tree.put("Swing", Pair.create(PlatformImplIcons.Swing, Collections.singletonList(
-      "com.intellij.uiDesigner"//TODO JavaFX?
-    )));
-    tree.put("Android", Pair.create(PlatformImplIcons.Android, Arrays.asList(
-      "org.jetbrains.android",
-      "com.intellij.android-designer")));
-    tree.put("Database Tools", Pair.create(PlatformImplIcons.DatabaseTools, Collections.singletonList(
-      "com.intellij.database"
-    )));
-    tree.put("Other Tools", Pair.create(PlatformImplIcons.OtherTools, Arrays.asList(
-      "ByteCodeViewer",
-      "com.intellij.dsm",
-      "org.jetbrains.idea.eclipse",
-      "org.jetbrains.debugger.streams",
-      "Remote Access:com.jetbrains.plugins.webDeployment,org.jetbrains.plugins.remote-run",
-      "Task Management:com.intellij.tasks,com.intellij.tasks.timeTracking",
-      "org.jetbrains.plugins.terminal",
-      "com.intellij.diagram",
-      "org.jetbrains.plugins.yaml",
-      "XSLT and XPath:XPathView,XSLT-Debugger"
-    )));
-    tree.put("Plugin Development", Pair.create(PlatformImplIcons.PluginDevelopment, Collections.singletonList("DevKit")));
-
     initFeaturedPlugins(featuredPlugins);
   }
 
@@ -237,18 +124,6 @@ public class PluginGroups {
     addTrainingPlugin(featuredPlugins);
   }
 
-  protected static void addVcsGroup(Map<String, Pair<Icon, List<String>>> tree) {
-    tree.put("Version Controls", Pair.create(PlatformImplIcons.VersionControls, Arrays.asList(
-      "CVS",
-      "Git4Idea",
-      "org.jetbrains.plugins.github",
-      "hg4idea",
-      "PerforceDirectPlugin",
-      "Subversion",
-      "TFS"
-    )));
-  }
-
   public static void addVimPlugin(Map<String, String> featuredPlugins) {
     featuredPlugins.put("IdeaVim", "Editor:Emulates Vim editor:" + IDEA_VIM_PLUGIN_ID);
   }
@@ -257,30 +132,8 @@ public class PluginGroups {
     featuredPlugins.put("IDE Features Trainer", "Code tools:Learn basic shortcuts and essential IDE features with quick interactive exercises:training");
   }
 
-  protected static void addLuaPlugin(Map<String, String> featuredPlugins) {
-    featuredPlugins.put("Lua", "Custom Languages:Lua language support:Lua");
-  }
-
   public static void addRustPlugin(Map<String, String> featuredPlugins) {
     featuredPlugins.put("Rust", "Custom Languages:Rust language support:org.rust.lang");
-  }
-
-  public static void addMarkdownPlugin(Map<String, String> featuredPlugins) {
-    featuredPlugins.put("Markdown", "Custom Languages:Markdown language support:org.intellij.plugins.markdown");
-  }
-
-  public static void addRPlugin(Map<String, String> featuredPlugins) {
-    featuredPlugins.put("R", "Custom Languages:R language support:R4Intellij");
-  }
-
-  protected static void addConfigurationServerPlugin(Map<String, String> featuredPlugins) {
-    featuredPlugins.put("Configuration Server",
-                        "Team Work:Supports sharing settings between installations of IntelliJ Platform based products used by the same developer on different computers:IdeaServerPlugin");
-  }
-
-  public static void addTeamCityPlugin(Map<String, String> featuredPlugins) {
-    featuredPlugins.put("TeamCity Integration",
-                        "Tools Integration:Integration with JetBrains TeamCity - innovative solution for continuous integration and build management:Jetbrains TeamCity Plugin");
   }
 
   private void initIfNeeded() {
@@ -384,16 +237,6 @@ public class PluginGroups {
       }
     }
     return null;
-  }
-
-  void setFeaturedPluginEnabled(String pluginId, boolean enabled) {
-    if (enabled) {
-      myFeaturedIds.add(pluginId);
-    }
-    else {
-      myFeaturedIds.remove(pluginId);
-    }
-    WelcomeWizardUtil.setFeaturedPluginsToInstall(myFeaturedIds);
   }
 
   void setPluginEnabledWithDependencies(@NotNull PluginId pluginId, boolean enabled) {

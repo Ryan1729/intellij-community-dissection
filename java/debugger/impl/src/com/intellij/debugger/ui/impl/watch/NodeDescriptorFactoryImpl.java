@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.debugger.ui.impl.watch;
 
-import com.intellij.debugger.engine.StackFrameContext;
 import com.intellij.debugger.engine.evaluation.EvaluateException;
 import com.intellij.debugger.engine.evaluation.TextWithImports;
 import com.intellij.debugger.engine.jdi.LocalVariableProxy;
@@ -88,10 +88,6 @@ public class NodeDescriptorFactoryImpl implements NodeDescriptorFactory {
 
   public DescriptorTree getCurrentHistoryTree() {
     return myCurrentHistoryTree;
-  }
-
-  public void deriveHistoryTree(DescriptorTree tree, final StackFrameContext context) {
-    deriveHistoryTree(tree, context.getFrameProxy());
   }
 
   public void deriveHistoryTree(DescriptorTree tree, final StackFrameProxy frameProxy) {
