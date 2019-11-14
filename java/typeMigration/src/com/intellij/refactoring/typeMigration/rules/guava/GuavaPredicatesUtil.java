@@ -7,8 +7,6 @@ import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTypesUtil;
 import com.intellij.psi.util.RedundantCastUtil;
 import com.intellij.refactoring.typeMigration.TypeConversionDescriptor;
-import com.intellij.refactoring.typeMigration.TypeConversionDescriptorBase;
-import com.intellij.refactoring.typeMigration.TypeEvaluator;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;

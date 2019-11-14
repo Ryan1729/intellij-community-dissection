@@ -5,7 +5,6 @@ import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.codeInsight.ExternalAnnotationsManager;
 import com.intellij.codeInsight.NullableNotNullManager;
-import com.intellij.codeInsight.daemon.impl.analysis.AnnotationsHighlightUtil;
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
 import com.intellij.codeInspection.LocalQuickFixOnPsiElement;
 import com.intellij.lang.findUsages.LanguageFindUsages;
@@ -23,7 +22,6 @@ import com.intellij.util.ObjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 import static com.intellij.codeInsight.AnnotationUtil.CHECK_EXTERNAL;
@@ -147,8 +145,7 @@ public class AddAnnotationPsiFix extends LocalQuickFixOnPsiElement {
     PsiClass aClass = JavaPsiFacade.getInstance(project).findClass(myAnnotation, myModifierListOwner.getResolveScope());
     final ExternalAnnotationsManager.AnnotationPlace annotationAnnotationPlace;
     if (aClass != null && BaseIntentionAction.canModify(myModifierListOwner) && 
-        (AnnotationsHighlightUtil.getRetentionPolicy(aClass) == RetentionPolicy.RUNTIME || 
-         !CommonClassNames.DEFAULT_PACKAGE.equals(StringUtil.getPackageName(myAnnotation)) && 
+        (!CommonClassNames.DEFAULT_PACKAGE.equals(StringUtil.getPackageName(myAnnotation)) &&
          JavaPsiFacade.getInstance(project).getResolveHelper()//if class is already imported in current file
            .resolveReferencedClass(StringUtil.getShortName(myAnnotation), myModifierListOwner) != null)) {
       annotationAnnotationPlace = ExternalAnnotationsManager.AnnotationPlace.IN_CODE;

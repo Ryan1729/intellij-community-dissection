@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 
 package com.intellij.refactoring.actions;
 
-import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiMethod;
 import com.intellij.refactoring.RefactoringActionHandler;
-import com.intellij.refactoring.replaceConstructorWithBuilder.ReplaceConstructorWithBuilderHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class ReplaceConstructorWithBuilderAction extends BaseJavaRefactoringAction{
@@ -36,17 +33,7 @@ public class ReplaceConstructorWithBuilderAction extends BaseJavaRefactoringActi
   @Override
   protected boolean isAvailableOnElementInEditorAndFile(@NotNull PsiElement element, @NotNull Editor editor, @NotNull PsiFile file,
                                                         @NotNull DataContext context, @NotNull String place) {
-    final int offset = editor.getCaretModel().getOffset();
-    final PsiElement elementAt = file.findElementAt(offset);
-    final PsiClass psiClass = ReplaceConstructorWithBuilderHandler.getParentNamedClass(elementAt);
-    if (psiClass == null || psiClass.getConstructors().length == 0 || psiClass.isEnum()) {
-      return false;
-    }
-    if (ActionPlaces.isPopupPlace(place) || place.equals(ActionPlaces.REFACTORING_QUICKLIST)) {
-      PsiMethod method = RefactoringActionContextUtil.getJavaMethodHeader(elementAt);
-      return method != null && method.isConstructor();
-    }
-    return true;
+    return false;
   }
 
   @Override
@@ -56,6 +43,6 @@ public class ReplaceConstructorWithBuilderAction extends BaseJavaRefactoringActi
 
   @Override
   protected RefactoringActionHandler getHandler(@NotNull final DataContext dataContext) {
-    return new ReplaceConstructorWithBuilderHandler();
+    return null;
   }
 }

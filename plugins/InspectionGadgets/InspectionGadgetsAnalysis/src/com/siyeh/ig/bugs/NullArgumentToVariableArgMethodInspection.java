@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.siyeh.ig.bugs;
 
-import com.intellij.codeInsight.daemon.impl.quickfix.AddTypeCastFix;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiUtil;
 import com.siyeh.InspectionGadgetsBundle;
 import com.siyeh.ig.BaseInspection;
 import com.siyeh.ig.BaseInspectionVisitor;
-import com.siyeh.ig.DelegatingFix;
 import com.siyeh.ig.InspectionGadgetsFix;
 import com.siyeh.ig.psiutils.TypeUtils;
 import org.jetbrains.annotations.NotNull;
@@ -59,10 +58,7 @@ public class NullArgumentToVariableArgMethodInspection extends BaseInspection {
     final PsiExpression argument = (PsiExpression)infos[0];
     final PsiType type1 = (PsiType)infos[1];
     final PsiType type2 = (PsiType)infos[2];
-    return new InspectionGadgetsFix[] {
-      new DelegatingFix(new AddTypeCastFix(type1, argument)),
-      new DelegatingFix(new AddTypeCastFix(type2, argument))
-    };
+    return new InspectionGadgetsFix[] {};
   }
 
   @Override

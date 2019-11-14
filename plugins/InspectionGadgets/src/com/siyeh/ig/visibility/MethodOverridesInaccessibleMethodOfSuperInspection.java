@@ -15,7 +15,6 @@
  */
 package com.siyeh.ig.visibility;
 
-import com.intellij.codeInsight.daemon.impl.analysis.JavaHighlightUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.util.MethodSignatureUtil;
 import com.intellij.psi.util.PsiTreeUtil;

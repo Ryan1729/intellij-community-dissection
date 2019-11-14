@@ -15,7 +15,6 @@ import com.intellij.openapi.editor.colors.CodeInsightColors;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Iconable;
 import com.intellij.psi.*;
-import com.intellij.testIntegration.TestFailedLineManager;
 import com.intellij.util.ui.UIUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;

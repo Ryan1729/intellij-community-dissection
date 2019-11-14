@@ -15,7 +15,6 @@
  */
 package com.intellij.refactoring.typeMigration.rules;
 
-import com.intellij.codeInsight.daemon.impl.analysis.HighlightControlFlowUtil;
 import com.intellij.codeInsight.daemon.impl.quickfix.VariableAccessFromInnerClassFix;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.Comparing;
@@ -24,9 +23,6 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.psi.util.TypeConversionUtil;
 import com.intellij.refactoring.typeMigration.TypeConversionDescriptor;
-import com.intellij.refactoring.typeMigration.TypeConversionDescriptorBase;
-import com.intellij.refactoring.typeMigration.TypeEvaluator;
-import com.intellij.refactoring.typeMigration.TypeMigrationLabeler;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

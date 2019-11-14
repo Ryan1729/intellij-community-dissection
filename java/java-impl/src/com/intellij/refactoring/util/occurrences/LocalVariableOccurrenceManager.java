@@ -18,7 +18,6 @@ package com.intellij.refactoring.util.occurrences;
 import com.intellij.codeInsight.CodeInsightUtil;
 import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiLocalVariable;
-import com.intellij.refactoring.util.RefactoringUtil;
 
 /**
  * @author dsl

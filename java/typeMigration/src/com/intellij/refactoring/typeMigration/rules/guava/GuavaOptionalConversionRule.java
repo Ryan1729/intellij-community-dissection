@@ -5,9 +5,6 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTypesUtil;
 import com.intellij.refactoring.typeMigration.TypeConversionDescriptor;
-import com.intellij.refactoring.typeMigration.TypeConversionDescriptorBase;
-import com.intellij.refactoring.typeMigration.TypeEvaluator;
-import com.intellij.refactoring.typeMigration.TypeMigrationLabeler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

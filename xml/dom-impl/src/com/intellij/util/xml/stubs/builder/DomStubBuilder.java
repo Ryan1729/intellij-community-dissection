@@ -27,14 +27,11 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.stubs.BinaryFileStubBuilder;
 import com.intellij.psi.stubs.Stub;
 import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.indexing.FileBasedIndexImpl;
 import com.intellij.util.indexing.FileContent;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.impl.DomApplicationComponent;
 import com.intellij.util.xml.impl.DomFileMetaData;
-import com.intellij.util.xml.impl.DomManagerImpl;
-import com.intellij.util.xml.stubs.FileStub;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -80,12 +77,8 @@ public class DomStubBuilder implements BinaryFileStubBuilder {
       if (header.getRootTagLocalName() == null) {
         LOG.error("null root tag for " + fileElement + " for " + fileContent.getFile());
       }
-      FileStub fileStub = new FileStub(header);
-      XmlTag rootTag = xmlFile.getRootTag();
-      if (rootTag != null) {
-        new DomStubBuilderVisitor(DomManagerImpl.getDomManager(project)).visitXmlElement(rootTag, fileStub, 0);
-      }
-      return fileStub;
+
+      return null;
     }
     finally {
       XmlUtil.BUILDING_DOM_STUBS.set(Boolean.FALSE);

@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.siyeh.ig.psiutils;
 
 import com.intellij.codeInsight.daemon.impl.HighlightInfo;
-import com.intellij.codeInsight.daemon.impl.analysis.HighlightControlFlowUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.controlFlow.ControlFlowUtil;
 import com.intellij.psi.controlFlow.LocalsOrMyInstanceFieldsControlFlowPolicy;
@@ -38,7 +38,7 @@ public class FinalUtils {
       // parameters have an implicit initializer
       return !VariableAccessUtils.variableIsAssigned(variable);
     }
-    if (variable instanceof PsiField && !HighlightControlFlowUtil.isFieldInitializedAfterObjectConstruction((PsiField)variable)) {
+    if (variable instanceof PsiField) {
       return false;
     }
     PsiElement scope = variable instanceof PsiField
@@ -51,18 +51,13 @@ public class FinalUtils {
       if (!(e instanceof PsiReferenceExpression)) return true;
       PsiReferenceExpression ref = (PsiReferenceExpression)e;
       if (!ref.isReferenceTo(variable)) return true;
-      HighlightInfo highlightInfo = HighlightControlFlowUtil
-        .checkVariableInitializedBeforeUsage(ref, variable, uninitializedVarProblems, variable.getContainingFile(), true);
-      if (highlightInfo != null) return false;
       if (!PsiUtil.isAccessedForWriting(ref)) return true;
       if (!LocalsOrMyInstanceFieldsControlFlowPolicy.isLocalOrMyInstanceReference(ref)) return false;
       if (ControlFlowUtil.isVariableAssignedInLoop(ref, variable)) return false;
       if (variable instanceof PsiField) {
         if (PsiUtil.findEnclosingConstructorOrInitializer(ref) == null) return false;
-        PsiElement innerClass = HighlightControlFlowUtil.getInnerClassVariableReferencedFrom(variable, ref);
-        if (innerClass != null && innerClass != ((PsiField)variable).getContainingClass()) return false;
       }
-      return HighlightControlFlowUtil.checkFinalVariableMightAlreadyHaveBeenAssignedTo(variable, ref, finalVarProblems) == null;
+      return true;
     };
     return PsiTreeUtil.processElements(scope, elementDoesNotViolateFinality);
   }

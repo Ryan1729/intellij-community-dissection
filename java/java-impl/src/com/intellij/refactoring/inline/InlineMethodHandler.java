@@ -11,11 +11,8 @@ import com.intellij.openapi.vfs.ReadonlyStatusHandler;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.refactoring.HelpID;
 import com.intellij.refactoring.RefactoringBundle;
 import com.intellij.refactoring.util.CommonRefactoringUtil;
-import com.intellij.refactoring.util.InlineUtil;
-import com.intellij.refactoring.util.RefactoringUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;

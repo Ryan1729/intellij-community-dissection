@@ -15,7 +15,6 @@
  */
 package com.intellij.debugger.actions;
 
-import com.intellij.codeInsight.daemon.impl.JavaHighlightInfoTypes;
 import com.intellij.debugger.engine.DebugProcess;
 import com.intellij.debugger.engine.DebugProcessImpl;
 import com.intellij.debugger.engine.DebuggerUtils;

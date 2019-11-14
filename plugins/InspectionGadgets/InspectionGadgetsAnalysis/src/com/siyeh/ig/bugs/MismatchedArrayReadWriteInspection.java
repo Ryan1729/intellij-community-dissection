@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
+
 package com.siyeh.ig.bugs;
 
-import com.intellij.codeInsight.daemon.impl.UnusedSymbolUtil;
 import com.intellij.codeInsight.daemon.impl.analysis.HighlightUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.util.InheritanceUtil;
@@ -96,7 +97,7 @@ public class MismatchedArrayReadWriteInspection extends BaseInspection {
       final ArrayReadWriteVisitor visitor = new ArrayReadWriteVisitor(field, !isZeroSizeArrayExpression(field.getInitializer()));
       containingClass.accept(visitor);
       final boolean written = visitor.isWritten();
-      if (!visitor.isReferenced() || written == visitor.isRead() || UnusedSymbolUtil.isImplicitWrite(field)) {
+      if (!visitor.isReferenced() || written == visitor.isRead()) {
         return;
       }
       registerFieldError(field, Boolean.valueOf(written));

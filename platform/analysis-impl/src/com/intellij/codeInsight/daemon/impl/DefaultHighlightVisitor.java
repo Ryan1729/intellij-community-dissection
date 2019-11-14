@@ -137,8 +137,6 @@ final class DefaultHighlightVisitor implements HighlightVisitor, DumbAware {
     if (HighlightErrorFilter.EP_NAME.findFirstSafe(myProject, filter -> !filter.shouldHighlightErrorElement(element)) != null) {
       return;
     }
-
-    myHolder.add(createErrorElementInfo(element));
   }
 
   private static HighlightInfo createErrorElementInfo(@NotNull PsiErrorElement element) {

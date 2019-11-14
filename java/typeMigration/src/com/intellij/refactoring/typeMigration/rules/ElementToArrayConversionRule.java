@@ -5,8 +5,6 @@ import com.intellij.psi.*;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.psi.util.TypeConversionUtil;
 import com.intellij.refactoring.typeMigration.TypeConversionDescriptor;
-import com.intellij.refactoring.typeMigration.TypeConversionDescriptorBase;
-import com.intellij.refactoring.typeMigration.TypeMigrationLabeler;
 
 public class ElementToArrayConversionRule extends TypeConversionRule{
   @Override

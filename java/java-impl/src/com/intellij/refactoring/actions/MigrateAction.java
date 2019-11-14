@@ -7,7 +7,6 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.project.Project;
-import com.intellij.refactoring.RefactoringManager;
 import org.jetbrains.annotations.NotNull;
 
 public class MigrateAction extends AnAction {

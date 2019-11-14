@@ -23,7 +23,6 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.refactoring.introduceVariable.IntroduceVariableBase;
-import com.intellij.refactoring.util.RefactoringUtil;
 
 import java.util.*;
 

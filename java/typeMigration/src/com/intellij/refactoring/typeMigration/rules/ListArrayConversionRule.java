@@ -10,8 +10,6 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.psi.util.TypeConversionUtil;
 import com.intellij.refactoring.typeMigration.TypeConversionDescriptor;
-import com.intellij.refactoring.typeMigration.TypeConversionDescriptorBase;
-import com.intellij.refactoring.typeMigration.TypeMigrationLabeler;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
 

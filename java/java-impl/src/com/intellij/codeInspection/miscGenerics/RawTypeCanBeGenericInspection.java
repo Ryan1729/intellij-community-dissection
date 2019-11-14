@@ -7,8 +7,6 @@ import com.intellij.psi.*;
 import com.intellij.psi.search.PsiSearchHelper;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.TypeConversionUtil;
-import com.intellij.refactoring.typeMigration.TypeMigrationProcessor;
-import com.intellij.refactoring.typeMigration.TypeMigrationRules;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -16,9 +16,6 @@
 package com.intellij.refactoring.typeMigration.rules.guava;
 
 import com.intellij.psi.*;
-import com.intellij.refactoring.typeMigration.TypeConversionDescriptorBase;
-import com.intellij.refactoring.typeMigration.TypeEvaluator;
-import com.intellij.refactoring.typeMigration.TypeMigrationLabeler;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

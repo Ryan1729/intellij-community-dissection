@@ -58,7 +58,6 @@ public abstract class RainbowVisitor implements HighlightVisitor {
 
 
   protected void addInfo(@Nullable HighlightInfo highlightInfo) {
-    myHolder.add(highlightInfo);
   }
 
   protected HighlightInfo getInfo(@NotNull final PsiElement context,

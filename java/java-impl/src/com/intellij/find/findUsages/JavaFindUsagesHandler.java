@@ -24,7 +24,6 @@ import com.intellij.psi.search.searches.OverridingMethodsSearch;
 import com.intellij.psi.util.PropertyUtilBase;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.psi.util.PsiUtilCore;
-import com.intellij.refactoring.util.JavaNonCodeSearchElementDescriptionProvider;
 import com.intellij.refactoring.util.NonCodeSearchDescriptionLocation;
 import com.intellij.usageView.UsageInfo;
 import com.intellij.util.Processor;

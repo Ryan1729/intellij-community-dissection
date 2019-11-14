@@ -23,10 +23,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.refactoring.RefactoringActionHandler;
-import com.intellij.refactoring.inheritanceToDelegation.InheritanceToDelegationHandler;
 import org.jetbrains.annotations.NotNull;
-
-import static com.intellij.refactoring.actions.RefactoringActionContextUtil.isJavaClassHeader;
 
 public class InheritanceToDelegationAction extends BaseJavaRefactoringAction {
   @Override
@@ -49,13 +46,13 @@ public class InheritanceToDelegationAction extends BaseJavaRefactoringAction {
                                                         @NotNull DataContext context,
                                                         @NotNull String place) {
     if (ActionPlaces.isPopupPlace(place) || place.equals(ActionPlaces.REFACTORING_QUICKLIST)) {
-      return isJavaClassHeader(element);
+      return false;
     }
     return super.isAvailableOnElementInEditorAndFile(element, editor, file, context, place);
   }
 
   @Override
   public RefactoringActionHandler getHandler(@NotNull DataContext dataContext) {
-    return new InheritanceToDelegationHandler();
+    return null;
   }
 }

@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 
 package com.intellij.codeInsight.intention.impl;
 
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.codeInsight.CodeInsightUtil;
 import com.intellij.codeInsight.FileModificationService;
-import com.intellij.codeInsight.daemon.impl.analysis.HighlightNamesUtil;
-import com.intellij.codeInsight.daemon.impl.quickfix.CreateClassKind;
 import com.intellij.codeInsight.daemon.impl.quickfix.CreateConstructorMatchingSuperFix;
 import com.intellij.codeInsight.daemon.impl.quickfix.CreateFromUsageBaseFix;
 import com.intellij.codeInsight.generation.OverrideImplementUtil;
@@ -31,20 +30,14 @@ import com.intellij.codeInsight.template.TemplateBuilderImpl;
 import com.intellij.codeInsight.template.TemplateEditingAdapter;
 import com.intellij.ide.scratch.ScratchFileType;
 import com.intellij.lang.java.JavaLanguage;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.TransactionGuard;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.RangeMarker;
-import com.intellij.openapi.fileEditor.ex.IdeDocumentHistory;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
-import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
@@ -56,7 +49,6 @@ import com.intellij.psi.util.TypeConversionUtil;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,15 +98,6 @@ public class CreateSubclassAction extends BaseIntentionAction {
     PsiElement lBrace = psiClass.getLBrace();
     if (lBrace == null) return false;
     if (element.getTextOffset() >= lBrace.getTextOffset()) return false;
-
-    TextRange declarationRange = HighlightNamesUtil.getClassDeclarationTextRange(psiClass);
-    final TextRange elementTextRange = element.getTextRange();
-    if (!declarationRange.contains(elementTextRange)) {
-      if (!(element instanceof PsiWhiteSpace) || (declarationRange.getStartOffset() != elementTextRange.getEndOffset() &&
-                                                  declarationRange.getEndOffset() != elementTextRange.getStartOffset())) {
-        return false;
-      }
-    }
 
     if (shouldCreateInnerClass(psiClass) && !canModify(file)) {
       return false;
@@ -168,83 +151,11 @@ public class CreateSubclassAction extends BaseIntentionAction {
   }
 
   protected void createTopLevelClass(PsiClass psiClass) {
-    final CreateClassDialog dlg = chooseSubclassToCreate(psiClass);
-    if (dlg != null) {
-      createSubclass(psiClass, dlg.getTargetDirectory(), dlg.getClassName());
-    }
-  }
-
-  @Nullable
-  public static CreateClassDialog chooseSubclassToCreate(PsiClass psiClass) {
-    return chooseSubclassToCreate(psiClass, suggestTargetClassName(psiClass));
-  }
-
-  @Nullable
-  public static CreateClassDialog chooseSubclassToCreate(PsiClass psiClass, final String targetClassName) {
-    final PsiDirectory sourceDir = psiClass.getContainingFile().getContainingDirectory();
-    ProjectFileIndex fileIndex = ProjectRootManager.getInstance(psiClass.getProject()).getFileIndex();
-    final PsiPackage aPackage = sourceDir != null ? JavaDirectoryService.getInstance().getPackage(sourceDir) : null;
-    final CreateClassDialog dialog = new CreateClassDialog(
-      psiClass.getProject(), getTitle(psiClass),
-      targetClassName,
-      aPackage != null ? aPackage.getQualifiedName() : "",
-      CreateClassKind.CLASS, true, ModuleUtilCore.findModuleForPsiElement(psiClass)) {
-      @Override
-      protected PsiDirectory getBaseDir(String packageName) {
-        return sourceDir != null && fileIndex.getSourceRootForFile(sourceDir.getVirtualFile()) != null ? sourceDir : super.getBaseDir(packageName);
-      }
-
-      @Override
-      protected boolean reportBaseInTestSelectionInSource() {
-        return true;
-      }
-    };
-    if (!dialog.showAndGet()) {
-      return null;
-    }
-    final PsiDirectory targetDirectory = dialog.getTargetDirectory();
-    if (targetDirectory == null) return null;
-    return dialog;
   }
 
   public static String suggestTargetClassName(PsiClass psiClass) {
     JavaCodeStyleSettings javaSettings = JavaCodeStyleSettings.getInstance(psiClass.getContainingFile());
     return javaSettings.SUBCLASS_NAME_PREFIX + psiClass.getName() + javaSettings.SUBCLASS_NAME_SUFFIX;
-  }
-
-  public static PsiClass createSubclass(final PsiClass psiClass, final PsiDirectory targetDirectory, final String className) {
-    return createSubclass(psiClass, targetDirectory, className, true);
-  }
-
-  public static PsiClass createSubclass(final PsiClass psiClass, final PsiDirectory targetDirectory, final String className, boolean showChooser) {
-    final Project project = psiClass.getProject();
-    final PsiClass[] targetClass = new PsiClass[1];
-    WriteCommandAction.writeCommandAction(project).withName(getTitle(psiClass)).withGroupId(getTitle(psiClass)).run(() -> {
-      IdeDocumentHistory.getInstance(project).includeCurrentPlaceAsChangePlace();
-
-      final PsiTypeParameterList oldTypeParameterList = psiClass.getTypeParameterList();
-
-      try {
-        targetClass[0] = JavaDirectoryService.getInstance().createClass(targetDirectory, className);
-      }
-      catch (final IncorrectOperationException e) {
-        ApplicationManager.getApplication().invokeLater(
-          () -> Messages.showErrorDialog(project, CodeInsightBundle.message("intention.error.cannot.create.class.message", className) +
-                                                  "\n" + e.getLocalizedMessage(),
-                                         CodeInsightBundle.message("intention.error.cannot.create.class.title")));
-        return;
-      }
-      startTemplate(oldTypeParameterList, project, psiClass, targetClass[0], false);
-    });
-    if (targetClass[0] == null) return null;
-    if (!ApplicationManager.getApplication().isUnitTestMode() && !psiClass.hasTypeParameters()) {
-
-      final Editor editor = CodeInsightUtil.positionCursorAtLBrace(project, targetClass[0].getContainingFile(), targetClass[0]);
-      if (editor == null) return targetClass[0];
-
-      chooseAndImplement(psiClass, project, targetClass[0], editor, showChooser);
-    }
-    return targetClass[0];
   }
 
   private static void startTemplate(PsiTypeParameterList oldTypeParameterList,

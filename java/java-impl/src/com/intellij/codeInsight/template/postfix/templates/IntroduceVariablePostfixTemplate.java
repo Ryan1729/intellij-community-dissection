@@ -21,9 +21,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiType;
-import com.intellij.refactoring.introduceVariable.InputValidator;
 import com.intellij.refactoring.introduceVariable.IntroduceVariableHandler;
-import com.intellij.refactoring.introduceVariable.IntroduceVariableSettings;
 import com.intellij.refactoring.ui.TypeSelectorManagerImpl;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,8 +48,8 @@ public class IntroduceVariablePostfixTemplate extends PostfixTemplateWithExpress
       // mock default settings
       @Override
       public final IntroduceVariableSettings getSettings(Project project, Editor editor, final PsiExpression expr,
-                                                         PsiExpression[] occurrences, TypeSelectorManagerImpl typeSelectorManager,
-                                                         boolean declareFinalIfAll, boolean anyAssignmentLHS, InputValidator validator,
+                                                         PsiExpression[] occurrences,
+                                                         boolean declareFinalIfAll, boolean anyAssignmentLHS,
                                                          PsiElement anchor, JavaReplaceChoice replaceChoice) {
         return new IntroduceVariableSettings() {
           @Override

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.siyeh.ig.junit;
 
 import com.intellij.codeInsight.AnnotationUtil;
@@ -25,8 +25,6 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.InheritanceUtil;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
-import com.intellij.refactoring.changeSignature.ChangeSignatureProcessor;
-import com.intellij.refactoring.changeSignature.ParameterInfoImpl;
 import com.siyeh.ig.BaseInspection;
 import com.siyeh.ig.BaseInspectionVisitor;
 import com.siyeh.ig.InspectionGadgetsFix;
@@ -48,14 +46,7 @@ public class ParameterizedParametersStaticCollectionInspection extends BaseInspe
       @Override
       protected void doFix(final Project project, ProblemDescriptor descriptor) {
         final PsiElement element = descriptor.getPsiElement();
-        final PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
-        if (method != null && infos[1] instanceof PsiType) {
-          PsiType type = (PsiType)infos[1];
-          final ChangeSignatureProcessor csp =
-            new ChangeSignatureProcessor(project, method, false, PsiModifier.PUBLIC, method.getName(), type, new ParameterInfoImpl[0]);
-          csp.run();
-        }
-        else {
+        {
           final PsiClass psiClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
           if (psiClass != null) {
             final CreateMethodQuickFix fix = CreateMethodQuickFix
@@ -129,7 +120,7 @@ public class ParameterizedParametersStaticCollectionInspection extends BaseInspe
 
                     if (collectionsClass != null &&
                         !(returnType instanceof PsiArrayType) &&
-                        (returnTypeClass == null || !InheritanceUtil.isInheritorOrSelf(returnTypeClass, collectionsClass, true))) {
+                        (!InheritanceUtil.isInheritorOrSelf(returnTypeClass, collectionsClass, true))) {
                       if (!signatureDescription.isEmpty()) {
                         signatureDescription += " and";
                       }

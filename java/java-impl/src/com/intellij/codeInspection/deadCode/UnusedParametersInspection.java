@@ -4,7 +4,6 @@ package com.intellij.codeInspection.deadCode;
 
 import com.intellij.analysis.AnalysisScope;
 import com.intellij.codeInsight.FileModificationService;
-import com.intellij.codeInsight.daemon.impl.quickfix.RemoveUnusedParameterFix;
 import com.intellij.codeInspection.*;
 import com.intellij.codeInspection.ex.EntryPointsManager;
 import com.intellij.codeInspection.reference.*;

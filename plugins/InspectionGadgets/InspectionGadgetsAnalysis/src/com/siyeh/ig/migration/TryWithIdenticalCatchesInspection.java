@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.siyeh.ig.migration;
 
-import com.intellij.codeInsight.daemon.impl.analysis.HighlightControlFlowUtil;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.openapi.project.Project;
@@ -24,10 +24,8 @@ import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import com.intellij.psi.javadoc.PsiDocComment;
-import com.intellij.psi.search.LocalSearchScope;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.refactoring.extractMethod.InputVariables;
 import com.intellij.refactoring.util.duplicates.DuplicatesFinder;
 import com.intellij.refactoring.util.duplicates.Match;
 import com.intellij.refactoring.util.duplicates.ReturnValue;
@@ -325,10 +323,6 @@ public class TryWithIdenticalCatchesInspection extends BaseInspection {
       final PsiCodeBlock codeBlock = catchSection.getCatchBlock();
       if (parameter != null && codeBlock != null) {
         final List<PsiClassType> types = getClassTypes(parameter.getType());
-        if (types != null && HighlightControlFlowUtil.isEffectivelyFinal(parameter, codeBlock, null)) {
-          final DuplicatesFinder finder = buildDuplicatesFinder(codeBlock, parameter);
-          return new CatchSectionWrapper(catchSection, codeBlock, parameter, types, finder);
-        }
       }
       return null;
     }
@@ -348,13 +342,6 @@ public class TryWithIdenticalCatchesInspection extends BaseInspection {
         }
       }
       return null;
-    }
-
-    @NotNull
-    private static DuplicatesFinder buildDuplicatesFinder(@NotNull PsiCodeBlock catchBlock, @NotNull PsiParameter parameter) {
-      final InputVariables inputVariables =
-        new InputVariables(Collections.singletonList(parameter), parameter.getProject(), new LocalSearchScope(catchBlock), false, Collections.emptySet());
-      return new DuplicatesFinder(new PsiElement[]{catchBlock}, inputVariables, null, Collections.emptyList());
     }
   }
 

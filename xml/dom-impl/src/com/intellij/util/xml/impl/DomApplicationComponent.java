@@ -1,23 +1,18 @@
 // Copyright 2000-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.util.xml.impl;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.util.ReflectionAssignabilityCache;
-import com.intellij.util.ReflectionUtil;
-import com.intellij.util.containers.ConcurrentFactoryMap;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.containers.MultiMap;
 import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.DomElementVisitor;
 import com.intellij.util.xml.DomFileDescription;
 import com.intellij.util.xml.TypeChooserManager;
-import com.intellij.util.xml.highlighting.DomElementsAnnotator;
 import gnu.trove.THashSet;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,17 +24,6 @@ public class DomApplicationComponent {
   private final Set<DomFileMetaData> myAcceptingOtherRootTagNamesDescriptions = new THashSet<>();
   private final ImplementationClassCache myCachedImplementationClasses = new ImplementationClassCache(DomImplementationClassEP.EP_NAME);
   private final TypeChooserManager myTypeChooserManager = new TypeChooserManager();
-  final ReflectionAssignabilityCache assignabilityCache = new ReflectionAssignabilityCache();
-  private final Map<Class<?>, DomElementsAnnotator> myClass2Annotator = ConcurrentFactoryMap.createMap(key-> {
-      final DomFileDescription<?> desc = findFileDescription(key);
-      return desc == null ? null : desc.createAnnotator();
-    }
-  );
-
-  private final Map<Class<?>, InvocationCache> myInvocationCaches = ConcurrentFactoryMap.create(InvocationCache::new,
-                                                                                                ContainerUtil::createConcurrentSoftValueMap);
-  private final Map<Class<? extends DomElementVisitor>, VisitorDescription> myVisitorDescriptions =
-    ConcurrentFactoryMap.createMap(VisitorDescription::new);
 
 
   public DomApplicationComponent() {
@@ -112,52 +96,9 @@ public class DomApplicationComponent {
     myTypeChooserManager.copyFrom(description.getTypeChooserManager());
   }
 
-  synchronized void removeDescription(DomFileDescription<?> description) {
-    DomFileMetaData meta = findMeta(description);
-    myRootTagName2FileDescription.get(description.getRootTagName()).remove(meta);
-    myAcceptingOtherRootTagNamesDescriptions.remove(meta);
-  }
-
-  @Nullable
-  private synchronized DomFileDescription<?> findFileDescription(Class<?> rootElementClass) {
-    for (DomFileMetaData meta : allMetas()) {
-      DomFileDescription<?> description = meta.lazyInstance;
-      if (description != null && description.getRootElementClass() == rootElementClass) {
-        return description;
-      }
-    }
-    return null;
-  }
-
-  public DomElementsAnnotator getAnnotator(Class<?> rootElementClass) {
-    return myClass2Annotator.get(rootElementClass);
-  }
-
-  @Nullable
-  final Class<? extends DomElement> getImplementation(Class<?> concreteInterface) {
-    //noinspection unchecked
-    return myCachedImplementationClasses.get(concreteInterface);
-  }
-
   public final void registerImplementation(Class<? extends DomElement> domElementClass, Class<? extends DomElement> implementationClass,
                                            @Nullable final Disposable parentDisposable) {
     myCachedImplementationClasses.registerImplementation(domElementClass, implementationClass, parentDisposable);
-  }
-
-  TypeChooserManager getTypeChooserManager() {
-    return myTypeChooserManager;
-  }
-
-  public final StaticGenericInfo getStaticGenericInfo(final Type type) {
-    return getInvocationCache(ReflectionUtil.getRawType(type)).genericInfo;
-  }
-
-  final InvocationCache getInvocationCache(Class<?> type) {
-    return myInvocationCaches.get(type);
-  }
-
-  public final VisitorDescription getVisitorDescription(Class<? extends DomElementVisitor> aClass) {
-    return myVisitorDescriptions.get(aClass);
   }
 
 }

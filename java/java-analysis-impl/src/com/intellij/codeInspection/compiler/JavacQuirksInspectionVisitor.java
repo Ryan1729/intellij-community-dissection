@@ -3,9 +3,6 @@ package com.intellij.codeInspection.compiler;
 
 import com.intellij.codeInsight.daemon.JavaErrorMessages;
 import com.intellij.codeInsight.daemon.QuickFixBundle;
-import com.intellij.codeInsight.daemon.impl.actions.SuppressByJavaCommentFix;
-import com.intellij.codeInsight.daemon.impl.analysis.JavaHighlightUtil;
-import com.intellij.codeInsight.daemon.impl.quickfix.AddTypeArgumentsFix;
 import com.intellij.codeInsight.intention.QuickFixFactory;
 import com.intellij.codeInspection.*;
 import com.intellij.codeInspection.miscGenerics.RedundantTypeArgsInspection;
@@ -90,9 +87,7 @@ public class JavacQuirksInspectionVisitor extends JavaElementVisitor {
     if (JavaSdkVersion.JDK_1_6.equals(JavaVersionService.getInstance().getJavaSdkVersion(assignment)) &&
         PsiType.getJavaLangObject(assignment.getManager(), assignment.getResolveScope()).equals(lType)) {
       String operatorText = operationSign.getText().substring(0, operationSign.getText().length() - 1);
-      String message = JavaErrorMessages.message("binary.operator.not.applicable", operatorText,
-                                                 JavaHighlightUtil.formatType(lType),
-                                                 JavaHighlightUtil.formatType(rExpression.getType()));
+      String message = "String message";
 
       myHolder.registerProblem(assignment, message, ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
                                new ReplaceAssignmentOperatorWithAssignmentFix(operationSign.getText()));
@@ -216,17 +211,6 @@ public class JavacQuirksInspectionVisitor extends JavaElementVisitor {
 
     @Override
     public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
-      PsiElement element = descriptor.getPsiElement();
-      if (element instanceof PsiReferenceExpression) {
-        PsiElement parent = element.getParent();
-        if (parent instanceof PsiMethodCallExpression) {
-          PsiExpression withArgs = AddTypeArgumentsFix.addTypeArguments((PsiExpression)parent, null);
-          if (withArgs == null) return;
-          element = WriteAction.compute(() -> CodeStyleManager.getInstance(project).reformat(parent.replace(withArgs)));
-          new SuppressByJavaCommentFix(RedundantTypeArgsInspection.SHORT_NAME + " (explicit type arguments speedup compilation and analysis time)")
-            .invoke(project, element);
-        }
-      }
     }
 
     @Override

@@ -20,7 +20,6 @@ import com.intellij.codeInspection.naming.NamingConvention;
 import com.intellij.codeInspection.naming.NamingConventionBean;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiTypeParameter;
-import com.intellij.testIntegration.JavaTestFramework;
 import com.intellij.testIntegration.TestFramework;
 import com.siyeh.InspectionGadgetsBundle;
 

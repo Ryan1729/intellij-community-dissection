@@ -2,16 +2,12 @@
 package com.intellij.codeInspection.unneededThrows;
 
 import com.intellij.codeInsight.ExceptionUtil;
-import com.intellij.codeInsight.daemon.JavaErrorMessages;
-import com.intellij.codeInsight.daemon.impl.analysis.JavaHighlightUtil;
-import com.intellij.codeInsight.daemon.impl.quickfix.MethodThrowsFix;
 import com.intellij.codeInspection.*;
 import com.intellij.codeInspection.deadCode.UnusedDeclarationInspectionBase;
 import com.intellij.psi.*;
 import com.siyeh.ig.JavaOverridingMethodUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.TestOnly;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -21,9 +17,6 @@ import java.util.stream.Stream;
 @SuppressWarnings("InspectionDescriptionNotFoundInspection") // delegates
 public class RedundantThrowsDeclarationLocalInspection extends AbstractBaseJavaLocalInspectionTool {
   private final RedundantThrowsDeclarationInspection myGlobalTool;
-
-  @TestOnly
-  public RedundantThrowsDeclarationLocalInspection() {this(new RedundantThrowsDeclarationInspection());}
 
   public RedundantThrowsDeclarationLocalInspection(@NotNull RedundantThrowsDeclarationInspection tool) {myGlobalTool = tool;}
 
@@ -56,7 +49,7 @@ public class RedundantThrowsDeclarationLocalInspection extends AbstractBaseJavaL
                                                          InspectionManager inspectionManager) {
     if (method instanceof SyntheticElement) return null;
     PsiClass containingClass = method.getContainingClass();
-    if (containingClass == null || JavaHighlightUtil.isSerializationRelatedMethod(method, containingClass)) return null;
+    if (containingClass == null) return null;
 
     PsiCodeBlock body = method.getBody();
     if (body == null) return null;
@@ -102,8 +95,8 @@ public class RedundantThrowsDeclarationLocalInspection extends AbstractBaseJavaL
 
     return candidates.stream().map(exceptionType -> {
       PsiJavaCodeReferenceElement reference = exceptionType.ref;
-      String description = JavaErrorMessages.message("exception.is.never.thrown", JavaHighlightUtil.formatType(exceptionType.type));
-      LocalQuickFix quickFix = new MethodThrowsFix.Remove(method, exceptionType.type, false);
+      String description = "String description";
+      LocalQuickFix quickFix = null;
       return inspectionManager.createProblemDescriptor(reference, description, quickFix, ProblemHighlightType.LIKE_UNUSED_SYMBOL, true);
     }).toArray(ProblemDescriptor[]::new);
   }

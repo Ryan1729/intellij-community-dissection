@@ -5,7 +5,6 @@ import com.intellij.codeInsight.completion.CompletionMemory;
 import com.intellij.codeInsight.completion.CompletionUtil;
 import com.intellij.codeInsight.completion.InsertionContext;
 import com.intellij.codeInsight.completion.JavaMethodCallElement;
-import com.intellij.codeInsight.daemon.impl.analysis.LambdaHighlightingUtil;
 import com.intellij.codeInsight.hints.ParameterHintsPass;
 import com.intellij.codeInsight.lookup.CommaTailType;
 import com.intellij.openapi.components.ServiceManager;

@@ -18,7 +18,6 @@ import com.intellij.psi.search.searches.ClassInheritorsSearch;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.*;
 import com.intellij.psi.util.proximity.PsiProximityComparator;
-import com.intellij.refactoring.util.RefactoringUtil;
 import com.intellij.util.Consumer;
 import com.intellij.util.FilteredQuery;
 import com.intellij.util.Processor;

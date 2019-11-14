@@ -60,12 +60,6 @@ public abstract class QuickFixFactory {
                                                                                     boolean fixWholeHierarchy);
 
   @NotNull
-  public abstract LocalQuickFixAndIntentionActionOnPsiElement createMethodReturnFix(@NotNull PsiMethod method,
-                                                                                    @NotNull PsiType toReturn,
-                                                                                    boolean fixWholeHierarchy,
-                                                                                    boolean suggestSuperTypes);
-
-  @NotNull
   public abstract LocalQuickFixAndIntentionActionOnPsiElement createAddMethodFix(@NotNull PsiMethod method, @NotNull PsiClass toClass);
 
   @NotNull

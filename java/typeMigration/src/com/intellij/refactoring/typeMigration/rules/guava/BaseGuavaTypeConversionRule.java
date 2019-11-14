@@ -17,9 +17,6 @@ package com.intellij.refactoring.typeMigration.rules.guava;
 
 import com.intellij.codeInspection.AnonymousCanBeLambdaInspection;
 import com.intellij.psi.*;
-import com.intellij.refactoring.typeMigration.TypeConversionDescriptorBase;
-import com.intellij.refactoring.typeMigration.TypeEvaluator;
-import com.intellij.refactoring.typeMigration.TypeMigrationLabeler;
 import com.intellij.refactoring.typeMigration.inspections.GuavaConversionSettings;
 import com.intellij.refactoring.typeMigration.rules.TypeConversionRule;
 import com.intellij.reference.SoftLazyValue;

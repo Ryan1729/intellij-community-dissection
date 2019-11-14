@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.refactoring.actions;
 
 import com.intellij.lang.java.JavaLanguage;
@@ -23,7 +24,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiMethod;
 import com.intellij.refactoring.RefactoringActionHandler;
-import com.intellij.refactoring.replaceConstructorWithFactory.ReplaceConstructorWithFactoryHandler;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -59,6 +59,6 @@ public class ReplaceConstructorWithFactoryAction extends BaseJavaRefactoringActi
 
   @Override
   protected RefactoringActionHandler getHandler(@NotNull DataContext dataContext) {
-    return new ReplaceConstructorWithFactoryHandler();
+    return null;
   }
 }

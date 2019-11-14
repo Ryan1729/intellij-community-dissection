@@ -18,7 +18,6 @@ package com.intellij.refactoring.util.occurrences;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.refactoring.introduceField.ElementToWorkOn;
-import com.intellij.refactoring.util.RefactoringUtil;
 
 import java.util.ArrayList;
 

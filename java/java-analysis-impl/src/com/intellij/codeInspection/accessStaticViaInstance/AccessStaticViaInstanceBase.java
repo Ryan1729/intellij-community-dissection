@@ -1,16 +1,11 @@
 // Copyright 2000-2017 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.codeInspection.accessStaticViaInstance;
 
-import com.intellij.codeInsight.daemon.JavaErrorMessages;
-import com.intellij.codeInsight.daemon.impl.analysis.HighlightMessageUtil;
-import com.intellij.codeInsight.daemon.impl.analysis.JavaHighlightUtil;
-import com.intellij.codeInsight.daemon.impl.quickfix.RemoveUnusedVariableUtil;
 import com.intellij.codeInspection.*;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 
 public class AccessStaticViaInstanceBase extends AbstractBaseJavaLocalInspectionTool implements CleanupLocalInspectionTool {
   @NonNls public static final String ACCESS_STATIC_VIA_INSTANCE = "AccessStaticViaInstance";
@@ -74,15 +69,7 @@ public class AccessStaticViaInstanceBase extends AbstractBaseJavaLocalInspection
     PsiClass containingClass = ((PsiMember)resolved).getContainingClass();
     if (containingClass != null && containingClass.isInterface()) return;
 
-    String description = JavaErrorMessages.message("static.member.accessed.via.instance.reference",
-                                                   JavaHighlightUtil.formatType(qualifierExpression.getType()),
-                                                   HighlightMessageUtil.getSymbolName(resolved, result.getSubstitutor()));
-    if (!onTheFly) {
-      if (RemoveUnusedVariableUtil.checkSideEffects(qualifierExpression, null, new ArrayList<>())) {
-        holder.registerProblem(expr, description);
-        return;
-      }
-    }
+    String description = "String description";
     holder.registerProblem(expr, description, createAccessStaticViaInstanceFix(expr, onTheFly, result));
   }
 

@@ -529,7 +529,6 @@ public class XmlHighlightVisitor extends XmlElementVisitor implements HighlightV
   }
 
   private void addToResults(final HighlightInfo info) {
-    myHolder.add(info);
   }
 
   public static void setDoJaxpTesting(boolean doJaxpTesting) {

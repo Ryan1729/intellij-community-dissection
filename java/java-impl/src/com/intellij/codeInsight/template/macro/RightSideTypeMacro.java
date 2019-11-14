@@ -20,7 +20,6 @@ import com.intellij.codeInsight.template.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.refactoring.util.RefactoringUtil;
 import org.jetbrains.annotations.NotNull;
 
 

@@ -17,7 +17,6 @@ package com.intellij.codeInsight.template.macro;
 
 import com.intellij.codeInsight.completion.JavaCompletionUtil;
 import com.intellij.codeInsight.completion.JavaMethodCallElement;
-import com.intellij.codeInsight.completion.SmartCompletionDecorator;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.template.ExpressionContext;
 import com.intellij.openapi.editor.Editor;

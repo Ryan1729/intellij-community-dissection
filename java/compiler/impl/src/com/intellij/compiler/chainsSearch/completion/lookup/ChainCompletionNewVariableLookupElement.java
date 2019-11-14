@@ -2,7 +2,6 @@
 package com.intellij.compiler.chainsSearch.completion.lookup;
 
 import com.intellij.codeInsight.completion.InsertionContext;
-import com.intellij.codeInsight.completion.PreferByKindWeigher;
 import com.intellij.codeInsight.lookup.AutoCompletionPolicy;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.compiler.chainsSearch.context.ChainCompletionContext;

@@ -5,8 +5,6 @@ import com.intellij.codeInsight.Nullability;
 import com.intellij.codeInsight.NullabilityAnnotationInfo;
 import com.intellij.codeInsight.NullableNotNullManager;
 import com.intellij.codeInsight.TestFrameworks;
-import com.intellij.codeInsight.daemon.impl.UnusedSymbolUtil;
-import com.intellij.codeInsight.daemon.impl.analysis.HighlightControlFlowUtil;
 import com.intellij.codeInsight.daemon.impl.quickfix.AddVariableInitializerFix;
 import com.intellij.codeInsight.daemon.impl.quickfix.DeleteElementFix;
 import com.intellij.codeInsight.daemon.impl.quickfix.InitializeFinalFieldInConstructorFix;

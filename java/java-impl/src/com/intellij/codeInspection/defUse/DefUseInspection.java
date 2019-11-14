@@ -3,8 +3,6 @@ package com.intellij.codeInspection.defUse;
 
 import com.intellij.codeInsight.ExpressionUtil;
 import com.intellij.codeInsight.daemon.GroupNames;
-import com.intellij.codeInsight.daemon.impl.analysis.HighlightControlFlowUtil;
-import com.intellij.codeInsight.daemon.impl.analysis.JavaHighlightUtil;
 import com.intellij.codeInsight.daemon.impl.quickfix.RemoveUnusedVariableUtil;
 import com.intellij.codeInspection.*;
 import com.intellij.psi.*;

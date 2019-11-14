@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.codeInsight.intention.impl.config;
 
 import com.intellij.codeInsight.CodeInsightWorkspaceSettings;
@@ -39,7 +40,6 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.ClassKind;
 import com.intellij.psi.util.InheritanceUtil;
 import com.intellij.psi.util.PropertyMemberType;
-import com.intellij.refactoring.memberPushDown.JavaPushDownHandler;
 import com.intellij.util.DocumentUtil;
 import com.intellij.util.IncorrectOperationException;
 import com.siyeh.ig.fixes.CreateDefaultBranchFix;
@@ -80,16 +80,7 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
   public LocalQuickFixAndIntentionActionOnPsiElement createMethodReturnFix(@NotNull PsiMethod method,
                                                                            @NotNull PsiType toReturn,
                                                                            boolean fixWholeHierarchy) {
-    return new MethodReturnTypeFix(method, toReturn, fixWholeHierarchy);
-  }
-
-  @NotNull
-  @Override
-  public LocalQuickFixAndIntentionActionOnPsiElement createMethodReturnFix(@NotNull PsiMethod method,
-                                                                           @NotNull PsiType toReturn,
-                                                                           boolean fixWholeHierarchy,
-                                                                           boolean suggestSuperTypes) {
-    return new MethodReturnTypeFix(method, toReturn, fixWholeHierarchy, suggestSuperTypes);
+    return null;
   }
 
   @NotNull
@@ -130,7 +121,7 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
                                                          @NotNull PsiClassType exceptionClass,
                                                          boolean shouldThrow,
                                                          boolean showContainingClass) {
-    return shouldThrow ? new MethodThrowsFix.Add(method, exceptionClass, showContainingClass) : new MethodThrowsFix.Remove(method, exceptionClass, showContainingClass);
+    return null;
   }
 
   @NotNull
@@ -150,7 +141,7 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
                                                                                   int index,
                                                                                   @NotNull PsiType newType,
                                                                                   boolean fixWholeHierarchy) {
-    return new MethodParameterFix(method, newType, index, fixWholeHierarchy);
+    return null;
   }
 
   @NotNull
@@ -170,13 +161,13 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
   public LocalQuickFixAndIntentionActionOnPsiElement createExtendsListFix(@NotNull PsiClass aClass,
                                                                           @NotNull PsiClassType typeToExtendFrom,
                                                                           boolean toAdd) {
-    return new ExtendsListFix(aClass, typeToExtendFrom, toAdd);
+    return null;
   }
 
   @NotNull
   @Override
   public LocalQuickFixAndIntentionActionOnPsiElement createRemoveUnusedParameterFix(@NotNull PsiParameter parameter) {
-    return new RemoveUnusedParameterFix(parameter);
+    return null;
   }
 
   @NotNull
@@ -250,13 +241,13 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
   @NotNull
   @Override
   public IntentionAction createAddTypeCastFix(@NotNull PsiType type, @NotNull PsiExpression expression) {
-    return new AddTypeCastFix(type, expression);
+    return null;
   }
 
   @NotNull
   @Override
   public IntentionAction createWrapExpressionFix(@NotNull PsiType type, @NotNull PsiExpression expression) {
-    return new WrapExpressionFix(type, expression);
+    return null;
   }
 
   @NotNull
@@ -373,7 +364,7 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
   @NotNull
   @Override
   public IntentionAction createChangeParameterClassFix(@NotNull PsiClass aClass, @NotNull PsiClassType type) {
-    return new ChangeParameterClassFix(aClass, type);
+    return (IntentionAction)new ChangeParameterClassFix(aClass, type);
   }
 
   @NotNull
@@ -421,7 +412,7 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
   @NotNull
   @Override
   public IntentionAction createChangeExtendsToImplementsFix(@NotNull PsiClass aClass, @NotNull PsiClassType classToExtendFrom) {
-    return new ChangeExtendsToImplementsFix(aClass, classToExtendFrom);
+    return null;
   }
 
   @NotNull
@@ -480,7 +471,7 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
                                                                  @NotNull PsiElement context,
                                                                  boolean changeAllUsages,
                                                                  int minUsagesNumberToShowDialog) {
-    return new ChangeMethodSignatureFromUsageFix(targetMethod, expressions, substitutor, context, changeAllUsages, minUsagesNumberToShowDialog);
+    return null;
   }
 
   @NotNull
@@ -491,7 +482,7 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
                                                                              @NotNull PsiElement context,
                                                                              boolean changeAllUsages,
                                                                              int minUsagesNumberToShowDialog) {
-    return new ChangeMethodSignatureFromUsageReverseOrderFix(targetMethod, expressions, substitutor, context, changeAllUsages, minUsagesNumberToShowDialog);
+    return (IntentionAction)new ChangeMethodSignatureFromUsageReverseOrderFix(targetMethod, expressions, substitutor, context, changeAllUsages, minUsagesNumberToShowDialog);
   }
 
   @NotNull
@@ -605,12 +596,12 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
   @NotNull
   @Override
   public IntentionAction createMoveBoundClassToFrontFix(@NotNull PsiClass aClass, @NotNull PsiClassType type) {
-    return new MoveBoundClassToFrontFix(aClass, type);
+    return null;
   }
 
   @Override
   public void registerPullAsAbstractUpFixes(@NotNull PsiMethod method, @NotNull QuickFixActionRegistrar registrar) {
-    PullAsAbstractUpFix.registerQuickFix(method, registrar);
+
   }
 
   @NotNull
@@ -773,7 +764,7 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
   @NotNull
   @Override
   public IntentionAction createWrapWithOptionalFix(@Nullable PsiType type, @NotNull PsiExpression expression) {
-    return WrapObjectWithOptionalOfNullableFix.createFix(type, expression);
+    return null;
   }
 
   @Nullable
@@ -851,7 +842,7 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
   @NotNull
   @Override
   public IntentionAction createWrapWithAdapterFix(@Nullable PsiType type, @NotNull PsiExpression expression) {
-    return new WrapWithAdapterMethodCallFix(type, expression);
+    return null;
   }
 
   @NotNull
@@ -869,7 +860,7 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
   @NotNull
   @Override
   public IntentionAction createPushDownMethodFix() {
-    return new RunRefactoringAction(new JavaPushDownHandler(), "Push method down...") {
+    return new RunRefactoringAction(null, "Push method down...") {
       @NotNull
       @Override
       public Priority getPriority() {
@@ -881,7 +872,7 @@ public class QuickFixFactoryImpl extends QuickFixFactory {
   @NotNull
   @Override
   public IntentionAction createSameErasureButDifferentMethodsFix(@NotNull PsiMethod method, @NotNull PsiMethod superMethod) {
-    return new SameErasureButDifferentMethodsFix(method, superMethod);
+    return null;
   }
 
   @NotNull

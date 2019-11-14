@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.refactoring.actions;
 
 import com.intellij.lang.java.JavaLanguage;
@@ -23,7 +24,6 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.refactoring.RefactoringActionHandler;
-import com.intellij.refactoring.turnRefsToSuper.TurnRefsToSuperHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class TurnRefsToSuperAction extends BaseJavaRefactoringAction {
@@ -44,13 +44,13 @@ public class TurnRefsToSuperAction extends BaseJavaRefactoringAction {
                                                         @NotNull DataContext context,
                                                         @NotNull String place) {
     if (ActionPlaces.isPopupPlace(place) || place.equals(ActionPlaces.REFACTORING_QUICKLIST)) {
-      return RefactoringActionContextUtil.isJavaClassHeader(element);
+      return false;
     }
     return super.isAvailableOnElementInEditorAndFile(element, editor, file, context, place);
   }
 
   @Override
   public RefactoringActionHandler getHandler(@NotNull DataContext dataContext) {
-    return new TurnRefsToSuperHandler();
+    return null;
   }
 }

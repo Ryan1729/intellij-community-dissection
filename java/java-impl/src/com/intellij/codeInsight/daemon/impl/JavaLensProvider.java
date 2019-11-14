@@ -3,7 +3,6 @@ package com.intellij.codeInsight.daemon.impl;
 
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler;
 import com.intellij.codeInsight.daemon.impl.analysis.JavaLensSettings;
-import com.intellij.codeInsight.daemon.impl.analysis.JavaTelescope;
 import com.intellij.codeInsight.hints.*;
 import com.intellij.codeInsight.hints.settings.InlayHintsConfigurable;
 import com.intellij.codeInsight.hints.presentation.AttributesTransformerPresentation;

@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.refactoring.actions;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.*;
 import com.intellij.refactoring.RefactoringActionHandler;
-import com.intellij.refactoring.makeStatic.MakeStaticHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class MakeStaticAction extends BaseJavaRefactoringAction {
@@ -39,12 +38,11 @@ public class MakeStaticAction extends BaseJavaRefactoringAction {
     if (element instanceof PsiIdentifier) {
       element = element.getParent();
     }
-    return element instanceof PsiTypeParameterListOwner &&
-           MakeStaticHandler.validateTarget((PsiTypeParameterListOwner) element) == null;
+    return element instanceof PsiTypeParameterListOwner;
   }
 
   @Override
   protected RefactoringActionHandler getHandler(@NotNull DataContext dataContext) {
-    return new MakeStaticHandler();
+    return null;
   }
 }

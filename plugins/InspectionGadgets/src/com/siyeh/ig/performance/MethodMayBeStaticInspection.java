@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.siyeh.ig.performance;
 
 import com.intellij.codeInspection.InspectionManager;
@@ -24,8 +25,6 @@ import com.intellij.openapi.util.WriteExternalException;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.FindSuperElementsHelper;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.refactoring.makeStatic.MakeMethodStaticProcessor;
-import com.intellij.refactoring.makeStatic.Settings;
 import com.siyeh.InspectionGadgetsBundle;
 import com.siyeh.ig.BaseInspection;
 import com.siyeh.ig.BaseInspectionVisitor;
@@ -59,10 +58,7 @@ public class MethodMayBeStaticInspection extends BaseInspection {
     return new InspectionGadgetsFix() {
       @Override
       public void doFix(Project project, ProblemDescriptor descriptor) {
-        final PsiMethod element = PsiTreeUtil.getParentOfType(descriptor.getPsiElement(), PsiMethod.class);
-        if (element != null) {
-          new MakeMethodStaticProcessor(project, element, new Settings(m_replaceQualifier, null, null)).run();
-        }
+        PsiTreeUtil.getParentOfType(descriptor.getPsiElement(), PsiMethod.class);
       }
 
       @Override

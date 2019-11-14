@@ -17,9 +17,6 @@ package com.intellij.refactoring.typeMigration.rules;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
-import com.intellij.refactoring.typeMigration.TypeConversionDescriptorBase;
-import com.intellij.refactoring.typeMigration.TypeEvaluator;
-import com.intellij.refactoring.typeMigration.TypeMigrationLabeler;
 import com.intellij.util.IncorrectOperationException;
 import com.siyeh.ig.controlflow.UnnecessaryReturnInspection;
 import com.siyeh.ig.fixes.DeleteUnnecessaryStatementFix;

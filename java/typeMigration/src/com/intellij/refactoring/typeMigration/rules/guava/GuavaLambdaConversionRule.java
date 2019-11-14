@@ -20,8 +20,6 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiNewExpression;
 import com.intellij.refactoring.typeMigration.TypeConversionDescriptor;
-import com.intellij.refactoring.typeMigration.TypeConversionDescriptorBase;
-import com.intellij.refactoring.typeMigration.TypeEvaluator;
 import com.intellij.refactoring.typeMigration.inspections.GuavaConversionSettings;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;

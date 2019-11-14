@@ -17,7 +17,6 @@ package com.intellij.codeInsight.generation;
 
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.codeInsight.CodeInsightSettings;
-import com.intellij.codeInsight.generation.ui.GenerateEqualsWizard;
 import com.intellij.codeInsight.hint.HintManager;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.WriteAction;
@@ -97,14 +96,6 @@ public class GenerateEqualsHandler extends GenerateMembersHandlerBase {
     if (ApplicationManager.getApplication().isUnitTestMode()) {
       myEqualsFields = myHashCodeFields = aClass.getFields();
       myNonNullFields = PsiField.EMPTY_ARRAY;
-    } else {
-      GenerateEqualsWizard wizard = new GenerateEqualsWizard(project, aClass, needEquals, needHashCode);
-      if (!wizard.showAndGet()) {
-        return null;
-      }
-      myEqualsFields = wizard.getEqualsFields();
-      myHashCodeFields = wizard.getHashCodeFields();
-      myNonNullFields = wizard.getNonNullFields();
     }
 
     return DUMMY_RESULT;

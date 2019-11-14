@@ -4,8 +4,6 @@ package com.intellij.refactoring.inline;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiVariable;
-import com.intellij.refactoring.HelpID;
-import com.intellij.refactoring.JavaRefactoringSettings;
 import com.intellij.refactoring.RefactoringBundle;
 
 public class InlineLocalDialog extends AbstractInlineLocalDialog {

@@ -2,7 +2,6 @@
 package com.intellij.codeInsight.intention.impl.singlereturn;
 
 import com.intellij.codeInsight.Nullability;
-import com.intellij.codeInsight.daemon.impl.analysis.HighlightControlFlowUtil;
 import com.intellij.codeInspection.dataFlow.CommonDataflow;
 import com.intellij.codeInspection.dataFlow.NullabilityUtil;
 import com.intellij.codeInspection.dataFlow.rangeSet.LongRangeSet;

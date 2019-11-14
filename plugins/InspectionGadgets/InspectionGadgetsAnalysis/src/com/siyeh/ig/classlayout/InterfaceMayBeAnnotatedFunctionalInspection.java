@@ -1,8 +1,8 @@
 // Copyright 2000-2017 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.siyeh.ig.classlayout;
 
 import com.intellij.codeInsight.AnnotationUtil;
-import com.intellij.codeInsight.daemon.impl.analysis.LambdaHighlightingUtil;
 import com.intellij.codeInsight.intention.AddAnnotationPsiFix;
 import com.intellij.psi.*;
 import com.intellij.psi.util.MethodSignature;
@@ -56,9 +56,6 @@ public class InterfaceMayBeAnnotatedFunctionalInspection extends BaseInspection 
     public void visitClass(PsiClass aClass) {
       super.visitClass(aClass);
       if (!aClass.isInterface() || AnnotationUtil.isAnnotated(aClass, CommonClassNames.JAVA_LANG_FUNCTIONAL_INTERFACE, 0)) {
-        return;
-      }
-      if (LambdaHighlightingUtil.checkInterfaceFunctional(aClass) != null) {
         return;
       }
       MethodSignature signature = LambdaUtil.getFunction(aClass);

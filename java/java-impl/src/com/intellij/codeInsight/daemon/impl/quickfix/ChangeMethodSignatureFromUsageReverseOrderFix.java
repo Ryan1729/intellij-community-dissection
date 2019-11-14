@@ -22,7 +22,6 @@ import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.TypeConversionUtil;
 import com.intellij.refactoring.changeSignature.ParameterInfoImpl;
-import com.intellij.refactoring.util.RefactoringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

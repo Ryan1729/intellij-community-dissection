@@ -11,7 +11,6 @@ import com.intellij.psi.codeStyle.JavaCodeStyleManager
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.createSmartPointer
 import com.intellij.psi.util.parentOfType
-import com.intellij.refactoring.util.RefactoringUtil
 
 internal abstract class CreateExecutableFromJavaUsageRequest<out T : PsiCall>(
   call: T,
@@ -36,7 +35,7 @@ internal abstract class CreateExecutableFromJavaUsageRequest<out T : PsiCall>(
     val scope = call.resolveScope
     val codeStyleManager: JavaCodeStyleManager = project.service()
     return argumentList.expressions.map { expression ->
-      val type = getArgType(expression, scope)
+      val type = getArgType(scope)
       val names = codeStyleManager.suggestSemanticNames(expression)
       val expectedTypes = if (type == null) emptyList() else expectedTypes(type, ExpectedType.Kind.SUPERTYPE)
       expectedParameter(expectedTypes, names)
@@ -45,18 +44,8 @@ internal abstract class CreateExecutableFromJavaUsageRequest<out T : PsiCall>(
 
   override fun getParameters() = getParameters(expectedParameters, project)
 
-  private fun getArgType(expression: PsiExpression, scope: GlobalSearchScope): PsiType? {
-    val argType: PsiType? = RefactoringUtil.getTypeByExpression(expression)
-    if (argType == null || PsiType.NULL == argType || LambdaUtil.notInferredType(argType)) {
-      return getJavaLangObject(psiManager, scope)
-    }
-    else if (argType is PsiDisjunctionType) {
-      return argType.leastUpperBound
-    }
-    else if (argType is PsiWildcardType) {
-      return if (argType.isBounded) argType.bound else getJavaLangObject(psiManager, scope)
-    }
-    return argType
+  private fun getArgType(scope: GlobalSearchScope): PsiType? {
+    return getJavaLangObject(psiManager, scope)
   }
 
   val context get() = call.parentOfType(PsiMethod::class, PsiClass::class)

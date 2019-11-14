@@ -14,8 +14,6 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.GlobalSearchScopesCore;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiTypesUtil;
-import com.intellij.refactoring.typeMigration.TypeMigrationProcessor;
-import com.intellij.refactoring.typeMigration.TypeMigrationRules;
 import com.intellij.refactoring.typeMigration.rules.TypeConversionRule;
 import com.intellij.refactoring.typeMigration.rules.guava.*;
 import com.intellij.util.Function;

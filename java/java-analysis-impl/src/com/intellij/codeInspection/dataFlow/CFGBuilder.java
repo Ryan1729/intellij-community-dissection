@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.codeInspection.dataFlow;
 
 import com.intellij.codeInsight.Nullability;
@@ -42,16 +43,10 @@ import java.util.function.Consumer;
  */
 @SuppressWarnings("UnusedReturnValue")
 public class CFGBuilder {
-  private final ControlFlowAnalyzer myAnalyzer;
   private final Deque<Runnable> myBranches = new ArrayDeque<>();
   private final Map<PsiExpression, DfaVariableValue> myMethodRefQualifiers = new HashMap<>();
 
-  CFGBuilder(ControlFlowAnalyzer analyzer) {
-    myAnalyzer = analyzer;
-  }
-
   private CFGBuilder add(Instruction instruction) {
-    myAnalyzer.addInstruction(instruction);
     return this;
   }
 
@@ -65,7 +60,6 @@ public class CFGBuilder {
    * @return this builder
    */
   public CFGBuilder pushUnknown() {
-    myAnalyzer.pushUnknown();
     return this;
   }
 
@@ -93,7 +87,6 @@ public class CFGBuilder {
    * @return this builder
    */
   public CFGBuilder pushExpression(@NotNull PsiExpression expression) {
-    expression.accept(myAnalyzer);
     return this;
   }
 
@@ -114,9 +107,6 @@ public class CFGBuilder {
     if (kind == null) { 
       return pushExpression(expression);
     }
-    myAnalyzer.addCustomNullabilityProblem(expression, kind);
-    expression.accept(myAnalyzer);
-    myAnalyzer.removeCustomNullabilityProblem(expression);
     return this;
   }
 
@@ -284,7 +274,6 @@ public class CFGBuilder {
    * @return this builder
    */
   public CFGBuilder invoke(PsiMethodCallExpression call) {
-    myAnalyzer.addBareCall(call, call.getMethodExpression());
     return this;
   }
 
@@ -317,7 +306,6 @@ public class CFGBuilder {
    */
   public CFGBuilder ifConditionIs(boolean value) {
     ConditionalGotoInstruction gotoInstruction = new ConditionalGotoInstruction(null, value, null);
-    myBranches.add(() -> gotoInstruction.setOffset(myAnalyzer.getInstructionCount()));
     return add(gotoInstruction);
   }
 
@@ -391,7 +379,6 @@ public class CFGBuilder {
   public CFGBuilder elseBranch() {
     GotoInstruction gotoInstruction = new GotoInstruction(null);
     add(gotoInstruction).end();
-    myBranches.add(() -> gotoInstruction.setOffset(myAnalyzer.getInstructionCount()));
     return this;
   }
 
@@ -403,7 +390,6 @@ public class CFGBuilder {
    */
   public CFGBuilder doWhileUnknown() {
     ConditionalGotoInstruction jump = new ConditionalGotoInstruction(null, false, null);
-    jump.setOffset(myAnalyzer.getInstructionCount());
     myBranches.add(() -> pushUnknown().add(jump));
     return this;
   }
@@ -421,7 +407,6 @@ public class CFGBuilder {
    * @return this builder
    */
   public CFGBuilder boxUnbox(@NotNull PsiExpression expression, PsiType expectedType) {
-    myAnalyzer.generateBoxingUnboxingInstructionFor(expression, expectedType);
     return this;
   }
 
@@ -439,7 +424,6 @@ public class CFGBuilder {
    * @return this builder
    */
   public CFGBuilder boxUnbox(PsiExpression expression, PsiType expressionType, PsiType expectedType) {
-    myAnalyzer.generateBoxingUnboxingInstructionFor(expression, expressionType, expectedType);
     return this;
   }
 
@@ -530,8 +514,6 @@ public class CFGBuilder {
    */
   public CFGBuilder doTry(@NotNull PsiElement anchor) {
     ControlFlow.DeferredOffset offset = new ControlFlow.DeferredOffset();
-    myAnalyzer.pushTrap(new Trap.TryCatchAll(anchor, offset));
-    myBranches.add(() -> offset.setOffset(myAnalyzer.getInstructionCount()));
     return this;
   }
 
@@ -541,10 +523,8 @@ public class CFGBuilder {
    * @return this builder
    */
   public CFGBuilder catchAll() {
-    myAnalyzer.popTrap(Trap.TryCatchAll.class);
     GotoInstruction gotoInstruction = new GotoInstruction(null);
     add(gotoInstruction).end();
-    myBranches.add(() -> gotoInstruction.setOffset(myAnalyzer.getInstructionCount()));
     return this;
   }
 
@@ -556,7 +536,6 @@ public class CFGBuilder {
    * @return this builder
    */
   public CFGBuilder doThrow(@NotNull PsiType exceptionType) {
-    myAnalyzer.throwException(exceptionType, null);
     return this;
   }
 
@@ -592,7 +571,7 @@ public class CFGBuilder {
    * @return a {@link DfaValueFactory} associated with current control flow.
    */
   public DfaValueFactory getFactory() {
-    return myAnalyzer.getFactory();
+    return null;
   }
 
   /**
@@ -678,12 +657,6 @@ public class CFGBuilder {
             push(qualifierValue == null ? DfaUnknownValue.getInstance() : qualifierValue);
             moveTopValue(argCount);
           }
-          myAnalyzer.addBareCall(null, methodRef);
-          myAnalyzer.generateBoxingUnboxingInstructionFor(methodRef, resolveResult.getSubstitutor().substitute(method.getReturnType()),
-                                                          LambdaUtil.getFunctionalInterfaceReturnType(methodRef));
-          if (resultNullability == Nullability.NOT_NULL) {
-            myAnalyzer.addNullCheck(NullabilityProblemKind.nullableFunctionReturn.problem(methodRef, null));
-          }
           return this;
         }
       }
@@ -702,16 +675,9 @@ public class CFGBuilder {
     }
     // Unknown function
     flushFields();
-    myAnalyzer.addConditionalErrorThrow();
     PsiType functionalInterfaceType = functionalExpression.getType();
-    myAnalyzer.addMethodThrows(LambdaUtil.getFunctionalInterfaceMethod(functionalInterfaceType), null);
     PsiType returnType = LambdaUtil.getFunctionalInterfaceReturnType(functionalInterfaceType);
-    if (returnType != null) {
-      push(getFactory().createTypeValue(returnType, DfaPsiUtil.getTypeNullability(returnType)));
-    }
-    else {
-      pushUnknown();
-    }
+    pushUnknown();
     return this;
   }
 
@@ -762,13 +728,10 @@ public class CFGBuilder {
     if (expression != null) {
       NullabilityProblemKind<PsiExpression> kind = 
         resultNullability == Nullability.NOT_NULL ? NullabilityProblemKind.nullableFunctionReturn : NullabilityProblemKind.noProblem;
-      myAnalyzer.addCustomNullabilityProblem(expression, kind);
       pushExpression(expression);
-      myAnalyzer.removeCustomNullabilityProblem(expression);
       boxUnbox(expression, LambdaUtil.getFunctionalInterfaceReturnType(lambda));
     } else if(body instanceof PsiCodeBlock) {
       DfaVariableValue variable = createTempVariable(LambdaUtil.getFunctionalInterfaceReturnType(lambda));
-      myAnalyzer.inlineBlock((PsiCodeBlock)body, resultNullability, variable);
       push(variable);
     } else {
       pushUnknown();
@@ -778,35 +741,22 @@ public class CFGBuilder {
 
   public CFGBuilder loopOver(PsiExpression[] expressions, DfaVariableValue targetVariable) {
     DfaValueFactory factory = getFactory();
-    if (expressions.length > ControlFlowAnalyzer.MAX_UNROLL_SIZE) {
-      for (PsiExpression expression : expressions) {
-        pushExpression(expression);
-        pop();
-      }
-      ConditionalGotoInstruction condGoto = new ConditionalGotoInstruction(null, false, null);
-      condGoto.setOffset(myAnalyzer.getInstructionCount());
-      myBranches.add(() -> pushUnknown().add(condGoto));
-      assign(targetVariable, factory.createCommonValue(expressions, targetVariable.getType()));
-    } else {
-      push(factory.getConstFactory().getSentinel());
-      for (PsiExpression expression : expressions) {
-        pushExpression(expression);
-        boxUnbox(expression, targetVariable.getType());
-      }
-      // Revert order
-      add(new SpliceInstruction(expressions.length, IntStreamEx.ofIndices(expressions).toArray()));
-      GotoInstruction gotoInstruction = new GotoInstruction(null);
-      gotoInstruction.setOffset(myAnalyzer.getInstructionCount());
-      dup().push(factory.getConstFactory().getSentinel()).compare(JavaTokenType.EQEQ);
-      ConditionalGotoInstruction condGoto = new ConditionalGotoInstruction(null, false, null);
-      add(condGoto);
-      assignTo(targetVariable);
-      myBranches.add(() -> {
-        add(gotoInstruction);
-        condGoto.setOffset(myAnalyzer.getInstructionCount());
-        pop();
-      });
+    push(factory.getConstFactory().getSentinel());
+    for (PsiExpression expression : expressions) {
+      pushExpression(expression);
+      boxUnbox(expression, targetVariable.getType());
     }
+    // Revert order
+    add(new SpliceInstruction(expressions.length, IntStreamEx.ofIndices(expressions).toArray()));
+    GotoInstruction gotoInstruction = new GotoInstruction(null);
+    dup().push(factory.getConstFactory().getSentinel()).compare(JavaTokenType.EQEQ);
+    ConditionalGotoInstruction condGoto = new ConditionalGotoInstruction(null, false, null);
+    add(condGoto);
+    assignTo(targetVariable);
+    myBranches.add(() -> {
+      add(gotoInstruction);
+      pop();
+    });
     return this;
   }
 
@@ -818,7 +768,7 @@ public class CFGBuilder {
    */
   @NotNull
   public DfaVariableValue createTempVariable(@Nullable PsiType type) {
-    return myAnalyzer.createTempVariable(type);
+    return null;
   }
 
   /**

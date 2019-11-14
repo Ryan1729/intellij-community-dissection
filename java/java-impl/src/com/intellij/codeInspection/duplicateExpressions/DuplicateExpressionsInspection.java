@@ -15,11 +15,8 @@ import com.intellij.psi.*;
 import com.intellij.psi.controlFlow.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
-import com.intellij.refactoring.introduceVariable.InputValidator;
 import com.intellij.refactoring.introduceVariable.IntroduceVariableHandler;
-import com.intellij.refactoring.introduceVariable.IntroduceVariableSettings;
 import com.intellij.refactoring.ui.TypeSelectorManagerImpl;
-import com.intellij.refactoring.util.RefactoringUtil;
 import com.intellij.util.IncorrectOperationException;
 import com.siyeh.ig.psiutils.CommentTracker;
 import gnu.trove.THashMap;
@@ -314,14 +311,14 @@ public class DuplicateExpressionsInspection extends LocalInspectionTool {
     private static class MyIntroduceVariableHandler extends IntroduceVariableHandler {
       @Override
       public IntroduceVariableSettings getSettings(Project project, Editor editor, PsiExpression expr,
-                                                   PsiExpression[] occurrences, TypeSelectorManagerImpl typeSelectorManager,
-                                                   boolean declareFinalIfAll, boolean anyAssignmentLHS, InputValidator validator,
+                                                   PsiExpression[] occurrences,
+                                                   boolean declareFinalIfAll, boolean anyAssignmentLHS,
                                                    PsiElement anchor, JavaReplaceChoice replaceChoice) {
         if (replaceChoice == null && ApplicationManager.getApplication().isUnitTestMode()) {
           replaceChoice = JavaReplaceChoice.ALL;
         }
-        return super.getSettings(project, editor, expr, occurrences, typeSelectorManager,
-                                 declareFinalIfAll, anyAssignmentLHS, validator, anchor, replaceChoice);
+        return super.getSettings(project, editor, expr, occurrences,
+                                 declareFinalIfAll, anyAssignmentLHS, anchor, replaceChoice);
       }
     }
   }

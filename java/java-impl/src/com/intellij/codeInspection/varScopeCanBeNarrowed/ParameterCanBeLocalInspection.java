@@ -1,4 +1,5 @@
 // Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.", "// Copyright 2000-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.\n//This file was modified, from the form JetBrains provided, by Ryan1729, at least in so far as this notice was added, possibly more.
 package com.intellij.codeInspection.varScopeCanBeNarrowed;
 
 import com.intellij.codeInsight.daemon.GroupNames;
@@ -7,14 +8,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.controlFlow.*;
 import com.intellij.psi.search.searches.SuperMethodsSearch;
-import com.intellij.refactoring.changeSignature.ChangeSignatureProcessor;
-import com.intellij.refactoring.changeSignature.JavaChangeInfo;
-import com.intellij.refactoring.changeSignature.JavaChangeInfoImpl;
-import com.intellij.refactoring.changeSignature.ParameterInfoImpl;
-import com.intellij.refactoring.util.CanonicalTypes;
-import com.intellij.usageView.UsageInfo;
 import com.intellij.util.NotNullFunction;
-import com.intellij.util.VisibilityUtil;
 import com.siyeh.ig.psiutils.MethodUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -158,43 +152,6 @@ public class ParameterCanBeLocalInspection extends AbstractBaseJavaLocalInspecti
                                       @NotNull final Collection<? extends PsiReference> references,
                                       boolean delete,
                                       @NotNull final NotNullFunction<? super PsiDeclarationStatement, ? extends PsiElement> action) {
-      final PsiElement scope = parameter.getDeclarationScope();
-      if (scope instanceof PsiMethod) {
-        final PsiMethod method = (PsiMethod)scope;
-        final PsiParameter[] parameters = method.getParameterList().getParameters();
-
-        final List<ParameterInfoImpl> info = new ArrayList<>();
-        for (int i = 0; i < parameters.length; i++) {
-          PsiParameter psiParameter = parameters[i];
-          if (psiParameter == parameter) continue;
-          info.add(new ParameterInfoImpl(i, psiParameter.getName(), psiParameter.getType()));
-        }
-        final ParameterInfoImpl[] newParams = info.toArray(new ParameterInfoImpl[0]);
-        final String visibilityModifier = VisibilityUtil.getVisibilityModifier(method.getModifierList());
-        final PsiType returnType = method.getReturnType();
-        final JavaChangeInfo changeInfo = new JavaChangeInfoImpl(visibilityModifier, method, method.getName(),
-                                                                 returnType != null ? CanonicalTypes.createTypeWrapper(returnType) : null,
-                                                                 newParams, null, false, new HashSet<>(), new HashSet<>());
-        class ParameterToLocalProcessor extends ChangeSignatureProcessor {
-          private PsiElement newDeclaration;
-
-          ParameterToLocalProcessor(Project project, JavaChangeInfo changeInfo) {
-            super(project, changeInfo);
-          }
-
-          @Override
-          protected void performRefactoring(@NotNull UsageInfo[] usages) {
-            final PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(project);
-            newDeclaration = moveDeclaration(elementFactory, localName, parameter, initializer, action, references);
-            super.performRefactoring(usages);
-          }
-        }
-
-        final ParameterToLocalProcessor processor = new ParameterToLocalProcessor(project, changeInfo);
-        processor.run();
-
-        return processor.newDeclaration;
-      }
       return null;
     }
 

@@ -17,7 +17,6 @@ package com.intellij.refactoring.typeMigration.rules;
 
 import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiNewExpression;
-import com.intellij.refactoring.typeMigration.TypeEvaluator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;

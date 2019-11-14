@@ -22,7 +22,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.refactoring.BaseRefactoringIntentionAction;
-import com.intellij.refactoring.introduceVariable.IntroduceEmptyVariableHandler;
 import com.intellij.refactoring.introduceVariable.IntroduceVariableHandler;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.text.CharArrayUtil;
